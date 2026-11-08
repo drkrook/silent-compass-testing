@@ -1,0 +1,44 @@
+name: Deploy Silent Compass Beta
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout beta repository
+        uses: actions/checkout@v4
+        with:
+          path: beta
+      - name: Checkout stable source as initial beta baseline
+        uses: actions/checkout@v4
+        with:
+          repository: drkrook/silent-compass-family-beta
+          ref: main
+          path: app
+          persist-credentials: false
+      - name: Apply beta-specific overrides
+        shell: bash
+        run: |
+          if [ -d beta/overrides ]; then cp -a beta/overrides/. app/; fi
+          touch app/.nojekyll
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload beta site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: app
+      - name: Deploy beta site
+        id: deployment
+        uses: actions/deploy-pages@v4
