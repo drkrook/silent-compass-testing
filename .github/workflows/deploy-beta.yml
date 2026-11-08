@@ -32,6 +32,20 @@ jobs:
         shell: bash
         run: |
           if [ -d beta/overrides ]; then cp -a beta/overrides/. app/; fi
+          cp beta/beta-assets/prepare-your-area.js app/prepare-your-area.js
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,'<script src="./prepare-your-area.js"></script>'+marker)
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.4')
+          s=s.replace('Stable Release · Ready','Beta Testing · Ready')
+          s=s.replace('BETA v0.8.3','BETA v0.8.4')
+          s=s.replace('Family Preview · Ready','Beta Testing · Ready')
+          p.write_text(s)
+          PY
           touch app/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5
