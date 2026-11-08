@@ -7,6 +7,15 @@ function init(){
  if(!section||!state||!download||!status||document.getElementById('scPrepareDashboard'))return;
  const oldLabel=section.querySelector('strong'),oldDescription=section.querySelector('p'),oldState=section.querySelector('.legend');
  if(oldLabel)oldLabel.hidden=true;if(oldDescription)oldDescription.hidden=true;if(oldState)oldState.hidden=true;
+ const offlineHome=document.getElementById('scOfflineHome');
+ if(offlineHome){
+  const children=[...offlineHome.children];
+  const heading=children.find(el=>el.tagName==='STRONG');
+  const intro=children.find(el=>el.tagName==='P'&&el.classList.contains('muted'));
+  if(heading)heading.hidden=true;
+  if(intro)intro.hidden=true;
+ }
+
  const ui=document.createElement('div');ui.id='scPrepareDashboard';
  ui.innerHTML=`<style>
  #scPrepareDashboard{color:#edf8f5}#scPrepareDashboard button{min-height:49px;border-radius:10px;font-weight:700}
