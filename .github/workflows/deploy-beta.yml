@@ -39,11 +39,13 @@ jobs:
           s=p.read_text()
           marker='</body></html>'
           assert s.count(marker)==1
-          s=s.replace(marker,'<script src="./prepare-your-area.js?v=0855"></script>'+marker)
+          s=s.replace(marker,'<script src="./prepare-your-area.js?v=0856"></script>'+marker)
           s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.5')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
           s=s.replace('BETA v0.8.3','BETA v0.8.5')
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
+          # Remove the obsolete State resources label from the rendered beta page only.
+          s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
           p.write_text(s)
           PY
           touch app/.nojekyll
