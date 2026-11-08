@@ -1,39 +1,77 @@
-/* Silent Compass Beta: Prepare Your Area. Non-destructive UI integration. */
+/* Silent Compass Beta v0.8.5 — Prepare Your Area dashboard.
+   Existing state pack download and storage remain owned by index.html. */
 (()=>{
 'use strict';
 function init(){
  const section=document.getElementById('scStatePackSection'),state=document.getElementById('state'),download=document.getElementById('scStatePackDownload'),status=document.getElementById('scStatePackStatus');
- if(!section||!state||!download||!status)return;
- if(document.getElementById('scPrepareState'))return;
- const title=section.querySelector('strong');if(title)title.textContent='🧭 Prepare Your Area';
- const description=section.querySelector('p');if(description)description.textContent='Choose a state, download available resource locations, then open the map. Offline map tiles are downloaded separately.';
- const old=section.querySelector('.legend');if(old)old.hidden=true;
- const step=document.createElement('div');step.innerHTML='<label for="scPrepareState" style="display:block;margin-top:14px;font-weight:700">1. Choose a state</label><select id="scPrepareState" style="width:100%;min-height:48px;margin:8px 0 12px"></select><div style="font-weight:700;margin:10px 0">2. Download resources</div>';
- section.insertBefore(step,download);
- const picker=step.querySelector('select');
+ if(!section||!state||!download||!status||document.getElementById('scPrepareDashboard'))return;
+ const oldLabel=section.querySelector('strong'),oldDescription=section.querySelector('p'),oldState=section.querySelector('.legend');
+ if(oldLabel)oldLabel.hidden=true;if(oldDescription)oldDescription.hidden=true;if(oldState)oldState.hidden=true;
+ const ui=document.createElement('div');ui.id='scPrepareDashboard';
+ ui.innerHTML=`<style>
+ #scPrepareDashboard{color:#edf8f5}#scPrepareDashboard button{min-height:49px;border-radius:10px;font-weight:700}
+ #scPrepareDashboard .scPrepPrimary{width:100%;background:#087e75;border:2px solid #4de1ce;color:#fff;padding:16px;font-size:18px}
+ #scPrepareDashboard .scPrepActions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+ #scPrepareDashboard .scPrepActions button{width:100%;background:#244e4a;border:1px solid #6aa99c;color:#fff;padding:10px}
+ #scPrepareDashboard .scPrepBox{border:1px solid #638f85;border-radius:12px;padding:14px;margin-top:12px;background:#193733}
+ #scPrepareDashboard .scPrepCard{border:1px solid #527f76;border-radius:10px;padding:12px;margin-top:10px;background:#21443f}
+ #scPrepareDashboard .scPrepCard button{margin-top:8px}
+ #scPrepareDashboard select{width:100%;min-height:48px;margin:8px 0;background:#173632;color:#fff;border:1px solid #8ebbb0;border-radius:9px;padding:10px}
+ #scPrepareDashboard summary{cursor:pointer;font-weight:700}
+ #scPrepareDashboard .scPrepNote{font-size:12px;color:#bfd9d1;line-height:1.5}
+ @media(max-width:430px){#scPrepareDashboard .scPrepActions{grid-template-columns:1fr}}
+ </style>
+ <h2 style="margin:0 0 6px">🧭 Prepare Your Area</h2>
+ <p class="scPrepNote">Download state resource locations for offline use. Map tiles must be downloaded separately.</p>
+ <button id="scPrepNew" class="scPrepPrimary" type="button" aria-expanded="false">⬇️ Prepare New Area</button>
+ <div class="scPrepActions"><button id="scPrepMap" type="button">🗺️ Open Map</button><button id="scPrepManage" type="button">⚙️ Manage Downloads</button></div>
+ <details class="scPrepBox" id="scPrepSavedBox" open><summary>📥 My Downloaded States (<span id="scPrepCount">0</span>)</summary><div id="scPrepCards" role="status">Checking saved states…</div></details>
+ <div class="scPrepBox" id="scPrepForm" hidden><h3 style="margin:0 0 8px">Prepare New Area</h3><label for="scPrepareState">Choose a state</label><select id="scPrepareState"></select><div id="scPrepDownloadSlot"></div><div id="scPrepStatusSlot"></div><p class="scPrepNote">Select a state, download its published resources, then open the map. Unpublished state packs cannot be downloaded yet.</p><button id="scPrepFormMap" type="button">🗺️ Open Map</button></div>
+ <details class="scPrepBox" id="scPrepManageBox" hidden><summary>Manage Downloaded Resources</summary><p class="scPrepNote">Select a downloaded state and use Prepare New Area to update its pack. Removing offline data is intentionally unavailable here to protect saved information.</p><button id="scPrepRefresh" type="button">↻ Refresh Saved States</button></details>`;
+ section.prepend(ui);
+ const form=ui.querySelector('#scPrepForm'),newButton=ui.querySelector('#scPrepNew'),picker=ui.querySelector('#scPrepareState');
  picker.innerHTML=state.innerHTML;picker.value=state.value;
- picker.addEventListener('change',()=>{state.value=picker.value;state.dispatchEvent(new Event('change',{bubbles:true}));updateSaved()});
- state.addEventListener('change',()=>{picker.value=state.value;updateSaved()});
- download.textContent='Download State Resources';
- const footer=document.createElement('div');footer.innerHTML='<div style="font-weight:700;margin:14px 0 8px">3. Open the map</div><button id="scPrepareOpenMap" type="button" style="width:100%;min-height:48px">🗺️ Open Map</button><p class="muted" style="font-size:12px">Opening the map does not guarantee offline coverage. Download map tiles for your intended area separately.</p><div id="scPrepareSaved" class="legend" role="status"></div>';
- section.append(footer);
- footer.querySelector('button').addEventListener('click',()=>{const tab=document.getElementById('tab-map');if(tab)tab.click();else document.getElementById('scMapHome')?.click()});
- let sequence=0;
- async function updateSaved(){
-  const token=++sequence,code=state.value,el=document.getElementById('scPrepareSaved');
-  if(!el)return;
-  el.textContent='Checking resources saved on this device…';
+ const downloadSlot=ui.querySelector('#scPrepDownloadSlot'),statusSlot=ui.querySelector('#scPrepStatusSlot');
+ downloadSlot.append(download);statusSlot.append(status);
+ download.textContent='⬇️ Download State Resources';
+ const map=()=>document.getElementById('tab-map')?.click();
+ ui.querySelector('#scPrepMap').onclick=map;ui.querySelector('#scPrepFormMap').onclick=map;
+ function showForm(){form.hidden=false;newButton.setAttribute('aria-expanded','true');picker.focus()}
+ newButton.onclick=()=>{if(form.hidden)showForm();else{form.hidden=true;newButton.setAttribute('aria-expanded','false')}};
+ ui.querySelector('#scPrepManage').onclick=()=>{const box=ui.querySelector('#scPrepManageBox');box.hidden=!box.hidden;if(!box.hidden)box.open=true};
+ ui.querySelector('#scPrepRefresh').onclick=refresh;
+ picker.onchange=()=>{state.value=picker.value;state.dispatchEvent(new Event('change',{bubbles:true}));refresh()};
+ state.addEventListener('change',()=>{picker.value=state.value;refresh()});
+ let generation=0;
+ async function refresh(){
+  const seq=++generation,cards=ui.querySelector('#scPrepCards'),count=ui.querySelector('#scPrepCount');
+  cards.textContent='Checking saved states…';
   try{
    if(typeof get!=='function')throw Error('Storage not ready');
-   const saved=await get('data','features-'+code),version=await get('data','state-pack-version-'+code);
-   if(token!==sequence)return;
-   el.textContent=version?'✓ State pack installed · '+(Array.isArray(saved)?saved.length:0)+' total saved locations.':'No state pack installation confirmed for this state. You can still open the map.';
-  }catch(e){if(token===sequence)el.textContent='Saved-resource status unavailable. You can still open the map.'}
+   const codes=[...state.options].map(o=>o.value);
+   const found=[];
+   for(const code of codes){
+    const version=await get('data','state-pack-version-'+code);
+    if(seq!==generation)return;
+    if(!version)continue;
+    const saved=await get('data','features-'+code);
+    if(seq!==generation)return;
+    found.push({code,name:state.querySelector('option[value="'+code+'"]')?.textContent||code,n:Array.isArray(saved)?saved.length:0});
+   }
+   count.textContent=String(found.length);cards.replaceChildren();
+   if(!found.length){cards.textContent='No installed state packs confirmed on this device.';return}
+   for(const item of found){
+    const card=document.createElement('div');card.className='scPrepCard';
+    const name=document.createElement('strong');name.textContent='📍 '+item.name;
+    const detail=document.createElement('div');detail.className='scPrepNote';detail.textContent=item.n.toLocaleString()+' saved resource locations · State pack installed on this device';
+    const button=document.createElement('button');button.type='button';button.textContent='🗺️ Open Map';button.onclick=()=>{state.value=item.code;state.dispatchEvent(new Event('change',{bubbles:true}));map()};
+    card.append(name,detail,button);cards.append(card);
+   }
+  }catch(e){if(seq===generation)cards.textContent='Could not check downloaded states. Try again after storage finishes loading.'}
  }
- download.addEventListener('click',()=>setTimeout(updateSaved,1000));
- const observer=new MutationObserver(()=>{if(/Saved \d+ .* pack resources offline/.test(status.textContent))updateSaved()});
+ const observer=new MutationObserver(()=>{if(/Saved \d+ .* pack resources offline/.test(status.textContent))refresh()});
  observer.observe(status,{childList:true,characterData:true,subtree:true});
- updateSaved();
+ window.addEventListener('focus',refresh);setTimeout(refresh,1200);refresh();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
