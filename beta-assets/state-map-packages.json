@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "description": "Beta catalog for future downloadable state map archives. Availability is explicit; do not advertise unverified downloads.",
+  "states": {
+    "SC": {
+      "name": "South Carolina",
+      "resources": {
+        "status": "published",
+        "source": "state-packs/manifest.json"
+      },
+      "street": {
+        "status": "not_published",
+        "format": "pmtiles"
+      },
+      "topographic": {
+        "status": "not_published"
+      },
+      "satellite": {
+        "status": "not_published"
+      }
+    },
+    "NC": {
+      "name": "North Carolina",
+      "resources": {
+        "status": "not_published"
+      },
+      "street": {
+        "status": "not_published",
+        "format": "pmtiles"
+      },
+      "topographic": {
+        "status": "not_published"
+      },
+      "satellite": {
+        "status": "not_published"
+      }
+    }
+  },
+  "requirements": {
+    "offline_storage_verification": true,
+    "license_review": true,
+    "size_estimate": true,
+    "resumable_download": true,
+    "integrity_check": true,
+    "zoom_coverage_disclosure": true
+  }
+}
