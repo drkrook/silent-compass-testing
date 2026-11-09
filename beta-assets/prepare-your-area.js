@@ -1,4 +1,4 @@
-/* Silent Compass Beta v0.8.5 — Prepare Your Area dashboard.
+/* Silent Compass Beta v0.8.6 — Prepare Your Area dashboard.
    Existing state pack download and storage remain owned by index.html. */
 (()=>{
 'use strict';
@@ -31,18 +31,41 @@ function init(){
  @media(max-width:430px){#scPrepareDashboard .scPrepActions{grid-template-columns:1fr}}
  </style>
  <h2 style="margin:0 0 6px">🧭 Prepare Your Area</h2>
- <p class="scPrepNote">Download state resource locations for offline use. Map tiles must be downloaded separately.</p>
+ <p class="scPrepNote">Prepare available offline resources. Statewide map packages and optional styles will appear here only after they are published and verified.</p>
  <button id="scPrepNew" class="scPrepPrimary" type="button" aria-expanded="false">⬇️ Prepare New Area</button>
  <div class="scPrepActions"><button id="scPrepMap" type="button">🗺️ Open Map</button><button id="scPrepManage" type="button">⚙️ Manage Downloads</button></div>
  <details class="scPrepBox" id="scPrepSavedBox" open><summary>📥 My Downloaded States (<span id="scPrepCount">0</span>)</summary><div id="scPrepCards" role="status">Checking saved states…</div></details>
  <div class="scPrepBox" id="scPrepForm" hidden><h3 style="margin:0 0 8px">Prepare New Area</h3><label for="scPrepareState">Choose a state</label><select id="scPrepareState"></select><div id="scPrepDownloadSlot"></div><div id="scPrepStatusSlot"></div><p class="scPrepNote">Select a state, download its published resources, then open the map. Unpublished state packs cannot be downloaded yet.</p><button id="scPrepFormMap" type="button">🗺️ Open Map</button></div>
  <details class="scPrepBox" id="scPrepManageBox" hidden><summary>Manage Downloaded Resources</summary><p class="scPrepNote">Select a downloaded state and use Prepare New Area to update its pack. Removing offline data is intentionally unavailable here to protect saved information.</p><button id="scPrepRefresh" type="button">↻ Refresh Saved States</button></details>`;
+ const packages=document.createElement('div');packages.className='scPrepBox';packages.id='scPrepPackages';packages.setAttribute('aria-live','polite');
+ packages.innerHTML='<strong>🗺️ Statewide Map Packages</strong><p class="scPrepNote">Checking verified package availability…</p>';
+ ui.append(packages);
+ async function showPackages(){
+  const code=state.value;
+  packages.replaceChildren();
+  const heading=document.createElement('strong');heading.textContent='🗺️ '+(state.selectedOptions[0]?.textContent||code)+' map packages';packages.append(heading);
+  try{
+   const response=await fetch('./state-map-packages.json',{cache:'no-store'});
+   if(!response.ok)throw Error('Catalog unavailable');
+   const catalog=await response.json(),entry=catalog.states?.[code];
+   const options=[['street','Street map'],['topographic','Topographic map'],['satellite','Satellite imagery']];
+   for(const [key,label] of options){
+    const line=document.createElement('p');line.className='scPrepNote';
+    const pack=entry?.[key];
+    line.textContent=label+': '+(pack?.status==='published'?'Published — awaiting integration verification':'Not available for download yet');
+    packages.append(line);
+   }
+   const info=document.createElement('p');info.className='scPrepNote';info.textContent='Existing area-map downloads remain available below. No statewide map is claimed offline until verified.';packages.append(info);
+  }catch(e){const msg=document.createElement('p');msg.className='scPrepNote';msg.textContent='Could not verify statewide map availability. Existing downloads are unchanged.';packages.append(msg)}
+ }
+ picker.addEventListener('change',showPackages);state.addEventListener('change',showPackages);
+ showPackages();
  section.prepend(ui);
  const form=ui.querySelector('#scPrepForm'),newButton=ui.querySelector('#scPrepNew'),picker=ui.querySelector('#scPrepareState');
  picker.innerHTML=state.innerHTML;picker.value=state.value;
  const downloadSlot=ui.querySelector('#scPrepDownloadSlot'),statusSlot=ui.querySelector('#scPrepStatusSlot');
  downloadSlot.append(download);statusSlot.append(status);
- download.textContent='⬇️ Download State Resources';
+ download.textContent='⬇️ Download Available State Resources';
  const map=()=>document.getElementById('tab-map')?.click();
  ui.querySelector('#scPrepMap').onclick=map;ui.querySelector('#scPrepFormMap').onclick=map;
  function showForm(){form.hidden=false;newButton.setAttribute('aria-expanded','true');picker.focus()}
