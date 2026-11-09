@@ -58,11 +58,11 @@ function init(){
    const info=document.createElement('p');info.className='scPrepNote';info.textContent='Existing area-map downloads remain available below. No statewide map is claimed offline until verified.';packages.append(info);
   }catch(e){const msg=document.createElement('p');msg.className='scPrepNote';msg.textContent='Could not verify statewide map availability. Existing downloads are unchanged.';packages.append(msg)}
  }
- picker.addEventListener('change',showPackages);state.addEventListener('change',showPackages);
- showPackages();
  section.prepend(ui);
  const form=ui.querySelector('#scPrepForm'),newButton=ui.querySelector('#scPrepNew'),picker=ui.querySelector('#scPrepareState');
  picker.innerHTML=state.innerHTML;picker.value=state.value;
+ picker.addEventListener('change',showPackages);state.addEventListener('change',showPackages);
+ showPackages();
  const downloadSlot=ui.querySelector('#scPrepDownloadSlot'),statusSlot=ui.querySelector('#scPrepStatusSlot');
  downloadSlot.append(download);statusSlot.append(status);
  download.textContent='⬇️ Download Available State Resources';
