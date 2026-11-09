@@ -40,7 +40,7 @@ jobs:
           s=p.read_text()
           marker='</body></html>'
           assert s.count(marker)==1
-          s=s.replace(marker,'<script src="./prepare-your-area.js?v=0860"></script>'+marker)
+          s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
           s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.6')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
           s=s.replace('BETA v0.8.3','BETA v0.8.6')
