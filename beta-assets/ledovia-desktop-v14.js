@@ -37,7 +37,7 @@ function init(){
  offline:()=>document.getElementById('tab-offline')?.click(),
  nws:()=>grid.querySelector('[data-go="nws"]')?.click(),
  family:()=>document.getElementById('scFamilyOpen')?.click(),
- compass:()=>{const buttons=[...document.querySelectorAll('button')];const b=buttons.find(x=>/compass/i.test(x.textContent||'')&&x.closest('.scHomeGrid'));if(b)b.click();else document.getElementById('scCompassOpen')?.click();}
+ compass:()=>grid.querySelector('.scLedoviaCompass')?.click()
  };
  wrap.addEventListener('click',e=>{const b=e.target.closest('button[data-action]');if(b&&wrap.contains(b))actions[b.dataset.action]?.()});
  grid.before(wrap);
