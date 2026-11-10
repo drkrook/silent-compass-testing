@@ -8,14 +8,16 @@ function init(){
  const fullscreen=()=>document.fullscreenElement===map;
  function sync(){
    const floating=desktop()&&fullscreen();
+   const hazard=document.getElementById('scHazDetailPopup');
    app.classList.toggle('ld21FullscreenDetails',floating);
-   if(floating){if(popup.parentElement!==map)map.appendChild(popup);dock.hidden=true;}
-   else if(desktop()){if(popup.parentElement!==dock)dock.appendChild(popup);dock.hidden=popup.hidden;}
+   if(floating){if(popup.parentElement!==map)map.appendChild(popup);if(hazard&&hazard.parentElement!==map)map.appendChild(hazard);dock.hidden=true;}
+   else if(desktop()){if(popup.parentElement!==dock)dock.appendChild(popup);if(hazard&&hazard.parentElement!==dock)dock.appendChild(hazard);dock.hidden=popup.hidden&&(!hazard||hazard.hidden);}
    else{if(popup.parentElement!==map)map.appendChild(popup);dock.hidden=true;}
  }
  document.addEventListener('fullscreenchange',sync);
  window.addEventListener('resize',sync);
- new MutationObserver(sync).observe(popup,{attributes:true,attributeFilter:['hidden']});
+ const observer=new MutationObserver(sync);observer.observe(popup,{attributes:true,attributeFilter:['hidden']});
+ const hazard=document.getElementById('scHazDetailPopup');if(hazard)observer.observe(hazard,{attributes:true,attributeFilter:['hidden']});
  function dismiss(){
    if(popup.hidden)return;
    const close=popup.querySelector('.scPlacePopupHeader button');
