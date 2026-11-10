@@ -21,32 +21,7 @@ function init(){
    const close=popup.querySelector('.scPlacePopupHeader button');
    if(close)close.click();else popup.hidden=true;
  }
- // Track the pointer travel so a map drag is not treated as a blank-map click.
- const starts=new Map();
- canvas.addEventListener('pointerdown',e=>{
-   if(!desktop()||e.button!==0)return;
-   starts.set(e.pointerId,{x:e.clientX,y:e.clientY,moved:false});
- },true);
- canvas.addEventListener('pointermove',e=>{
-   const p=starts.get(e.pointerId);if(p&&Math.hypot(e.clientX-p.x,e.clientY-p.y)>6)p.moved=true;
- },true);
- canvas.addEventListener('pointercancel',e=>starts.delete(e.pointerId),true);
- canvas.addEventListener('pointerup',e=>{
-   const p=starts.get(e.pointerId);starts.delete(e.pointerId);
-   if(!desktop()||!p||p.moved||Math.hypot(e.clientX-p.x,e.clientY-p.y)>6||popup.hidden)return;
-   // The base map handler runs after capture and may change selection. Wait until it has picked a marker.
-   const before=popup.querySelector('.scPlacePopupHeader strong')?.textContent||'';
-   const wasOpen=!popup.hidden;
-   setTimeout(()=>{
-     if(!wasOpen||popup.hidden)return;
-     const after=popup.querySelector('.scPlacePopupHeader strong')?.textContent||'';
-     if(before!==after)return;
-     // Only dismiss if no marker hit; marker positions are rendered in canvas and not DOM.
-     const x=e.clientX-canvas.getBoundingClientRect().left,y=e.clientY-canvas.getBoundingClientRect().top;
-     const hit=(window._markers||[]).some(f=>Math.hypot(f.sx-x,f.sy-y)<(f.cluster?22:17));
-     if(!hit)dismiss();
-   },0);
- },true);
+ // Selection and empty-click handling are owned by the patched base map handler in Beta v0.8.23.
  // Intercept wheel before the base canvas handler. Ctrl+wheel and fullscreen retain map zoom.
  canvas.addEventListener('wheel',e=>{
    if(!desktop())return;
