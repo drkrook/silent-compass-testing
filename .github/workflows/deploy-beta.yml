@@ -63,9 +63,9 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
-          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.17')
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.18')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
-          s=s.replace('BETA v0.8.3','BETA v0.8.17')
+          s=s.replace('BETA v0.8.3','BETA v0.8.18')
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
           # Remove the obsolete State resources label from the rendered beta page only.
           s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
@@ -248,6 +248,17 @@ jobs:
           window.addEventListener('blur',()=>{for(const id of activeTouches.keys()){try{canvas.releasePointerCapture(id)}catch(e){}}activeTouches.clear();drag=null;gesture=null;pinchMoved=false});"""
           assert s.count(original)==1, 'Expected one map pointer end handler'
           s=s.replace(original,patched,1)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-map-resource-v18.* app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-map-resource-v18.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-resource-v18.css?v=18"><script src="./ledovia-map-resource-v18.js?v=18"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
