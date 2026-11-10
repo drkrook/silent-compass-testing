@@ -63,9 +63,9 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
-          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.24')
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.25')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
-          s=s.replace('BETA v0.8.3','BETA v0.8.24')
+          s=s.replace('BETA v0.8.3','BETA v0.8.25')
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
           # Remove the obsolete State resources label from the rendered beta page only.
           s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
@@ -291,7 +291,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-map-interactions-v21.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-interactions-v21.css?v=21"><script src="./ledovia-map-interactions-v21.js?v=24"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-interactions-v21.css?v=21"><script src="./ledovia-map-interactions-v21.js?v=25"></script>'+marker)
           p.write_text(s)
           PY
           cp beta/beta-assets/ledovia-map-cleanup-v22.* app/
