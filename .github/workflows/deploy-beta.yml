@@ -54,6 +54,7 @@ jobs:
           cp beta/beta-assets/ledovia-compass-v13.css app/
           cp beta/beta-assets/ledovia-desktop-v14.* app/
           cp beta/beta-assets/ledovia-desktop-v15.css app/
+          cp beta/beta-assets/ledovia-desktop-v16.* app/
           cp beta/beta-assets/ledovia-icon-*.svg app/
           python3 - <<'PY'
           from pathlib import Path
@@ -62,9 +63,9 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
-          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.15')
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.16')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
-          s=s.replace('BETA v0.8.3','BETA v0.8.15')
+          s=s.replace('BETA v0.8.3','BETA v0.8.16')
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
           # Remove the obsolete State resources label from the rendered beta page only.
           s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
@@ -218,6 +219,16 @@ jobs:
           assert s.count(marker)==1
           assert 'ledovia-desktop-v15.css' not in s
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-desktop-v15.css?v=15">'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-desktop-v16.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-desktop-v16.css?v=16"><script src="./ledovia-desktop-v16.js?v=16"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
