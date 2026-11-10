@@ -44,6 +44,7 @@ jobs:
           cp beta/beta-assets/ledovia-icon-*-v4.svg app/
           cp beta/beta-assets/ledovia-landscape-v4.css app/
           cp beta/beta-assets/ledovia-photo-v5.css app/
+          cp beta/beta-assets/ledovia-clean-home-v6.css app/
           cp beta/beta-assets/ledovia-icon-*.svg app/
           python3 - <<'PY'
           from pathlib import Path
@@ -108,6 +109,16 @@ jobs:
           assert s.count(marker)==1
           assert 'ledovia-photo-v5.css' not in s
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-photo-v5.css?v=5">'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-clean-home-v6.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-clean-home-v6.css?v=6">'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
