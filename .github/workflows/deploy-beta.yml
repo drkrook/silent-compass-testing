@@ -63,9 +63,9 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
-          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.30')
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.31')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
-          s=s.replace('BETA v0.8.3','BETA v0.8.30')
+          s=s.replace('BETA v0.8.3','BETA v0.8.31')
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
           # Remove the obsolete State resources label from the rendered beta page only.
           s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
@@ -370,7 +370,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-fullscreen-layers-v30.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-fullscreen-layers-v30.css?v=30"><script src="./ledovia-fullscreen-layers-v30.js?v=30"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-fullscreen-layers-v30.css?v=31"><script src="./ledovia-fullscreen-layers-v30.js?v=30"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
