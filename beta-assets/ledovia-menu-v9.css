@@ -1,0 +1,15 @@
+/* Beta v0.8.9: premium compact menu; explicit icon visibility. */
+#ledoviaMenuPanel .ledoviaPanelTop{justify-content:space-between!important;padding-bottom:16px!important}
+#ledoviaMenuPanel .ledoviaDrawerBrand{flex:0 0 auto!important}
+#ledoviaMenuPanel .ledoviaDrawerLogo.ledoviaLogoOnly{width:57px!important;height:57px!important;border-radius:15px!important}
+#ledoviaMenuPanel .ledoviaDrawerLogo.ledoviaLogoOnly svg{width:43px!important;height:43px!important}
+#ledoviaMenuPanel #ledoviaPlaces>button,#ledoviaMenuPanel #ledoviaPreparedness>button,#ledoviaMenuPanel #ledoviaPlaces>#scFamilyOpen{display:flex!important;align-items:center!important;gap:13px!important}
+#ledoviaMenuPanel .ledoviaNavIcon{display:inline-flex!important;visibility:visible!important;opacity:1!important;flex:0 0 37px!important;width:37px!important;height:37px!important;align-items:center!important;justify-content:center!important;background:#80d6c522!important;border-radius:10px!important;color:#d2fff2!important}
+#ledoviaMenuPanel .ledoviaNavIcon svg{display:block!important;visibility:visible!important;opacity:1!important;width:23px!important;height:23px!important;stroke:currentColor!important;flex:none!important}
+#ledoviaMenuPanel .ledoviaNavChevron{display:block!important;margin-left:auto!important;font-size:25px!important}
+#ledoviaMenuPanel #ledoviaFamily{display:none!important}
+#ledoviaMenuPanel h3{margin-top:22px!important}
+#ledoviaMenuPanel .ledoviaSettingHint{margin-bottom:12px}
+#ledoviaMenuPanel .ledoviaLanguageSetting{position:relative}
+#ledoviaMenuPanel .ledoviaLanguageSetting .scLangLabel{padding-left:0!important}
+@media(max-width:700px){#ledoviaMenuPanel:not([hidden]){width:min(350px,94vw)!important}}
