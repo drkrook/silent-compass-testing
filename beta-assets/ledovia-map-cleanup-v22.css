@@ -1,0 +1,24 @@
+/* Ledovia Beta v0.8.22 — desktop map clarity */
+#ld22LayersToggle,#ld22FullscreenLayers{display:none}
+@media(min-width:1100px){
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap::before{display:none!important;content:none!important}
+ #appMain.scMapSimple.ld19DesktopMap #scMapTools{display:none!important}
+ #appMain.scMapSimple.ld19DesktopMap #scSimpleMapNav{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #appMain.scMapSimple.ld19DesktopMap #ld19Layers{padding:18px!important}
+ #appMain.scMapSimple.ld19DesktopMap #ld19Layers h2{font-size:21px!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceMenu,
+ #appMain.scMapSimple.ld19DesktopMap #ld22FullscreenLayers #mapResourceMenu{font-size:16px!important;line-height:1.45!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceMenu .check,
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceMenu label{font-size:16px!important;line-height:1.4!important;min-height:44px!important;display:flex!important;align-items:center!important;gap:9px!important;padding:9px 4px!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceMenu input[type="checkbox"]{width:19px!important;height:19px!important;flex-shrink:0;accent-color:#e6a33a}
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceMenu button{font-size:15px!important;min-height:43px!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceMenu .legend,
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceMenu p{font-size:14px!important;line-height:1.5!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap:fullscreen #ld22LayersToggle{display:block!important;position:absolute;left:300px;right:auto;top:14px;z-index:35;min-height:44px;padding:9px 13px;border-radius:10px;background:#103f42f5;border:1px solid #65b9b2;color:#fff;font-size:15px;font-weight:700}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap:fullscreen #ld22FullscreenLayers:not([hidden]){display:block!important;position:absolute;top:70px;left:14px;right:auto;width:min(355px,calc(100vw - 32px));max-height:calc(100dvh - 260px);overflow-y:auto;overscroll-behavior:contain;z-index:45;padding:16px;background:#0d4143f8;border:1px solid #65b9b2;border-radius:14px;color:#f3fcf9;box-shadow:0 15px 40px #0008}
+ #appMain.scMapSimple.ld19DesktopMap #ld22FullscreenLayers .ld22LayerHeading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px;font-size:19px}
+ #appMain.scMapSimple.ld19DesktopMap #ld22FullscreenLayers .ld22LayerHeading button{min-height:38px;padding:7px 10px;background:#176368;color:#fff;border-radius:8px}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap:fullscreen #ld22FullscreenLayers #mapResourceMenu{display:block!important;position:static!important;max-height:none!important;overflow:visible!important;width:100%!important;padding:0!important;border:0!important;box-shadow:none!important;background:transparent!important}
+ #appMain.ld21FullscreenDetails #mapwrap:fullscreen #scPlaceDetailPopup:not([hidden]){bottom:auto!important;max-height:min(68dvh,630px)!important;min-height:0!important;width:min(350px,30vw)!important;overflow-y:auto!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap:fullscreen #ld22FullscreenLayers:not([hidden])~#scPlaceDetailPopup{pointer-events:auto}
+}
