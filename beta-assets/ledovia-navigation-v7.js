@@ -1,0 +1,43 @@
+/* Ledovia Beta v7 — UI relocation only; original action handlers remain attached. */
+(()=>{'use strict';
+function init(){
+ const header=document.querySelector('body > header'),home=document.querySelector('.scSimpleHome'),grid=home?.querySelector('.scHomeGrid');
+ const language=document.querySelector('.scLanguageBar'),version=document.getElementById('scAppVersion'),connection=document.getElementById('connection');
+ if(!header||!home||!grid||!language||!version||!connection)return false;
+ if(document.getElementById('ledoviaMenuButton'))return true;
+ const menuButton=document.createElement('button');menuButton.id='ledoviaMenuButton';menuButton.type='button';menuButton.textContent='☰';menuButton.setAttribute('aria-label','Open navigation menu');menuButton.setAttribute('aria-controls','ledoviaMenuPanel');menuButton.setAttribute('aria-expanded','false');
+ const bell=document.createElement('button');bell.id='ledoviaBellButton';bell.type='button';bell.textContent='♧';bell.innerHTML='<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>';bell.setAttribute('aria-label','Open app notifications');bell.setAttribute('aria-controls','ledoviaNotificationPanel');bell.setAttribute('aria-expanded','false');
+ header.append(menuButton,bell);
+ const backdrop=document.createElement('div');backdrop.id='ledoviaBackdrop';backdrop.hidden=true;
+ const panel=document.createElement('nav');panel.id='ledoviaMenuPanel';panel.setAttribute('aria-label','Ledovia navigation');panel.hidden=true;
+ panel.innerHTML='<div class="ledoviaPanelTop"><strong>☰ Ledovia Menu</strong><button type="button" data-close-menu aria-label="Close menu">✕</button></div><h3>Navigation & Places</h3><div id="ledoviaPlaces"></div><h3>Family & Sharing</h3><div id="ledoviaFamily"></div><h3>Preparedness</h3><div id="ledoviaPreparedness"></div><h3>Settings</h3><div id="ledoviaSettings"></div>';
+ const notice=document.createElement('section');notice.id='ledoviaNotificationPanel';notice.setAttribute('aria-label','App notifications');notice.hidden=true;
+ notice.innerHTML='<div class="ledoviaPanelTop"><strong>Notifications</strong><button type="button" data-close-notice aria-label="Close notifications">✕</button></div><p id="ledoviaConnectionState" role="status"></p><p>For official weather warnings, use the Official Weather Alerts feature. New alerts require an internet connection to refresh.</p><button type="button" id="ledoviaOfflineLink">Offline Readiness</button>';
+ document.body.append(backdrop,panel,notice);
+ const offline=grid.querySelector('[data-go="offline"]'),places=grid.querySelector('[data-go="places"]'),family=grid.querySelector('#scFamilyOpen'),hazard=grid.querySelector('[data-go="hazards"]');
+ if(!offline||!places||!family||!hazard)return false;
+ panel.querySelector('#ledoviaPreparedness').append(offline);
+ panel.querySelector('#ledoviaPlaces').append(places);
+ panel.querySelector('#ledoviaFamily').append(family);
+ panel.querySelector('#ledoviaSettings').append(language);
+ language.hidden=false;
+ const hazardTitle=hazard.querySelector('strong');if(hazardTitle)hazardTitle.textContent='Report a Hazard';
+ const foot=document.createElement('div');foot.id='ledoviaBetaFooter';foot.append(version);home.append(foot);
+ version.removeAttribute('style');version.setAttribute('aria-label','Ledovia Beta version');
+ connection.classList.add('ledoviaConnectionHidden');
+ function state(){const online=navigator.onLine;notice.querySelector('#ledoviaConnectionState').textContent=online?'● Device reports an internet connection. Download availability is not verified.':'○ Device reports offline. Only previously stored resources may be available.';}
+ function close(){panel.hidden=true;notice.hidden=true;backdrop.hidden=true;menuButton.setAttribute('aria-expanded','false');bell.setAttribute('aria-expanded','false')}
+ function open(which){close();backdrop.hidden=false;which.hidden=false;(which===panel?menuButton:bell).setAttribute('aria-expanded','true');which.querySelector('button')?.focus();if(which===notice)state()}
+ menuButton.onclick=()=>panel.hidden?open(panel):close();bell.onclick=()=>notice.hidden?open(notice):close();
+ backdrop.onclick=close;panel.querySelector('[data-close-menu]').onclick=()=>{close();menuButton.focus()};
+ notice.querySelector('[data-close-notice]').onclick=()=>{close();bell.focus()};
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(!panel.hidden||!notice.hidden))close()});
+ panel.querySelectorAll('#ledoviaPlaces button,#ledoviaFamily button,#ledoviaPreparedness button').forEach(b=>b.addEventListener('click',close));
+ notice.querySelector('#ledoviaOfflineLink').onclick=()=>{close();offline.click()};
+ window.addEventListener('online',state);window.addEventListener('offline',state);
+ const update=document.getElementById('scUpdateNotice');
+ if(update){const observer=new MutationObserver(()=>{if(!update.hidden){bell.classList.add('ledoviaHasNotice');bell.setAttribute('aria-label','App update available; open notifications')}else{bell.classList.remove('ledoviaHasNotice');bell.setAttribute('aria-label','Open app notifications')}});observer.observe(update,{attributes:true,attributeFilter:['hidden']});}
+ return true;
+}
+if(!init()){let n=0;const t=setInterval(()=>{if(init()||++n>100)clearInterval(t)},100)}
+})();
