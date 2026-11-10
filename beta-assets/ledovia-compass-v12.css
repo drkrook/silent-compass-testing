@@ -1,0 +1,26 @@
+/* Beta v0.8.12 responsive Compass: no sensor logic changes */
+#scLedoviaCompassView{overflow-x:hidden!important;overscroll-behavior:contain}
+#scLedoviaCompassView .scCompassShell{min-height:0!important;max-width:560px!important;gap:clamp(7px,1.5vh,15px)!important;align-items:stretch}
+#scLedoviaCompassView .scCompassTop{flex-shrink:0}
+#scLedoviaCompassView .scCompassDial{width:min(76vw,350px,46dvh)!important;height:auto!important;aspect-ratio:1!important;flex:0 0 auto!important;margin:clamp(3px,1vh,12px) auto!important}
+#scLedoviaCompassView .scCompassModes{display:flex!important;justify-content:center!important;gap:8px!important;flex-wrap:wrap!important;order:0}
+#scLedoviaCompassView .scCompassModes button{min-height:42px!important;padding:8px 12px!important}
+#scLedoviaCompassView .scCompassHeading{font-size:clamp(30px,6vh,58px)!important;line-height:1.1!important}
+#scLedoviaCompassView .scCompassStatus{line-height:1.35!important}
+#scLedoviaCompassView .scCompassFoot{margin:4px 0!important}
+#ledoviaMenuPanel .ledoviaCompassPreference{padding:12px 5px 8px;border-top:1px solid #ffffff20;margin-top:16px}
+#ledoviaMenuPanel .ledoviaCompassPreference label{display:block;font-size:14px;font-weight:700;color:#effffb}
+#ledoviaMenuPanel .ledoviaCompassPreference p{font-size:12px;color:#b9d8d2;line-height:1.5;margin:8px 0}
+#ledoviaMenuPanel .ledoviaCompassPreference select{width:100%;min-height:48px;border:1px solid #69aaa4;border-radius:12px;background:#1a4a4e;color:white;padding:10px;font-size:15px}
+@media(orientation:landscape) and (max-height:650px){
+ #scLedoviaCompassView{padding:8px 12px!important}
+ #scLedoviaCompassView .scCompassShell{gap:5px!important}
+ #scLedoviaCompassView .scCompassTop button{padding:5px 10px!important}
+ #scLedoviaCompassView .scCompassDial{width:min(45vw,42dvh,270px)!important;margin:0 auto!important;border-width:4px!important}
+ #scLedoviaCompassView .scCompassRose span{font-size:clamp(12px,3.5vh,20px)!important}
+ #scLedoviaCompassView .scCompassHeading{font-size:clamp(26px,7vh,44px)!important}
+ #scLedoviaCompassView .scCompassModes{gap:6px!important}
+ #scLedoviaCompassView .scCompassModes button{min-height:34px!important;padding:5px 10px!important;font-size:13px!important}
+ #scLedoviaCompassView .scCompassStatus{font-size:12px!important}
+ #scLedoviaCompassView .scCompassFoot{font-size:11px!important}
+}
