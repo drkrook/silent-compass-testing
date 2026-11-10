@@ -1,0 +1,22 @@
+/* Ledovia Beta v0.8.15: desktop width and readability only. */
+@media (min-width:1050px){
+ #appMain.scHomeActive .scSimpleHome{
+   max-width:1540px!important;
+   width:calc(100% - 16px)!important;
+ }
+ #ledoviaDesktopDashboard .ld14Columns{
+   grid-template-columns:minmax(210px,.95fr) minmax(360px,1.55fr) minmax(210px,.95fr)!important;
+   gap:14px!important;
+ }
+ #ledoviaDesktopDashboard .ld14Panel{padding:19px 18px!important}
+ #ledoviaDesktopDashboard .ld14Top{padding:17px 21px!important}
+ #ledoviaDesktopDashboard .ld14Panel h2{font-size:19px!important}
+ #ledoviaDesktopDashboard .ld14Links button{font-size:15px!important;min-height:48px!important}
+ #ledoviaDesktopDashboard .ld14Tiles button{font-size:15px!important;min-height:91px!important}
+ #ledoviaDesktopDashboard .ld14Intro strong{font-size:19px!important}
+ #ledoviaDesktopDashboard .ld14Intro p{font-size:14px!important}
+}
+@media (min-width:1050px) and (max-width:1200px){
+ #ledoviaDesktopDashboard .ld14Columns{gap:10px!important}
+ #ledoviaDesktopDashboard .ld14Panel{padding:15px 12px!important}
+}
