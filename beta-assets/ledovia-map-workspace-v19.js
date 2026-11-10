@@ -21,7 +21,7 @@ function init(){
  function sync(){
  const desktop=matchMedia('(min-width:1100px)').matches;
  app.classList.toggle('ld19DesktopMap',desktop&&app.classList.contains('scMapSimple'));
- if(desktop){if(resource.parentElement!==box)box.appendChild(resource);resource.hidden=false}
+ if(desktop&&document.fullscreenElement===map){update();return;} if(desktop){if(resource.parentElement!==box)box.appendChild(resource);resource.hidden=false}
  else if(resource.parentElement===box){oldParent.insertBefore(resource,oldNext);resource.hidden=true}
  update();
  }
