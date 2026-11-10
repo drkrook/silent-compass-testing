@@ -33,3 +33,14 @@ Sequence: finish the approved realistic pine-and-mountain appearance first; only
 **Consider moving to hamburger:** Report a Hazard, Family Circles, My Saved Locations, Settings, and other secondary features, after confirming their existing destinations and whether they remain discoverable. This is a proposal only: user approval of the final menu arrangement is still required.
 
 **Non-negotiables:** Every moved feature must remain accessible with its original behavior and data; no deletion of existing sections, no regression of emergency access, and no Cruise Test tile. Ensure the hamburger menu is accessible, clearly labeled, keyboard-friendly, and easy to close. Notification bell implementation follows separately once real data sources and states are defined.
+
+## Home navigation decision — 2026-11-10
+User direction: **Move Offline Readiness from the Home tile grid into the hamburger menu, and replace its Home position with Report a Hazard** so reporting hazards remains a quick action.
+
+Revised proposed Home quick actions: Emergency Help (prominent), Official Weather Alerts (prominent), Compass (supported mobile devices), Open Map, Show My Location, Get Directions, Survival Guides, Report a Hazard. Keep the established underlying actions and navigation; do not replace or remove any working feature.
+
+Proposed hamburger organization (subject to visual design review): Navigation & Places (Saved Locations, saved routes, related location tools); Family & Sharing (Family Circles); Preparedness (Offline Readiness, map/resource pack downloads); Settings (preferences, language, app/data management). Consider consolidating related destinations into clear sections, not merging or deleting their stored data.
+
+Offline readiness status may remain visible in a small, accurate status indicator, separate from the moved shortcut. Avoid unverified 'Offline Ready' claims.
+
+Priority remains: approved realistic scenery first, then implement approved Home/menu structure, then functional notifications. The user is approving this information architecture direction, not authorizing unreviewed changes to emergency functionality or Stable.
