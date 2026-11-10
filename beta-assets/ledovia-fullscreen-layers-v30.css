@@ -8,5 +8,5 @@
  #mapwrap:fullscreen #ld22FullscreenLayers #ld30FullscreenResourceToggle:focus-visible{
   outline:3px solid #b3e9de;outline-offset:2px;
  }
- #mapwrap:fullscreen #ld22FullscreenLayers.ld30ResourcesCollapsed #mapResourceMenu{display:none!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap:fullscreen #ld22FullscreenLayers.ld30ResourcesCollapsed #mapResourceMenu{display:none!important}
 }
