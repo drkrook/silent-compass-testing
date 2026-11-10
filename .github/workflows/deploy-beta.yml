@@ -63,9 +63,9 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
-          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.16')
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.17')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
-          s=s.replace('BETA v0.8.3','BETA v0.8.16')
+          s=s.replace('BETA v0.8.3','BETA v0.8.17')
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
           # Remove the obsolete State resources label from the rendered beta page only.
           s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
@@ -229,6 +229,25 @@ jobs:
           assert s.count(marker)==1
           assert 'ledovia-desktop-v16.js' not in s
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-desktop-v16.css?v=16"><script src="./ledovia-desktop-v16.js?v=16"></script>'+marker)
+          p.write_text(s)
+          PY
+          # Beta-only repair: release stuck desktop mouse dragging without altering touch gestures.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          original="canvas.addEventListener('pointermove',e=>{if(!activeTouches.has(e.pointerId))return;"
+          patched="canvas.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'&&activeTouches.has(e.pointerId)&&e.buttons===0){endPointer(e);return}if(!activeTouches.has(e.pointerId))return;"
+          assert s.count(original)==1, 'Expected one map pointermove handler'
+          s=s.replace(original,patched,1)
+          original="canvas.addEventListener('pointerup',endPointer);canvas.addEventListener('pointercancel',endPointer);"
+          patched="""canvas.addEventListener('pointerup',endPointer);canvas.addEventListener('pointercancel',endPointer);
+          // Desktop mouseup can be lost when the browser releases capture outside the canvas.
+          window.addEventListener('pointerup',e=>{if(e.pointerType==='mouse'&&activeTouches.has(e.pointerId))endPointer(e)},true);
+          canvas.addEventListener('lostpointercapture',e=>{if(e.pointerType==='mouse'&&activeTouches.has(e.pointerId)){activeTouches.delete(e.pointerId);drag=null;gesture=null;pinchMoved=false}});
+          window.addEventListener('blur',()=>{for(const id of activeTouches.keys()){try{canvas.releasePointerCapture(id)}catch(e){}}activeTouches.clear();drag=null;gesture=null;pinchMoved=false});"""
+          assert s.count(original)==1, 'Expected one map pointer end handler'
+          s=s.replace(original,patched,1)
           p.write_text(s)
           PY
           touch app/.nojekyll
