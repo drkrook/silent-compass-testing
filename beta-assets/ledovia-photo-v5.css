@@ -1,0 +1,9 @@
+/* Beta-only photographic visual experiment. Existing functional navigation is untouched. */
+/* Photos load when online; bundled vector landscapes remain offline fallbacks. */
+header{background-image:linear-gradient(180deg,#001c2b40,#001c2b10 55%,#001c2b94),url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800&q=85'),url('./ledovia-landscape-desktop-v4.svg')!important;background-size:100% 100%,cover,100% 100%!important;background-position:center,center 52%,center!important;background-repeat:no-repeat!important;min-height:250px!important}
+#appMain.scHomeActive #sidePanel{background-image:linear-gradient(90deg,#00171bde,#003238d9 35%,#003238d9 65%,#00171bde),url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1800&q=75')!important;background-size:cover,cover!important;background-position:center!important;background-attachment:scroll!important}
+#appMain.scHomeActive .scSimpleHome{max-width:860px!important}
+#appMain.scHomeActive .scHomeGrid>button{backdrop-filter:blur(3px)}
+header h1::before{width:125px!important;height:90px!important}
+@media(max-width:700px){header{min-height:255px!important;background-image:linear-gradient(180deg,#001c2b20,#001c2b20 55%,#001c2b94),url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=900&q=85'),url('./ledovia-landscape-mobile-v4.svg')!important;background-size:100% 100%,auto 100%,100% 100%!important;background-position:center,center,center!important}#appMain.scHomeActive #sidePanel{background-image:linear-gradient(180deg,#00282cdd,#00171bec),url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=900&q=70')!important;background-position:center!important}}
+@media(prefers-reduced-data:reduce){header{background-image:linear-gradient(180deg,#001c2b40,#001c2b94),url('./ledovia-landscape-desktop-v4.svg')!important;background-size:100% 100%!important}#appMain.scHomeActive #sidePanel{background-image:linear-gradient(180deg,#06383c,#031c21)!important}}
