@@ -1,0 +1,8 @@
+/* v0.8.10 drawer header cleanup and accessible Family Circles on mobile Home */
+#ledoviaMenuPanel .ledoviaPanelTop>strong{display:none!important}
+#ledoviaMenuPanel .ledoviaDrawerBrand>span:not(.ledoviaDrawerLogo){display:none!important}
+#ledoviaMenuPanel .ledoviaDrawerBrand{flex:0 0 auto!important}
+#ledoviaMenuPanel .ledoviaNavIcon,#ledoviaMenuPanel .ledoviaNavIcon svg{display:inline-flex!important;visibility:visible!important;opacity:1!important}
+#ledoviaMenuPanel #ledoviaFamily{display:none!important}
+#appMain.scHomeActive .scHomeGrid>#scFamilyOpen{display:flex!important;visibility:visible!important}
+@media(max-width:700px){#appMain.scHomeActive .scHomeGrid>#scFamilyOpen{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;min-height:100px!important}}
