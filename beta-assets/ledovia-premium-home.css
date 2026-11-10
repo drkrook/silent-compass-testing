@@ -1,0 +1,31 @@
+/* Ledovia Beta premium Home: existing navigation/handlers remain unchanged */
+body{background:#07191c!important}
+header{min-height:108px;background:linear-gradient(180deg,#053a42dd,#031e27c9),url('./ledovia-mountains.svg') center bottom/cover no-repeat!important;border-bottom:2px solid #1c8e8d!important}
+header h1{font-family:system-ui,sans-serif!important;font-weight:900!important;letter-spacing:.03em!important;text-transform:none!important;text-shadow:0 3px 10px #001d27!important}
+header h1 small{display:block!important;font-size:10px!important;letter-spacing:.12em!important;text-transform:uppercase!important;color:#e2f5f3!important}
+.scLanguageBar{background:#09262b!important;border-bottom:1px solid #1e6265!important;padding:8px 12px!important}
+#appMain.scHomeActive #sidePanel{padding:12px!important;background:linear-gradient(180deg,#071b20,#06171b)!important}
+#appMain.scHomeActive .scSimpleHome{max-width:680px!important;padding:2px 0 24px!important}
+#appMain.scHomeActive .scSimpleHome h2{font-size:clamp(21px,4vw,26px)!important;margin:4px 0!important}
+#appMain.scHomeActive .scSimpleHome>p:not(.scHomeNote){font-size:13px!important;margin:4px 0 10px!important}
+#appMain.scHomeActive .scHomeGrid{gap:9px!important;margin:10px 0!important}
+#appMain.scHomeActive .scHomeGrid>button{min-height:112px!important;padding:15px 12px!important;gap:5px!important;align-items:center!important;text-align:center!important;justify-content:center!important;border:1px solid #149c97!important;border-radius:12px!important;background:linear-gradient(155deg,#065453,#032c34)!important;box-shadow:inset 0 1px #ffffff14,0 5px 14px #00101480!important;font-size:27px!important;line-height:1.05!important}
+#appMain.scHomeActive .scHomeGrid>button strong{font-size:clamp(14px,2.5vw,18px)!important;line-height:1.15!important;color:white!important;font-weight:800!important}
+#appMain.scHomeActive .scHomeGrid>button span:not(.scLedoviaNew){font-size:11px!important;color:#e5f5f2!important;line-height:1.35!important}
+#appMain.scHomeActive .scHomeGrid>.scHomeSOS,#appMain.scHomeActive .scHomeGrid>.scHomeNWS{grid-column:1/-1!important;min-height:74px!important;align-items:flex-start!important;text-align:left!important;gap:3px!important;padding:10px 16px!important}
+#appMain.scHomeActive .scHomeGrid>.scHomeSOS{background:linear-gradient(180deg,#c91625,#650512)!important;border:2px solid #ff475b!important;box-shadow:0 0 13px #b9132555!important}
+#appMain.scHomeActive .scHomeGrid>.scHomeNWS{background:linear-gradient(180deg,#08678c,#04334e)!important;border:2px solid #45d8f2!important;box-shadow:0 0 12px #0c8bb944!important}
+#appMain.scHomeActive .scHomeGrid>.scHomeSOS strong,#appMain.scHomeActive .scHomeGrid>.scHomeNWS strong{font-size:18px!important}
+#appMain.scHomeActive .scHomeGrid>.scLedoviaCompass{border:2px solid #5afee4!important;background:linear-gradient(145deg,#07615b,#023638)!important;box-shadow:0 0 17px #39dfcfbb,inset 0 0 13px #39dfcf33!important}
+#appMain.scHomeActive .scHomeGrid>.scLedoviaCompass .scLedoviaNew{top:8px;left:9px}
+.scHomeGrid>button .ledoviaIcon{display:block;width:38px;height:38px;flex:none;background-position:center;background-repeat:no-repeat;background-size:contain}
+.scHomeGrid>button[data-go=map] .ledoviaIcon{background-image:url('./ledovia-icon-map.svg')}
+.scHomeGrid>button.scLedoviaCompass .ledoviaIcon{background-image:url('./ledovia-icon-compass.svg')}
+.scHomeGrid>button[data-go=offline] .ledoviaIcon{background-image:url('./ledovia-icon-download.svg')}
+.scHomeGrid>button[data-go=survival] .ledoviaIcon{background-image:url('./ledovia-icon-book.svg')}
+.scHomeGrid>button[data-go=places] .ledoviaIcon{background-image:url('./ledovia-icon-pin.svg')}
+.scHomeGrid>button[data-go=routes] .ledoviaIcon{background-image:url('./ledovia-icon-route.svg')}
+.scHomeGrid>button[data-go=hazards] .ledoviaIcon{background-image:url('./ledovia-icon-warning.svg')}
+.scHomeGrid>button#scFamilyOpen .ledoviaIcon{background-image:url('./ledovia-icon-family.svg')}
+@media(min-width:800px){header{min-height:126px}#appMain.scHomeActive .scSimpleHome{max-width:740px!important}}
+@media(max-width:380px){#appMain.scHomeActive .scHomeGrid{grid-template-columns:1fr 1fr!important}#appMain.scHomeActive .scHomeGrid>button{min-height:108px!important;padding:10px 5px!important}}
