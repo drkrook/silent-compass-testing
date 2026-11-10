@@ -1,0 +1,4 @@
+/* Ledovia Beta: the Home actions are self-explanatory; hide redundant heading and intro in all languages. */
+.scSimpleHome > h2,.scSimpleHome > p:first-of-type{display:none!important}
+#appMain.scHomeActive .scSimpleHome{padding-top:12px!important}
+#appMain.scHomeActive .scHomeGrid{margin-top:0!important}
