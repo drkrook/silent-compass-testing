@@ -291,7 +291,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-map-interactions-v21.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-interactions-v21.css?v=21"><script src="./ledovia-map-interactions-v21.js?v=21"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-interactions-v21.css?v=21"><script src="./ledovia-map-interactions-v21.js?v=23"></script>'+marker)
           p.write_text(s)
           PY
           cp beta/beta-assets/ledovia-map-cleanup-v22.* app/
