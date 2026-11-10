@@ -63,9 +63,9 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
-          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.22')
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.23')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
-          s=s.replace('BETA v0.8.3','BETA v0.8.22')
+          s=s.replace('BETA v0.8.3','BETA v0.8.23')
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
           # Remove the obsolete State resources label from the rendered beta page only.
           s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
@@ -303,6 +303,17 @@ jobs:
           assert s.count(marker)==1
           assert 'ledovia-map-cleanup-v22.js' not in s
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-cleanup-v22.css?v=22"><script src="./ledovia-map-cleanup-v22.js?v=22"></script>'+marker)
+          p.write_text(s)
+          PY
+          # Beta-only fix: consistent map marker selection and blank-map dismissal.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          old="if(f){if(selected&&placeKey(selected)===placeKey(f)){selected=null;scPlacePopup.hidden=true;$('selected').replaceChildren();$('routeSelected').disabled=true;render();drawMiniMap()}else pick(f)}}drag=null;"
+          new="if(f){pick(f)}else{if(!scPlacePopup.hidden){scPlacePopup.hidden=true;selected=null;$('selected').replaceChildren();$('routeSelected').disabled=true;render();drawMiniMap()}const hazardPopup=document.getElementById('scHazDetailPopup');if(hazardPopup&&!hazardPopup.hidden){hazardPopup.querySelector('.scHazPopupHeader button')?.click()}}}drag=null;"
+          assert s.count(old)==1, 'Expected exactly one base map marker selection handler'
+          s=s.replace(old,new,1)
           p.write_text(s)
           PY
           touch app/.nojekyll
