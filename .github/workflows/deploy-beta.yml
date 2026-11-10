@@ -37,6 +37,9 @@ jobs:
           cp beta/beta-assets/ledovia-compass-home.js app/ledovia-compass-home.js
           cp beta/beta-assets/ledovia-premium-home.* app/
           cp beta/beta-assets/ledovia-mountains.svg app/
+          cp beta/beta-assets/ledovia-logo.svg app/
+          cp beta/beta-assets/ledovia-landscape-*.svg app/
+          cp beta/beta-assets/ledovia-scenic-v3.* app/
           cp beta/beta-assets/ledovia-icon-*.svg app/
           python3 - <<'PY'
           from pathlib import Path
@@ -71,6 +74,16 @@ jobs:
           assert s.count(marker)==1
           assert 'ledovia-premium-home.js' not in s
           s=s.replace(marker,'<script src="./ledovia-premium-home.js?v=2"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-scenic-v3.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-scenic-v3.js?v=3"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
