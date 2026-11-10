@@ -24,3 +24,12 @@ The user prefers the previously approved high-fidelity Ledovia mobile and deskto
 - Hamburger menu works with the existing app navigation.
 - Bell accurately reflects real notification state and remains useful without an internet connection.
 - No regressions to protected functionality; Beta tested before any Stable promotion.
+
+## Proposed Home decluttering (design planning, not yet approved for implementation)
+Sequence: finish the approved realistic pine-and-mountain appearance first; only then implement navigation and notifications.
+
+**Keep on Home:** Emergency Help, Official Weather Alerts, Compass on supported mobile devices, Open Map, Show My Location, Get Directions, Survival Guides, Offline Readiness.
+
+**Consider moving to hamburger:** Report a Hazard, Family Circles, My Saved Locations, Settings, and other secondary features, after confirming their existing destinations and whether they remain discoverable. This is a proposal only: user approval of the final menu arrangement is still required.
+
+**Non-negotiables:** Every moved feature must remain accessible with its original behavior and data; no deletion of existing sections, no regression of emergency access, and no Cruise Test tile. Ensure the hamburger menu is accessible, clearly labeled, keyboard-friendly, and easy to close. Notification bell implementation follows separately once real data sources and states are defined.
