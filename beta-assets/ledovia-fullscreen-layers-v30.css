@@ -1,0 +1,12 @@
+/* Ledovia Beta v0.8.30: show saved hazards without scrolling past resource controls. */
+@media(min-width:1100px){
+ #mapwrap:fullscreen #ld22FullscreenLayers #ld30FullscreenResourceToggle{
+  display:block;width:100%;text-align:left;min-height:44px;padding:8px 4px;
+  margin:6px 0 8px;background:transparent;border:0;border-bottom:1px solid #ffffff30;
+  color:#f3fcf8;font-size:17px;font-weight:700;cursor:pointer;
+ }
+ #mapwrap:fullscreen #ld22FullscreenLayers #ld30FullscreenResourceToggle:focus-visible{
+  outline:3px solid #b3e9de;outline-offset:2px;
+ }
+ #mapwrap:fullscreen #ld22FullscreenLayers.ld30ResourcesCollapsed #mapResourceMenu{display:none!important}
+}
