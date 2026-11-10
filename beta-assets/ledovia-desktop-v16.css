@@ -1,0 +1,19 @@
+/* Beta v0.8.16: desktop legibility and correct Ledovia brand asset. */
+@media(min-width:1050px){
+ #ledoviaDesktopDashboard .ld14Brand{display:flex!important;align-items:center!important;gap:12px!important;font-size:22px!important}
+ #ledoviaDesktopDashboard .ld16Logo{width:45px;height:36px;object-fit:contain;flex:none}
+ #ledoviaDesktopDashboard .ld14Panel h2{font-size:23px!important;line-height:1.3!important}
+ #ledoviaDesktopDashboard .ld14Links button{font-size:18px!important;line-height:1.45!important;min-height:58px!important;padding:12px 10px!important}
+ #ledoviaDesktopDashboard .ld14Intro{padding:18px!important}
+ #ledoviaDesktopDashboard .ld14Intro small{font-size:14px!important}
+ #ledoviaDesktopDashboard .ld14Intro strong{font-size:22px!important}
+ #ledoviaDesktopDashboard .ld14Intro p{font-size:17px!important;line-height:1.5!important}
+ #ledoviaDesktopDashboard .ld14Tiles button{font-size:18px!important;min-height:104px!important;line-height:1.35!important}
+ #ledoviaDesktopDashboard .ld14Tiles span{font-size:27px!important}
+ #ledoviaDesktopDashboard .ld14SOS{font-size:16px!important;min-height:50px!important}
+}
+@media(min-width:1050px) and (max-width:1200px){
+ #ledoviaDesktopDashboard .ld14Links button{font-size:16px!important}
+ #ledoviaDesktopDashboard .ld14Tiles button{font-size:16px!important}
+ #ledoviaDesktopDashboard .ld14Panel h2{font-size:20px!important}
+}
