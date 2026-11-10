@@ -18,6 +18,38 @@ function init(){
  window.addEventListener('resize',sync);
  const observer=new MutationObserver(sync);observer.observe(popup,{attributes:true,attributeFilter:['hidden']});
  const hazard=document.getElementById('scHazDetailPopup');if(hazard)observer.observe(hazard,{attributes:true,attributeFilter:['hidden']});
+ // Only one map detail may be visible at a time. Observe actual open transitions,
+ // not routine DOM updates, to avoid hiding a newly selected detail.
+ let lastPlaceOpen=!popup.hidden;
+ let lastHazardOpen=Boolean(hazard&&!hazard.hidden);
+ let reconciling=false;
+ function reconcileSelection(){
+   if(reconciling)return;
+   const placeOpen=!popup.hidden,hazardOpen=Boolean(hazard&&!hazard.hidden);
+   const placeJustOpened=placeOpen&&!lastPlaceOpen;
+   const hazardJustOpened=hazardOpen&&!lastHazardOpen;
+   lastPlaceOpen=placeOpen;lastHazardOpen=hazardOpen;
+   if(!placeOpen||!hazardOpen)return;
+   reconciling=true;
+   try{
+     if(placeJustOpened&&!hazardJustOpened){
+       const close=hazard.querySelector('.scHazPopupHeader button');
+       if(close)close.click();else hazard.hidden=true;
+     }else{
+       const close=popup.querySelector('.scPlacePopupHeader button');
+       if(close)close.click();else popup.hidden=true;
+     }
+   }finally{
+     lastPlaceOpen=!popup.hidden;
+     lastHazardOpen=!hazard.hidden;
+     reconciling=false;
+   }
+ }
+ const selectionObserver=new MutationObserver(reconcileSelection);
+ selectionObserver.observe(popup,{attributes:true,attributeFilter:['hidden']});
+ if(hazard)selectionObserver.observe(hazard,{attributes:true,attributeFilter:['hidden']});
+ reconcileSelection();
+
  function dismiss(){
    if(popup.hidden)return;
    const close=popup.querySelector('.scPlacePopupHeader button');
