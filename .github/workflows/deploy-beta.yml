@@ -34,6 +34,7 @@ jobs:
           if [ -d beta/overrides ]; then cp -a beta/overrides/. app/; fi
           cp beta/beta-assets/prepare-your-area.js app/prepare-your-area.js
           cp beta/beta-assets/state-map-packages.json app/state-map-packages.json
+          cp beta/beta-assets/ledovia-compass-home.js app/ledovia-compass-home.js
           python3 - <<'PY'
           from pathlib import Path
           p=Path('app/index.html')
@@ -47,6 +48,16 @@ jobs:
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
           # Remove the obsolete State resources label from the rendered beta page only.
           s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1, 'Beta closing body anchor missing'
+          assert 'ledovia-compass-home.js' not in s, 'Duplicate compass injection'
+          s=s.replace(marker,'<script src="./ledovia-compass-home.js?v=1"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
