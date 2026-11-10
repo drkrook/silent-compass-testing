@@ -35,6 +35,9 @@ jobs:
           cp beta/beta-assets/prepare-your-area.js app/prepare-your-area.js
           cp beta/beta-assets/state-map-packages.json app/state-map-packages.json
           cp beta/beta-assets/ledovia-compass-home.js app/ledovia-compass-home.js
+          cp beta/beta-assets/ledovia-premium-home.* app/
+          cp beta/beta-assets/ledovia-mountains.svg app/
+          cp beta/beta-assets/ledovia-icon-*.svg app/
           python3 - <<'PY'
           from pathlib import Path
           p=Path('app/index.html')
@@ -58,6 +61,16 @@ jobs:
           assert s.count(marker)==1, 'Beta closing body anchor missing'
           assert 'ledovia-compass-home.js' not in s, 'Duplicate compass injection'
           s=s.replace(marker,'<script src="./ledovia-compass-home.js?v=1"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-premium-home.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-premium-home.js?v=2"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
