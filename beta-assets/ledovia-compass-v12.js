@@ -14,13 +14,12 @@ function init(){
  if(!shell||!dial||!modesRow)return false;
  dial.after(modesRow);
  modesRow.setAttribute('aria-label','Temporary compass display mode');
- const heading=shell.querySelector('.scCompassHeading');
- if(heading)heading.after(document.createElement('span'));
  const box=document.createElement('div');box.className='ledoviaCompassPreference';
  const label=document.createElement('label');label.htmlFor='ledoviaDefaultCompassLight';label.textContent='Default Compass Display';
  const hint=document.createElement('p');hint.textContent='Choose how Compass opens. Buttons inside Compass change the display for that session only.';
  const select=document.createElement('select');select.id='ledoviaDefaultCompassLight';
  for(const [value,name] of [['standard','Normal'],['red','Red Night'],['green','Green Night']]){const opt=document.createElement('option');opt.value=value;opt.textContent=name;select.append(opt)}
+ saveDefault(getDefault());
  select.value=getDefault();
  select.addEventListener('change',()=>saveDefault(select.value));
  box.append(label,hint,select);settings.append(box);
