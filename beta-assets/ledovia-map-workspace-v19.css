@@ -1,0 +1,22 @@
+/* Beta v0.8.19 desktop map workspace */
+#ld19MapStyles,#ld19Layers{display:none}
+@media(min-width:1100px){
+ #appMain.scMapSimple.ld19DesktopMap #sidePanel{background:#0c3336!important;padding:14px!important;overflow-y:auto!important}
+ #appMain.scMapSimple.ld19DesktopMap #scSimpleMapNav{display:grid!important;grid-template-columns:1fr 1fr;gap:10px!important}
+ #appMain.scMapSimple.ld19DesktopMap #scMapHome,#appMain.scMapSimple.ld19DesktopMap #scMapDirections{font-size:17px!important;min-height:54px!important}
+ #appMain.scMapSimple.ld19DesktopMap #scMapTools{grid-column:1/-1;font-size:15px!important;min-height:48px!important}
+ #appMain.scMapSimple.ld19DesktopMap #ld19Layers{display:block!important;margin-top:16px;padding:15px;background:#103f42;border:1px solid #367d7b;border-radius:14px;color:#f1fbf8}
+ #appMain.scMapSimple.ld19DesktopMap #ld19Layers h2{font-size:19px;margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid #ffffff25}
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceMenu{position:static!important;display:block!important;width:100%!important;max-height:none!important;overflow:visible!important;background:transparent!important;border:0!important;padding:0!important;box-shadow:none!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapResourceControl,#appMain.scMapSimple.ld19DesktopMap #mapLayersControl{display:none!important}
+ #appMain.scMapSimple.ld19DesktopMap #ld19MapStyles{display:flex!important;align-items:center;gap:5px;position:absolute;top:14px;left:14px;right:14px;z-index:8;pointer-events:none}
+ #appMain.scMapSimple.ld19DesktopMap #ld19MapStyles button{pointer-events:auto;min-height:43px;padding:9px 16px;background:#103f42ed;color:#f5fcf9;border:1px solid #448581;font-size:15px;font-weight:700}
+ #appMain.scMapSimple.ld19DesktopMap #ld19MapStyles button:first-child{border-radius:10px 0 0 10px}
+ #appMain.scMapSimple.ld19DesktopMap #ld19MapStyles button[data-style="topo"]{border-radius:0 10px 10px 0}
+ #appMain.scMapSimple.ld19DesktopMap #ld19MapStyles button[aria-pressed="true"]{background:#087c85}
+ #appMain.scMapSimple.ld19DesktopMap #ld19Full{margin-left:auto;border-radius:10px!important;font-size:23px!important;padding:6px 14px!important}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap{border:1px solid #3c9691;border-radius:12px;overflow:hidden}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap:fullscreen{border-radius:0}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap #status{pointer-events:none}
+ #appMain.scMapSimple.ld19DesktopMap #mapwrap #zoom{top:78px!important}
+}
