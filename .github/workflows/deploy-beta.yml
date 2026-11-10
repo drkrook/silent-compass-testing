@@ -49,6 +49,7 @@ jobs:
           cp beta/beta-assets/ledovia-visual-v8.* app/
           cp beta/beta-assets/ledovia-menu-v9.* app/
           cp beta/beta-assets/ledovia-menu-v10.* app/
+          cp beta/beta-assets/ledovia-android-back-v11.js app/
           cp beta/beta-assets/ledovia-icon-*.svg app/
           python3 - <<'PY'
           from pathlib import Path
@@ -57,9 +58,9 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
-          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.10')
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.11')
           s=s.replace('Stable Release · Ready','Beta Testing · Ready')
-          s=s.replace('BETA v0.8.3','BETA v0.8.10')
+          s=s.replace('BETA v0.8.3','BETA v0.8.11')
           s=s.replace('Family Preview · Ready','Beta Testing · Ready')
           # Remove the obsolete State resources label from the rendered beta page only.
           s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
@@ -163,6 +164,16 @@ jobs:
           assert s.count(marker)==1
           assert 'ledovia-menu-v10.js' not in s
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-menu-v10.css?v=10"><script src="./ledovia-menu-v10.js?v=10"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-android-back-v11.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-android-back-v11.js?v=11"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
