@@ -9,15 +9,19 @@ function init(){
  let previous=false;
  function sync(){
    const desktop=window.matchMedia('(min-width:1100px)').matches;
-   const open=!popup.hidden;
-   const active=desktop&&open;
+   const hazard=document.getElementById('scHazDetailPopup');
+   const open=!popup.hidden||Boolean(hazard&&!hazard.hidden);
+   const active=desktop&&open&&!document.fullscreenElement;
    app.classList.toggle('ld18ResourceOpen',active);
    dock.hidden=!active;
    if(!desktop&&popup.parentElement!==map)map.appendChild(popup);
-   if(desktop&&popup.parentElement!==dock)dock.appendChild(popup);
+   if(desktop&&!document.fullscreenElement&&popup.parentElement!==dock)dock.appendChild(popup);
+   if(hazard){if(desktop&&!document.fullscreenElement&&hazard.parentElement!==dock)dock.appendChild(hazard);else if((!desktop||document.fullscreenElement)&&hazard.parentElement!==map)map.appendChild(hazard)}
    if(active!==previous){previous=active;requestAnimationFrame(()=>{window.dispatchEvent(new Event('resize'))})}
  }
  const observer=new MutationObserver(sync);observer.observe(popup,{attributes:true,attributeFilter:['hidden']});
+ const hazard=document.getElementById('scHazDetailPopup');if(hazard)observer.observe(hazard,{attributes:true,attributeFilter:['hidden']});
+ document.addEventListener('fullscreenchange',()=>requestAnimationFrame(sync));
  window.addEventListener('resize',sync);
  sync();return true;
 }
