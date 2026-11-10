@@ -1,0 +1,12 @@
+/* Ledovia v4: preserve entire landscape composition, no cover cropping */
+header{min-height:235px!important;background-image:linear-gradient(180deg,#002b3438,#001c2566 90%),url('./ledovia-landscape-desktop-v4.svg')!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important}
+header h1{z-index:1;filter:drop-shadow(0 3px 8px #00252a)}
+header h1::before{width:115px!important;height:82px!important}
+header>div{z-index:2}
+#appMain.scHomeActive .scSimpleHome{max-width:850px!important}
+#appMain.scHomeActive .scHomeGrid>.scHomeSOS,#appMain.scHomeActive .scHomeGrid>.scHomeNWS{min-height:92px!important;padding-left:76px!important;justify-content:center!important}
+#appMain.scHomeActive .scHomeGrid>.scHomeSOS::before,#appMain.scHomeActive .scHomeGrid>.scHomeNWS::before{content:"";position:absolute;left:19px;top:50%;transform:translateY(-50%);width:39px;height:39px;background-size:contain;background-position:center;background-repeat:no-repeat}
+#appMain.scHomeActive .scHomeGrid>.scHomeSOS::before{background-image:url('./ledovia-icon-sos-v4.svg')}
+#appMain.scHomeActive .scHomeGrid>.scHomeNWS::before{background-image:url('./ledovia-icon-weather-v4.svg')}
+#appMain.scHomeActive .scHomeGrid>button[data-map-action="gps"] .ledoviaIcon{background-image:url('./ledovia-icon-pin.svg')}
+@media(max-width:700px){header{min-height:265px!important;background-image:linear-gradient(180deg,#002b3430,#001c2566 90%),url('./ledovia-landscape-mobile-v4.svg')!important;background-size:100% 100%!important}header h1{font-size:clamp(32px,9vw,46px)!important}header h1::before{width:108px!important;height:78px!important}#appMain.scHomeActive .scHomeGrid>.scHomeSOS,#appMain.scHomeActive .scHomeGrid>.scHomeNWS{padding-left:64px!important;padding-right:25px!important}#appMain.scHomeActive .scHomeGrid>.scHomeSOS::before,#appMain.scHomeActive .scHomeGrid>.scHomeNWS::before{left:14px;width:34px;height:34px}}
