@@ -1,0 +1,25 @@
+/* Ledovia v7 clean header and working menu; keep mobile scenic composition unchanged */
+header{position:relative!important}
+#ledoviaMenuButton,#ledoviaBellButton{position:absolute!important;top:12px;z-index:5;display:grid;place-items:center;width:43px;height:43px;padding:0!important;margin:0!important;border:1px solid #d6f2e688!important;border-radius:12px!important;background:#063b46aa!important;color:#fff!important;backdrop-filter:blur(5px)}
+#ledoviaMenuButton{left:12px;font-size:26px!important}#ledoviaBellButton{right:12px}
+#ledoviaBellButton.ledoviaHasNotice::after{content:"";position:absolute;right:6px;top:5px;width:8px;height:8px;background:#ffcb55;border-radius:50%}
+header>div:has(#connection){display:none!important}
+.scLanguageBar:empty{display:none!important}
+#ledoviaMenuPanel .scLanguageBar{display:block!important;background:transparent!important;border:0!important;padding:4px!important}
+#ledoviaMenuPanel .scLangLabel{display:block!important;width:100%!important}
+#ledoviaMenuPanel .scLanguageBar select{display:block!important;width:100%!important;max-width:none!important;margin-top:8px!important}
+#ledoviaBackdrop:not([hidden]){position:fixed;inset:0;background:#000a;z-index:100050}
+#ledoviaMenuPanel:not([hidden]),#ledoviaNotificationPanel:not([hidden]){position:fixed;z-index:100051;top:0;bottom:0;overflow-y:auto;box-sizing:border-box;background:#092a30;color:#f1fffc;box-shadow:0 0 30px #000b;padding:18px;max-width:90vw}
+#ledoviaMenuPanel{left:0;width:min(365px,90vw)}#ledoviaNotificationPanel{right:0;width:min(365px,90vw)}
+.ledoviaPanelTop{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #4d8b87;padding-bottom:10px}
+.ledoviaPanelTop button{margin:0!important;background:transparent!important;color:white!important}
+#ledoviaMenuPanel h3{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:#9ce0d5;margin:24px 0 8px}
+#ledoviaMenuPanel .scHomeGrid>button{width:100%}
+#ledoviaMenuPanel [data-go],#ledoviaMenuPanel #scFamilyOpen{display:flex!important;align-items:center!important;justify-content:flex-start!important;text-align:left!important;gap:10px!important;width:100%!important;min-height:52px!important;padding:12px!important;margin:6px 0!important;background:#125058!important;border:1px solid #348e8b!important;border-radius:10px!important;color:white!important}
+#ledoviaMenuPanel [data-go] strong,#ledoviaMenuPanel #scFamilyOpen strong{font-size:15px!important}
+#ledoviaMenuPanel [data-go] span,#ledoviaMenuPanel #scFamilyOpen span{display:none!important}
+#ledoviaMenuPanel .ledoviaIcon{display:none!important}
+#ledoviaBetaFooter{display:flex;justify-content:flex-end;padding:10px 6px 5px}
+#ledoviaBetaFooter #scAppVersion{border:0!important;background:transparent!important;color:#9cb9b5!important;font-size:10px!important;font-weight:500!important;letter-spacing:.05em!important;padding:0!important}
+@media(min-width:701px){header{background-size:100% 100%,100% 100%,100% 100%!important;background-position:center!important}}
+@media(max-width:700px){#ledoviaMenuButton,#ledoviaBellButton{top:9px;width:39px;height:39px}header{background-size:100% 100%,auto 100%,100% 100%!important}}
