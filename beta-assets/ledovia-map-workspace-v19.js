@@ -6,10 +6,10 @@ function init(){
  if(!app||!side||!map||!select||!resource||!document.getElementById('scMapTools'))return false;
  if(document.getElementById('ld19MapStyles'))return true;
  const bar=document.createElement('div');bar.id='ld19MapStyles';bar.setAttribute('role','group');bar.setAttribute('aria-label','Map appearance');
- const opts=[['map','Map'],['satellite','Satellite'],['topo','Topo']];
+ let selected='topo';const opts=[['map','Map'],['satellite','Satellite'],['topo','Topo']];
  for(const [id,label] of opts){const b=document.createElement('button');b.type='button';b.dataset.style=id;b.textContent=label;
  b.title=id==='map'?'Standard topographic map (street basemap not yet available)':id==='topo'?'USGS topographic map':'USGS satellite imagery';
- b.addEventListener('click',()=>{select.value=id==='satellite'?'satellite':'topo';select.dispatchEvent(new Event('change',{bubbles:true}));update()});bar.appendChild(b)}
+ b.addEventListener('click',()=>{select.value=id==='satellite'?'satellite':'topo';selected=id;select.dispatchEvent(new Event('change',{bubbles:true}));update()});bar.appendChild(b)}
  const full=document.createElement('button');full.type='button';full.id='ld19Full';full.title='Toggle fullscreen map';full.setAttribute('aria-label','Toggle fullscreen map');full.textContent='⛶';
  full.onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await map.requestFullscreen()}catch(e){full.title='Fullscreen unavailable in this browser'}};
  bar.appendChild(full);map.prepend(bar);
@@ -17,7 +17,7 @@ function init(){
  const oldParent=resource.parentElement;
  const oldNext=resource.nextSibling;
  const tools=document.getElementById('scMapTools');tools.textContent='Advanced Tools';
- function update(){for(const b of bar.querySelectorAll('[data-style]')){const active=(select.value==='satellite'?b.dataset.style==='satellite':b.dataset.style==='topo');b.setAttribute('aria-pressed',String(active));}}
+ function update(){for(const b of bar.querySelectorAll('[data-style]')){const active=b.dataset.style===selected;b.setAttribute('aria-pressed',String(active));}}
  function sync(){
  const desktop=matchMedia('(min-width:1100px)').matches;
  app.classList.toggle('ld19DesktopMap',desktop&&app.classList.contains('scMapSimple'));
