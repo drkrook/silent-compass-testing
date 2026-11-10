@@ -1,0 +1,12 @@
+/* Beta v0.8.26 — collapsible desktop resource layers; never change checkbox state. */
+@media(min-width:1100px){
+ #appMain.scMapSimple.ld19DesktopMap #ld26ResourceToggle{
+  display:block;width:100%;text-align:left;background:transparent;color:#f1fbf8;
+  border:0;border-bottom:1px solid #ffffff25;border-radius:0;padding:0 0 12px;
+  margin:0 0 12px;font-size:20px;font-weight:750;min-height:44px;cursor:pointer;
+ }
+ #appMain.scMapSimple.ld19DesktopMap #ld26ResourceToggle:focus-visible{outline:3px solid #a5e4d8;outline-offset:3px}
+ #appMain.scMapSimple.ld19DesktopMap #ld19Layers.ld26ResourceCollapsed #mapResourceMenu{display:none!important}
+ #appMain.scMapSimple.ld19DesktopMap #ld19Layers.ld26ResourceCollapsed{padding-bottom:10px!important}
+ #appMain.scMapSimple.ld19DesktopMap #ld19Layers.ld26ResourceCollapsed #ld26ResourceToggle{margin-bottom:0;border-bottom:0}
+}
