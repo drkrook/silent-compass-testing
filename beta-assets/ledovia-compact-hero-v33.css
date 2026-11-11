@@ -1,4 +1,4 @@
-/* Beta v0.8.318: compact desktop hero without changing mobile or app controls. */
+/* Beta v0.8.319: 18% larger mountain emblem in compact desktop hero; mobile untouched. */
 @media (min-width:1050px) {
  body:has(#appMain.scHomeActive) > header {
   min-height:158px!important;
@@ -10,8 +10,8 @@
   line-height:1!important;
  }
  body:has(#appMain.scHomeActive) > header h1::before {
-  width:88px!important;
-  height:59px!important;
+  width:104px!important;
+  height:70px!important;
   margin-bottom:2px!important;
  }
  body:has(#appMain.scHomeActive) > header h1 small {
