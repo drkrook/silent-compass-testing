@@ -491,7 +491,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-home-account-v39.js' not in s
-          s=s.replace(marker,'<script src="./ledovia-home-account-v39.js?v=41"></script>'+marker)
+          s=s.replace(marker,'<script src="./ledovia-home-account-v39.js?v=42"></script>'+marker)
           p.write_text(s)
           PY
           cp beta/beta-assets/ledovia-guest-gate-v40.js app/
@@ -511,7 +511,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.340', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.341', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
