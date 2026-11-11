@@ -9,7 +9,7 @@ style.textContent=`
 #ldAccountDialog .ldPasswordEye{position:absolute;right:9px;top:50%;transform:translateY(-50%);min-width:60px;min-height:44px;padding:7px!important;border:1px solid #8ed4ca!important;border-radius:9px!important;background:#07545e!important;color:white!important;font-size:13px;font-weight:700}
 #ldAccountDialog .ldResetTitle{text-align:center;font-size:clamp(22px,4vw,30px);margin:8px 0}
 #ldAccountDialog .ldResetText{text-align:center;line-height:1.5}
-#ldAccountDialog .ldResetForm{display:grid;gap:14px}
+#ldAccountDialog .ldResetForm{display:grid;gap:14px}\n#ldAccountDialog .ldResetForm[hidden]{display:none!important}
 #ldAccountDialog .ldResetForm label{display:block;font-weight:700}
 #ldAccountDialog .ldResetForm .ldPasswordWrap{margin-top:5px}
 #ldAccountDialog .ldResetForm input{width:100%!important}
