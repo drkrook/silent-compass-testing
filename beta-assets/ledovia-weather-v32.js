@@ -20,6 +20,12 @@ function start(){
   try{
    const point=await fetchJson('https://api.weather.gov/points/'+lat.toFixed(4)+','+lon.toFixed(4));
    if(id!==request)return;
+   // NWS identifies the nearest reference city; observations and alerts still use GPS coordinates.
+   if(name==='Current GPS location'){
+    const nearest=point.properties?.relativeLocation?.properties;
+    const city=nearest?.city?.trim(),state=nearest?.state?.trim();
+    label.textContent=city&&state?'GPS location: '+city+', '+state:'GPS location confirmed · Nearby city unavailable';
+   }
    const stationList=await fetchJson(point.properties.observationStations);
    const station=stationList.features?.[0]?.id;
    const [obsResult,alertsResult]=await Promise.allSettled([station?fetchJson(station+'/observations/latest'):Promise.reject(Error('No observation station')),fetchJson('https://api.weather.gov/alerts/active?point='+lat.toFixed(4)+','+lon.toFixed(4))]);
