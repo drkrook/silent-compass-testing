@@ -450,6 +450,17 @@ jobs:
           s=s.replace(marker,'<script src="./ledovia-mobile-trips-v38.js?v=39"></script>'+marker)
           p.write_text(s)
           PY
+          # Beta-only auth recovery: direct reset emails to the Beta app, never the Pages root.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          old="await scAuthRequest('recover','POST',{email:e})"
+          new="await scAuthRequest('recover?redirect_to='+encodeURIComponent(location.origin+'/silent-compass-testing/index.html'),'POST',{email:e})"
+          assert s.count(old)==1, 'Expected exactly one existing password recovery handler'
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
           # Beta-only PWA branding; stable source and installed user data are unchanged.
           cp beta/beta-assets/ledovia-app-icon-stable.svg app/ledovia-app-icon-beta.svg
           cp beta/beta-assets/ledovia-official-logo.svg app/ledovia-official-logo.svg
