@@ -51,7 +51,7 @@ function init(){
    panel.prepend(plan);
    const form=panel.querySelector('form');
    if(form){
-    const buttons=form.querySelectorAll('button');
+    const buttons=Array.from(form.children).filter(el=>el.tagName==='BUTTON');
     if(buttons[0]){buttons[0].classList.add('ldAccountPrimary');buttons[0].textContent='Sign in to LEDOVIA →'}
     if(buttons[1])buttons[1].classList.add('ldAccountSecondary');
     if(buttons[2])buttons[2].classList.add('ldAccountSecondary');
