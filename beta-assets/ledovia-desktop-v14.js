@@ -28,13 +28,14 @@ function init(){
  <button type="button" data-action="hazards"><span>⚑</span>Report a Hazard</button>
  </div></nav>
  <nav class="ld14Panel ld14Prepare" aria-label="My readiness"><h2>✓ &nbsp; My Readiness</h2>
- <div class="ldReadinessNote"><strong>Check before you go</strong><p>Review your trip preparations. Readiness has not been verified.</p></div>
- <div class="ld14Links">
- <button type="button" data-action="offline">⇩ &nbsp; Offline Readiness</button>
- <button type="button" data-action="places">⌖ &nbsp; Saved Destinations</button>
- <button type="button" data-action="survival">▤ &nbsp; Survival Guides</button>
- <button type="button" data-action="family">♧ &nbsp; Family Circles</button>
- </div></nav></div>`;
+ <div class="ldReadinessNote"><strong>Adventure Preparation <span class="ldReadinessBadge">Not verified</span></strong><p>Check your essentials before heading out. These shortcuts do not confirm trip readiness.</p></div>
+ <div class="ld14Links" aria-label="Preparation tools">
+ <button type="button" data-action="offline"><span>▣ &nbsp; Offline Maps &amp; Readiness</span><span aria-hidden="true">›</span></button>
+ <button type="button" data-action="places"><span>⌖ &nbsp; Saved Destinations</span><span aria-hidden="true">›</span></button>
+ <button type="button" data-action="survival"><span>▤ &nbsp; Survival Guides</span><span aria-hidden="true">›</span></button>
+ <button type="button" data-action="family"><span>♧ &nbsp; Family Circles</span><span aria-hidden="true">›</span></button>
+ </div>
+ <div class="ldReadinessChecklist"><strong>☑ &nbsp; Trip Checklist</strong><p>Coming with Trip Planning: review supplies, downloaded maps, contacts, and destination preparation.</p></div></nav></div>`;
  const actions={
  map:()=>grid.querySelector('[data-map-action="open"]')?.click(),
  routes:()=>grid.querySelector('[data-go="routes"]')?.click(),
@@ -57,6 +58,14 @@ function init(){
  #ledoviaDesktopDashboard .ldWeatherAlert{border:1px solid #edaa43;border-radius:10px;padding:12px;margin:12px 0;color:#f7d79e}
  #ledoviaDesktopDashboard .ldWeatherOpen{display:block;width:100%;background:#17646a;border:1px solid #79c6bd;border-radius:9px;padding:12px;color:#fff;font-size:14px;font-weight:700;text-align:left}
  #ledoviaDesktopDashboard .ldWeatherOpen:hover,#ledoviaDesktopDashboard .ldWeatherOpen:focus-visible{outline:2px solid #b1e6db;outline-offset:2px}
+ #ledoviaDesktopDashboard .ldReadinessBadge{display:inline-block;vertical-align:middle;font-size:11px;font-weight:700;color:#f7d79e;border:1px solid #edaa43;border-radius:20px;padding:4px 8px;margin:5px 0 0 5px}
+ #ledoviaDesktopDashboard .ld14Prepare .ld14Links{background:#123b3e;border-radius:10px;padding:6px;margin-bottom:14px}
+ #ledoviaDesktopDashboard .ld14Prepare .ld14Links button{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;border-bottom:1px solid #ffffff18}
+ #ledoviaDesktopDashboard .ld14Prepare .ld14Links button:last-child{border-bottom:0}
+ #ledoviaDesktopDashboard .ld14Prepare .ld14Links button>span:last-child{font-size:23px;color:#b7d5d2}
+ #ledoviaDesktopDashboard .ldReadinessChecklist{background:#1b5155;border-radius:10px;padding:14px}
+ #ledoviaDesktopDashboard .ldReadinessChecklist strong{font-size:15px;color:#fff}
+ #ledoviaDesktopDashboard .ldReadinessChecklist p{font-size:13px;line-height:1.45;color:#d5e5e2;margin:8px 0 0}
  #ledoviaDesktopDashboard .ld14Tiles button{min-width:0}
  }`;
  document.head.append(style);grid.before(wrap);return true;
