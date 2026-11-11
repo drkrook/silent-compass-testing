@@ -461,12 +461,27 @@ jobs:
           data['name']='LEDOVIA Beta'
           data['short_name']='LEDOVIA Beta'
           data['description']='Ready for the Adventure. Prepared for the Unexpected.'
-          data['icons']=[{'src':'./ledovia-app-icon-beta.svg','sizes':'any','type':'image/svg+xml','purpose':'any'}]
+          data['icons']=[
+            {'src':'./ledovia-app-icon-beta-192.png','sizes':'192x192','type':'image/png','purpose':'any'},
+            {'src':'./ledovia-app-icon-beta-512.png','sizes':'512x512','type':'image/png','purpose':'any'},
+            {'src':'./ledovia-app-icon-beta.svg','sizes':'any','type':'image/svg+xml','purpose':'any'}
+          ]
           manifest.write_text(json.dumps(data,indent=2)+'\\n')
           p=Path('app/index.html')
           s=p.read_text()
-          s=s.replace('</head>','<link rel="icon" type="image/svg+xml" href="./ledovia-app-icon-beta.svg?v=1"></head>',1)
+          s=s.replace('<title>Silent Compass — Offline Survival Companion</title>','<title>LEDOVIA Beta</title>',1)
+          s=s.replace('<link rel="icon" href="./icon.svg" type="image/svg+xml">','',1)
+          s=s.replace('</head>','<link rel="icon" type="image/png" sizes="192x192" href="./ledovia-app-icon-beta-192.png?v=2"><link rel="icon" type="image/svg+xml" href="./ledovia-app-icon-beta.svg?v=2"></head>',1)
           p.write_text(s)
+          PY
+          # Windows installed apps may ignore SVG-only manifest icons. Supply raster PNG sizes.
+          python3 -m pip -q install cairosvg
+          python3 - <<'PY'
+          from pathlib import Path
+          import cairosvg
+          svg=Path('app/ledovia-app-icon-beta.svg').read_bytes()
+          for size in (192,512):
+              cairosvg.svg2png(bytestring=svg,write_to=f'app/ledovia-app-icon-beta-{size}.png',output_width=size,output_height=size)
           PY
           # Release version is authoritative after all baseline substitutions.
           python3 - <<'PY'
@@ -474,7 +489,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.329', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.330', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
