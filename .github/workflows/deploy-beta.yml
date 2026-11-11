@@ -483,13 +483,24 @@ jobs:
           for size in (192,512):
               cairosvg.svg2png(bytestring=svg,write_to=f'app/ledovia-app-icon-beta-{size}.png',output_width=size,output_height=size)
           PY
+          cp beta/beta-assets/ledovia-home-account-v39.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-home-account-v39.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-home-account-v39.js?v=39"></script>'+marker)
+          p.write_text(s)
+          PY
           # Release version is authoritative after all baseline substitutions.
           python3 - <<'PY'
           from pathlib import Path
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.331', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.332', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
