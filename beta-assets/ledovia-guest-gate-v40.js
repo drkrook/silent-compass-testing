@@ -3,12 +3,12 @@
 const style=document.createElement('style');
 style.textContent=`
 body.ldGuestGate #appMain,body.ldGuestGate > header,body.ldGuestGate > footer{display:none!important}
-#ldGuestScreen{display:none;min-height:100dvh;background:#103c40;color:#fff;padding:24px 16px;font-family:system-ui,sans-serif}
+#ldGuestScreen{display:none;min-height:100dvh;background:linear-gradient(180deg,#062d35bb 0%,#092b34ed 47%,#071b22 100%),url('./ledovia-mountains.svg') center top/100% auto no-repeat,#071b22;color:#fff;padding:clamp(18px,3vw,38px) 16px;font-family:system-ui,sans-serif}
 body.ldGuestGate #ldGuestScreen{display:block}
-#ldGuestScreen .ldGuestWrap{max-width:720px;margin:auto}
-#ldGuestScreen .ldGuestTop{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
-#ldGuestScreen button.ldGuestSignIn{background:#17646a;border:1px solid #8ed4ca;border-radius:9px;color:white;padding:12px 16px;font-weight:700;cursor:pointer}
-#ldGuestScreen .scEmergencyHelp{background:#17282c;border:1px solid #668c82;border-radius:14px;padding:18px}
+#ldGuestScreen .ldGuestWrap{max-width:780px;margin:0 auto}
+#ldGuestScreen .ldGuestTop{display:flex;align-items:flex-start;flex-direction:column;gap:18px;margin-bottom:20px}
+#ldGuestScreen button.ldGuestSignIn{background:linear-gradient(135deg,#1a8c89,#09616b);border:2px solid #a5f3e5;border-radius:12px;color:white;padding:16px 36px;font-size:18px;font-weight:800;box-shadow:0 6px 24px #001b24a6;cursor:pointer}
+#ldGuestScreen .scEmergencyHelp{background:#10272de8;border:1px solid #69a7a5;border-radius:16px;padding:clamp(16px,3vw,26px);box-shadow:0 16px 44px #00141b9c;backdrop-filter:blur(5px)}
 #ldGuestScreen .scHelpActions{display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 #ldGuestScreen.ldGuestExpanded .scHelpActions{display:grid}
 #ldGuestScreen #scHelpOutput{display:none}
@@ -16,7 +16,7 @@ body.ldGuestGate #ldGuestScreen{display:block}
 #ldGuestScreen .ldGuestExpand{display:block;width:100%;margin:16px 0 0;padding:12px;border:1px solid #668c82;border-radius:10px;background:#244b4d;color:#fff;font-weight:700;cursor:pointer}
 #ldGuestScreen .scEmergencyHelp>.scHelpNote:last-child{display:none}
 #ldGuestScreen .scHelpActions button{min-height:72px;white-space:normal}
-#ldGuestScreen .scCall911{display:block;text-align:center;padding:17px;background:#7c2525;color:white;border-radius:12px;font-weight:700}
+#ldGuestScreen .scCall911{display:block;text-align:center;padding:17px;background:linear-gradient(180deg,#b52d35,#7c2029);color:white;border-radius:12px;font-weight:800}
 @media(max-width:440px){#ldGuestScreen .scHelpActions{grid-template-columns:1fr}}
 `;
 document.head.append(style);
@@ -31,9 +31,9 @@ function init(){
  const wrap=document.createElement('div');wrap.className='ldGuestWrap';
  const top=document.createElement('div');top.className='ldGuestTop';
  const brand=document.createElement('strong');brand.textContent='🏔️ LEDOVIA · Emergency Access';
- const signIn=document.createElement('button');signIn.type='button';signIn.className='ldGuestSignIn';signIn.textContent='Sign in';signIn.onclick=()=>homeAccount.click();
+ const signIn=document.createElement('button');signIn.type='button';signIn.className='ldGuestSignIn';signIn.textContent='Sign in to LEDOVIA';signIn.onclick=()=>homeAccount.click();
  top.append(brand,signIn);
- const note=document.createElement('p');note.textContent='Emergency assistance is available without signing in. Sign in to access the rest of LEDOVIA.';
+ const note=document.createElement('p');note.textContent='Ready for the Adventure. Prepared for the Unexpected. Emergency help is always available.';
  wrap.append(top,note);screen.append(wrap);document.body.append(screen);
  const actions=help.querySelector('.scHelpActions');
  if(!actions) return false;
