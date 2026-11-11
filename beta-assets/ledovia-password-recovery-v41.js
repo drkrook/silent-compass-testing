@@ -4,7 +4,7 @@ const base='https://uymjxxgpsnezlaifsgwv.supabase.co/auth/v1';
 const key='sb_publishable_EYvWf8w_3n79nnVgmESJLw_Q_vMeXM_';
 const style=document.createElement('style');
 style.textContent=`
-#ldAccountDialog .ldPasswordWrap{position:relative;flex:0 0 100%;width:100%;min-width:0}
+#ldAccountDialog .ldPasswordWrap{position:relative;flex:0 0 100%;width:100%;min-width:0;box-sizing:border-box}\n#ldAccountDialog .ldAccountPanel form:not(.ldResetForm)>.ldPasswordWrap{order:0;margin:0 0 10px}\n#ldAccountDialog .ldAccountPanel form:not(.ldResetForm)>.ldPasswordWrap input{display:block;width:100%!important;margin:0!important}\n#ldAccountDialog .ldAccountPanel form:not(.ldResetForm)>.ldPasswordWrap .ldPasswordEye{order:unset;width:auto!important;flex:none!important;margin:0!important}
 #ldAccountDialog .ldPasswordWrap input{padding-right:80px!important}
 #ldAccountDialog .ldPasswordEye{position:absolute;right:9px;top:50%;transform:translateY(-50%);min-width:60px;min-height:44px;padding:7px!important;border:1px solid #8ed4ca!important;border-radius:9px!important;background:#07545e!important;color:white!important;font-size:13px;font-weight:700}
 #ldAccountDialog .ldResetTitle{text-align:center;font-size:clamp(22px,4vw,30px);margin:8px 0}
