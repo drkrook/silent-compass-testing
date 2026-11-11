@@ -80,7 +80,7 @@ function init(){
  form.onsubmit=async e=>{
   e.preventDefault();
   const value=first.value;
-  if(value.length<8||!/[a-z]/.test(value)||!/[A-Z]/.test(value)||!/[0-9]/.test(value)||!/[^\\w\s]/.test(value)){status.textContent='Use at least 8 characters, including uppercase, lowercase, a number and a symbol.';return}
+  if(value.length<8||!/[a-z]/.test(value)||!/[A-Z]/.test(value)||!/[0-9]/.test(value)||!/[^a-zA-Z0-9\s]/.test(value)){status.textContent='Use at least 8 characters, including uppercase, lowercase, a number and a symbol.';return}
   if(value!==second.value){status.textContent='Passwords do not match.';return}
   submit.disabled=true;status.textContent='Updating password…';
   try{await request('/user','PUT',{password:value});first.value='';second.value='';form.hidden=true;status.textContent='Password updated successfully. You can now sign in with your new password.'}
