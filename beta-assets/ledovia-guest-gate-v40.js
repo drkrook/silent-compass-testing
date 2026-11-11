@@ -71,7 +71,9 @@ function init(){
  let guest=null;
  function check(){
   const a=scAuthGet();const next=!(a&&a.access_token&&a.expires_at>Date.now()/1000);
-  if(next===guest)return;guest=next;
+  if(next===guest)return;
+  const previous=guest;guest=next;
+  if(previous!==null){const dlg=document.getElementById('ldAccountDialog');if(dlg&&dlg.open)dlg.close();}
   if(guest){emergencyArea.append(help);document.body.classList.add('ldGuestGate')}
   else{anchor.parentNode.insertBefore(help,anchor.nextSibling);document.body.classList.remove('ldGuestGate')}
  }
