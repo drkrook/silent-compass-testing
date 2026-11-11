@@ -516,6 +516,18 @@ jobs:
           s=s.replace(marker,'<script src="./ledovia-guest-gate-v40.js?v=6"></script>'+marker)
           p.write_text(s)
           PY
+          # Beta-only password visibility and recovery completion; Stable source untouched.
+          cp beta/beta-assets/ledovia-password-recovery-v41.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-password-recovery-v41.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-password-recovery-v41.js?v=1"></script>'+marker)
+          p.write_text(s)
+          PY
           # Release version is authoritative after all baseline substitutions.
           python3 - <<'PY'
           from pathlib import Path
