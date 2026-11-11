@@ -8,7 +8,13 @@ function init(){
  if(document.getElementById('ldAccountOpenDesktop'))return true;
  const button=(id)=>{const b=document.createElement('button');b.type='button';b.id=id;b.className='ldAccountHomeButton';b.textContent='My Account';b.addEventListener('click',open);return b};
  const d=button('ldAccountOpenDesktop');desktop.querySelector('.ld14Prepare .ld14Links')?.append(d);
- const m=button('ldAccountOpenMobile');mobile.querySelector('.ldMobileTripActions')?.append(m);
+ const m=button('ldAccountOpenMobile');
+ const accountSection=document.createElement('section');
+ accountSection.id='ldMobileAccountSection';
+ accountSection.setAttribute('aria-label','Account access');
+ const label=document.createElement('span');label.textContent='Account';
+ accountSection.append(label,m);
+ mobile.before(accountSection);
  function open(){
   let dlg=document.getElementById('ldAccountDialog');
   if(!dlg){
@@ -27,6 +33,12 @@ function init(){
  return true;
 }
 const css=document.createElement('style');css.textContent=`
+#ldMobileAccountSection{display:none}
+@media(max-width:1049px){
+ #appMain.scHomeActive #ldMobileAccountSection{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0 12px;padding:12px 16px;background:#103e42;border:1px solid #77bfb7;border-radius:12px;color:#fff}
+ #ldMobileAccountSection span{font-size:15px;font-weight:700}
+ #ldAccountOpenMobile{width:auto;min-height:42px;padding:9px 15px;background:#17646a;border:1px solid #8ed4ca;border-radius:8px;color:#fff;font-weight:700;cursor:pointer}
+}
 #ldAccountOpenDesktop{display:flex;width:100%;justify-content:space-between;align-items:center;text-align:left}
 #ldAccountOpenDesktop::after{content:'›';font-size:23px;color:#b7d5d2}
 #ldAccountDialog{box-sizing:border-box;width:min(520px,calc(100vw - 24px));max-height:90dvh;overflow:auto;border:1px solid #77bfb7;border-radius:14px;background:#103c40;color:#fff;padding:18px}
