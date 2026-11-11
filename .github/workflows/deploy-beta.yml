@@ -417,13 +417,24 @@ jobs:
           s=s.replace(marker,'<script src="./ledovia-trip-weather-v35.js?v=35"></script>'+marker)
           p.write_text(s)
           PY
+          cp beta/beta-assets/ledovia-trip-date-fix-v36.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-trip-date-fix-v36.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-trip-date-fix-v36.js?v=36"></script>'+marker)
+          p.write_text(s)
+          PY
           # Release version is authoritative after all baseline substitutions.
           python3 - <<'PY'
           from pathlib import Path
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.321', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.322', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
