@@ -525,7 +525,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-password-recovery-v41.js' not in s
-          s=s.replace(marker,'<script src="./ledovia-password-recovery-v41.js?v=1"></script>'+marker)
+          s=s.replace(marker,'<script src="./ledovia-password-recovery-v41.js?v=2"></script>'+marker)
           p.write_text(s)
           PY
           # Release version is authoritative after all baseline substitutions.
