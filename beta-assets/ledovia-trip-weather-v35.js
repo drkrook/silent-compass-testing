@@ -18,12 +18,12 @@
   try{
    // Search by city, then match the optional state independently of punctuation.
    const STATES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',DC:'District of Columbia'};
-   const clean=destination.replace(/\\s*,\\s*/g,' ').replace(/\\s+/g,' ').trim();
+   const clean=destination.replace(/\s*,\s*/g,' ').replace(/\s+/g,' ').trim();
    let city=clean,state='';
    for(const [abbr,full] of Object.entries(STATES)){
     if(clean.toLowerCase().endsWith(' '+full.toLowerCase())){city=clean.slice(0,-full.length).trim();state=full;break}
    }
-   if(!state){const match=clean.match(/^(.*?)\\s+([a-z]{2})$/i);if(match&&STATES[match[2].toUpperCase()]){city=match[1].trim();state=STATES[match[2].toUpperCase()]}}
+   if(!state){const match=clean.match(/^(.*?)\s+([a-z]{2})$/i);if(match&&STATES[match[2].toUpperCase()]){city=match[1].trim();state=STATES[match[2].toUpperCase()]}}
    if(!city){say('Enter a US city and, optionally, a state.');return}
    const search=await json('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(city)+'&count=100&countryCode=US&language=en&format=json');
    if(id!==token)return;
