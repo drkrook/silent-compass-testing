@@ -466,7 +466,7 @@ jobs:
             {'src':'./ledovia-app-icon-beta-512.png','sizes':'512x512','type':'image/png','purpose':'any'},
             {'src':'./ledovia-app-icon-beta.svg','sizes':'any','type':'image/svg+xml','purpose':'any'}
           ]
-          manifest.write_text(json.dumps(data,indent=2)+'\\n')
+          manifest.write_text(json.dumps(data,indent=2)+'\n')
           p=Path('app/index.html')
           s=p.read_text()
           s=s.replace('<title>Silent Compass — Offline Survival Companion</title>','<title>LEDOVIA - Beta</title>',1)
