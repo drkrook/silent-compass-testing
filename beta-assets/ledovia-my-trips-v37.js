@@ -1,7 +1,7 @@
 /* LEDOVIA Beta My Trips v1: local trip management and user-confirmed resource checklist. */
 (()=>{'use strict';
 const KEY='ledovia-trips-v1',OLD='ledovia-trip-draft-v1',ITEMS=['Offline maps downloaded','Destination locations saved','Emergency contacts available','Weather and alerts reviewed','Essential supplies packed'];
-function load(){let a=[];try{const v=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(v))a=v.filter(x=>x&&typeof x==='object')}catch{}if(!a.length){try{const old=JSON.parse(localStorage.getItem(OLD)||'null');if(old&&old.destination&&old.start&&old.end){a=[{...old,id:'legacy-draft',status:'upcoming',checks:{}}];localStorage.setItem(KEY,JSON.stringify(a))}}catch{}}return a}
+function load(){let a=[];try{const v=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(v))a=v.filter(x=>x&&typeof x==='object')}catch{}if(!a.length&&!localStorage.getItem('ledovia-trips-migrated-v1')){try{const old=JSON.parse(localStorage.getItem(OLD)||'null');if(old&&old.destination&&old.start&&old.end){a=[{...old,id:'legacy-draft',status:'upcoming',checks:{}}];localStorage.setItem(KEY,JSON.stringify(a))}localStorage.setItem('ledovia-trips-migrated-v1','1')}catch{}}return a}
 function store(a){localStorage.setItem(KEY,JSON.stringify(a))}
 function init(){const form=document.getElementById('ldTripForm'),open=document.getElementById('ldTripOpen'),dialog=document.getElementById('ldTripDialog');if(!form||!open||!dialog)return false;if(document.getElementById('ldMyTripsOpen'))return true;
 let editing=null;const button=document.createElement('button');button.id='ldMyTripsOpen';button.type='button';button.textContent='▤  My Trips — View & Manage';open.after(button);
@@ -21,7 +21,7 @@ for(const item of ITEMS){const label=document.createElement('label'),check=docum
 }const note=document.createElement('p');note.className='ldMyWarn';note.textContent='Checklist completion is self-reported, not proof that maps, contacts, or weather are available offline. Check official alerts and forecast again before travel.';list.append(note)}
 function change(id,status){const a=load(),x=a.find(x=>x.id===id);if(x){x.status=status;try{store(a)}catch{alert('Unable to save trip change.')}}render()}
 button.addEventListener('click',()=>{render();modal.showModal()});modal.querySelector('#ldMyClose').addEventListener('click',()=>modal.close());modal.querySelector('#ldMyNew').addEventListener('click',()=>{editing=null;form.reset();modal.close();dialog.showModal()});
-open.addEventListener('click',()=>{editing=null;form.reset()},{capture:true});
+open.addEventListener('click',e=>{e.stopImmediatePropagation();editing=null;form.reset();dialog.showModal()},{capture:true});
 form.addEventListener('submit',e=>{e.preventDefault();e.stopImmediatePropagation();const o=Object.fromEntries(new FormData(form));const msg=document.getElementById('ldTripMessage');if(!o.name||!o.destination||!o.start||!o.end||o.end<o.start){msg.textContent='Enter a trip name, destination, and valid dates.';return}const a=load();let x=editing?a.find(t=>t.id===editing):null;if(x){Object.assign(x,o)}else{x={...o,id:'trip-'+Date.now()+'-'+Math.random().toString(36).slice(2,8),status:'upcoming',checks:{}};a.push(x)}try{store(a);editing=x.id;msg.textContent='Trip saved in My Trips on this device. Open My Trips to review or edit it.'}catch{msg.textContent='Unable to save. Check browser storage settings.'}},{capture:true});
 return true}
 if(!init()){let n=0;const t=setInterval(()=>{if(init()||++n>100)clearInterval(t)},100)}
