@@ -11,7 +11,7 @@ function init(){
  const section=document.createElement('section');
  section.id='ldMobileTrips';
  section.setAttribute('aria-label','LEDOVIA adventure planning');
- section.innerHTML='<div class="ldMobileBrand"><img src="./ledovia-logo.svg" alt=""><div><strong>LEDOVIA</strong><small>Ready for the Adventure. Prepared for the Unexpected.</small></div></div><h2>Adventure Tools</h2><p>Plan your next adventure and keep your trips organized.</p><div class="ldMobileTripActions"><button type="button" id="ldMobilePlan">Plan a Trip <span aria-hidden="true">›</span></button><button type="button" id="ldMobileManage">My Trips <span aria-hidden="true">›</span></button></div>';
+ section.innerHTML='<h2>Adventure Tools</h2><p>Plan your next adventure and keep your trips organized.</p><div class="ldMobileTripActions"><button type="button" id="ldMobilePlan">Plan a Trip <span aria-hidden="true">›</span></button><button type="button" id="ldMobileManage">My Trips <span aria-hidden="true">›</span></button></div>';
  grid.before(section);
  section.querySelector('#ldMobilePlan').addEventListener('click',()=>plan.click());
  section.querySelector('#ldMobileManage').addEventListener('click',()=>trips.click());
