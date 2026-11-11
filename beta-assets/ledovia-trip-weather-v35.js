@@ -16,9 +16,20 @@
   if(start>iso(ten)){say('Forecast not yet available for your departure date (more than 10 days away). Check again closer to departure.');return}
   say('Looking up destination forecast and official alerts…');
   try{
-   const search=await json('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(destination)+'&count=1&countryCode=US&language=en&format=json');
+   // Search by city, then match the optional state independently of punctuation.
+   const STATES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',DC:'District of Columbia'};
+   const clean=destination.replace(/\\s*,\\s*/g,' ').replace(/\\s+/g,' ').trim();
+   let city=clean,state='';
+   for(const [abbr,full] of Object.entries(STATES)){
+    if(clean.toLowerCase().endsWith(' '+full.toLowerCase())){city=clean.slice(0,-full.length).trim();state=full;break}
+   }
+   if(!state){const match=clean.match(/^(.*?)\\s+([a-z]{2})$/i);if(match&&STATES[match[2].toUpperCase()]){city=match[1].trim();state=STATES[match[2].toUpperCase()]}}
+   if(!city){say('Enter a US city and, optionally, a state.');return}
+   const search=await json('https://geocoding-api.open-meteo.com/v1/search?name='+encodeURIComponent(city)+'&count=100&countryCode=US&language=en&format=json');
    if(id!==token)return;
-   const place=search.results?.[0];if(!place){say('Destination not found. Enter a US city and state.');return}
+   const candidates=search.results||[];
+   const place=state?candidates.find(p=>(p.admin1||'').toLowerCase()===state.toLowerCase()):candidates[0];
+   if(!place){say(state?'No matching US city found in '+state+'. Check the destination spelling.':'Destination not found. Enter a US city and state.');return}
    const lat=place.latitude.toFixed(4),lon=place.longitude.toFixed(4);
    const point=await json('https://api.weather.gov/points/'+lat+','+lon);if(id!==token)return;
    const [forecastResult,alertResult]=await Promise.allSettled([json(point.properties.forecast),json('https://api.weather.gov/alerts/active?point='+lat+','+lon)]);if(id!==token)return;
