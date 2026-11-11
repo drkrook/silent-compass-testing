@@ -30,7 +30,7 @@ function start(){
    const f=v=>Number.isFinite(v)?Math.round(v*9/5+32)+'°F':'Unavailable';
    metrics[0].textContent=f(temp);
    const wind=o?.windSpeed?.value,gust=o?.windGust?.value;
-   metrics[1].textContent=(Number.isFinite(wind)?mph(wind*0.621371):'Unavailable')+' / '+(Number.isFinite(gust)?mph(gust*0.621371):'Unavailable');
+   metrics[1].textContent=(Number.isFinite(wind)?mph(wind*3.6):'Unavailable')+' / '+(Number.isFinite(gust)?mph(gust*3.6):'Unavailable');
    metrics[2].textContent=Number.isFinite(o?.relativeHumidity?.value)?num(o.relativeHumidity.value)+'%':'Unavailable';
    metrics[3].textContent=Number.isFinite(o?.visibility?.value)?num(o.visibility.value/1609.344,1)+' mi':'Unavailable';
    const features=alertsResult.status==='fulfilled'?alertsResult.value.features||[]:null;
