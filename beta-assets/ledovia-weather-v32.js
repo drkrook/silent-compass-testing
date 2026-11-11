@@ -8,15 +8,15 @@ function start(){
  controls.innerHTML='<button type="button" data-wx-gps>Use my location</button><form data-wx-form><label for="ldWxCity">Trip destination (US city)</label><div><input id="ldWxCity" type="search" placeholder="e.g. Asheville, NC" required><button type="submit">Check</button></div></form><small data-wx-location>Location not selected</small>';
  status.before(controls);
  const css=document.createElement('style');css.textContent='@media(min-width:1050px){#ledoviaDesktopDashboard .ldWeatherControls{display:grid;gap:8px;margin:0 0 12px}#ledoviaDesktopDashboard .ldWeatherControls>button,#ledoviaDesktopDashboard .ldWeatherControls form button{background:#17646a;border:1px solid #79c6bd;border-radius:7px;color:white;padding:8px;cursor:pointer}#ledoviaDesktopDashboard .ldWeatherControls label,#ledoviaDesktopDashboard .ldWeatherControls small{font-size:12px;color:#d5e5e2}#ledoviaDesktopDashboard .ldWeatherControls form>div{display:flex;gap:6px;margin-top:5px}#ledoviaDesktopDashboard .ldWeatherControls input{width:100%;min-width:0;background:#e8f5f1;color:#07191c;border:0;border-radius:7px;padding:8px}#ledoviaDesktopDashboard .ldWeatherControls button:focus-visible,#ledoviaDesktopDashboard .ldWeatherControls input:focus-visible{outline:2px solid #edaa43;outline-offset:2px}}';document.head.append(css);
- const label=controls.querySelector('[data-wx-location]');let request=0;
- const show=(heading,body)=>{status.replaceChildren();const b=document.createElement('strong'),p=document.createElement('p');b.textContent=heading;p.textContent=body;status.append(b,p)};
+ const label=controls.querySelector('[data-wx-location]');label.hidden=true;let request=0;let locationName='';
+ const show=(heading,body)=>{if(heading==='Current conditions'||heading==='Current observations unavailable')heading+=' for '+(locationName||'selected location');status.replaceChildren();const b=document.createElement('strong'),p=document.createElement('p');b.textContent=heading;p.textContent=body;status.append(b,p)};
  const showAlert=(heading,body)=>{alert.replaceChildren();const b=document.createElement('strong'),p=document.createElement('p');b.textContent=heading;p.textContent=body;alert.append(b,p)};
  const clear=()=>{metrics.forEach((e,i)=>e.textContent=i===4?'Not checked':'—');showAlert('Official alert status: Unknown','Alerts have not been verified for this location.')};
  const fetchJson=async(url)=>{const res=await fetch(url,{headers:{Accept:'application/geo+json, application/json'}});if(!res.ok)throw Error('Weather service returned '+res.status);return res.json()};
  const num=(v,d=0)=>Number.isFinite(v)?Number(v).toFixed(d):null;
  const mph=(v)=>Number.isFinite(v)?Math.round(v*0.621371)+' mph':'Unavailable';
  async function load(lat,lon,name){
-  const id=++request;clear();label.textContent=name;show('Checking weather…','Retrieving official NWS observations and alerts.');
+  const id=++request;clear();locationName=name;label.textContent=name;show('Checking weather…','Retrieving official NWS observations and alerts.');
   try{
    const point=await fetchJson('https://api.weather.gov/points/'+lat.toFixed(4)+','+lon.toFixed(4));
    if(id!==request)return;
@@ -24,7 +24,7 @@ function start(){
    if(name==='Current GPS location'){
     const nearest=point.properties?.relativeLocation?.properties;
     const city=nearest?.city?.trim(),state=nearest?.state?.trim();
-    label.textContent=city&&state?'GPS location: '+city+', '+state:'GPS location confirmed · Nearby city unavailable';
+    locationName=city&&state?city+', '+state:'GPS location';label.textContent=locationName;
    }
    const stationList=await fetchJson(point.properties.observationStations);
    const station=stationList.features?.[0]?.id;
