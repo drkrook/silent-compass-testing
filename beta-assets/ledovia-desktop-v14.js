@@ -6,7 +6,6 @@ function init(){
  if(!home||!grid||document.getElementById('ledoviaDesktopDashboard'))return !!document.getElementById('ledoviaDesktopDashboard');
  const wrap=document.createElement('section');wrap.id='ledoviaDesktopDashboard';wrap.setAttribute('aria-label','Adventure dashboard');
  wrap.innerHTML=`
- <div class="ld14Top"><div class="ld14Brand"><span aria-hidden="true">△</span> LEDOVIA</div><button type="button" data-action="help" class="ld14SOS">Emergency Help</button></div>
  <div class="ld14Columns">
  <section class="ld14Panel ld14Plan" aria-label="Weather and conditions">
  <h2>☁ &nbsp; Weather &amp; Conditions</h2>
@@ -37,7 +36,6 @@ function init(){
  <button type="button" data-action="family">♧ &nbsp; Family Circles</button>
  </div></nav></div>`;
  const actions={
- help:()=>grid.querySelector('[data-go="help"]')?.click(),
  map:()=>grid.querySelector('[data-map-action="open"]')?.click(),
  routes:()=>grid.querySelector('[data-go="routes"]')?.click(),
  places:()=>document.getElementById('tab-places')?.click(),
