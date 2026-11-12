@@ -135,3 +135,33 @@ function move(){
 }
 if(!move()){let n=0;const timer=setInterval(()=>{if(move()||++n>120)clearInterval(timer)},100)}
 })();
+
+
+/* Beta Phase 3 — photographic adventure tiles; safety cards, Account, actions unchanged. */
+(()=>{'use strict';
+const style=document.createElement('style');style.id='ldAdventurePhotoPhase3';
+style.textContent=`
+@media(max-width:1049px){
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button:not(.scHomeSOS):not(.scHomeNWS){
+background-color:#06343b!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;
+border:1px solid #368d89!important;border-radius:12px!important;
+box-shadow:inset 0 0 0 1px #ffffff10,0 3px 10px #00161caa!important;
+text-shadow:0 2px 5px #001017!important;
+align-items:flex-start!important;justify-content:flex-end!important;text-align:left!important;
+padding:12px!important;min-height:110px!important;gap:3px!important;
+}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button strong{color:#fff!important;font-size:clamp(13px,3.4vw,16px)!important;text-align:left!important;line-height:1.2!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button span:not(.scLedoviaNew):not(.ledoviaIcon){color:#eaf6f4!important;font-size:10px!important;line-height:1.25!important;text-align:left!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button .ledoviaIcon{width:31px!important;height:31px!important;filter:drop-shadow(0 2px 5px #000)!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-map-action="open"]{background-image:linear-gradient(0deg,#00141df2 0%,#001b2770 65%),url('https://images.unsplash.com/photo-1500534623283-312aade485b7?w=650&q=75')!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-map-action="gps"]{background-image:linear-gradient(0deg,#00141df2 0%,#001b2770 65%),url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=650&q=75')!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-go="routes"]{background-image:linear-gradient(0deg,#00141df2 0%,#001b2770 65%),url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=650&q=75')!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-go="survival"]{background-image:linear-gradient(0deg,#00141df2 0%,#001b2770 65%),url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=650&q=75')!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-go="hazards"]{background-image:linear-gradient(0deg,#00141df2 0%,#001b2770 65%),url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=650&q=75')!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button#scFamilyOpen{background-image:linear-gradient(0deg,#00141df2 0%,#001b2770 65%),url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=650&q=75')!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button.scLedoviaCompass{background-image:linear-gradient(0deg,#001b1ff0,#003c3999 65%),url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=650&q=75')!important;border:2px solid #50f3da!important;box-shadow:0 0 12px #28cdb6a8!important}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button:focus-visible{outline:3px solid #fff0a6!important;outline-offset:2px!important}
+}
+@media(prefers-reduced-data:reduce){#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button{background-image:linear-gradient(155deg,#06464a,#03232b)!important}}
+`;document.head.append(style);
+})();
