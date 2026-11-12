@@ -40,12 +40,28 @@ h2{margin-top:26px;font-size:20px;color:#a7fff6}
 .note{padding-bottom:22px}
 @media(max-width:650px){.shell{padding:8px}.brand{padding:11px 9px}.badge{font-size:9px;max-width:112px}.stage{min-height:410px;height:52vh}.fallback{padding:12px}.fallback h1{font-size:28px}.readout{font-size:12px;padding:11px;max-width:215px}.readout strong{font-size:20px}.actions{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.actions button{min-height:55px}.actions #save{grid-column:1/-1}.tile{padding:9px}.tile strong{font-size:16px}.inputs{grid-template-columns:1fr;padding:12px}}
 @media(orientation:landscape) and (max-height:650px){.shell{padding:5px}.brand{min-height:58px;padding:5px 12px}.logo{font-size:24px}.stage{height:calc(100dvh - 75px);min-height:250px}.fallback h1{font-size:28px}.readout{bottom:8px;left:8px;padding:9px;font-size:11px}.readout strong{font-size:18px}.cross{width:110px;height:110px;background-size:24px 3px,3px 24px,24px 3px,3px 24px,24px 3px,3px 24px,24px 3px,3px 24px}.cross:before{top:54px;left:-25px;width:160px}.cross:after{left:54px;top:-25px;height:160px}}
+</style><style id="ledovia-simple-rangefinder-v3">
+.ledoviaPrimary{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:13px 0}
+.ledoviaPrimary button{min-height:57px;padding:9px 5px;font-size:clamp(13px,2.5vw,17px)}
+.ledoviaPrimary #markTarget{background:linear-gradient(145deg,#14627a,#073448);border-color:#74e9e8}
+.ledoviaPrimary #save{grid-column:auto;background:linear-gradient(145deg,#087752,#074b3c)}
+.ledoviaAdvanced{margin:0 0 12px;background:#061d28b8;border:1px solid #286c78;border-radius:14px;overflow:hidden}
+.ledoviaAdvanced summary{cursor:pointer;list-style:none;padding:13px 16px;color:#bafaf3;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ledoviaAdvanced summary::-webkit-details-marker{display:none}
+.ledoviaAdvanced summary:after{content:"⌄";font-size:19px}
+.ledoviaAdvanced[open] summary:after{content:"⌃"}
+.ledoviaAdvanced summary span{color:#9bbdc6;font-size:11px;font-weight:500}
+.ledoviaAdvanced>.actions,.ledoviaAdvanced>.panel,.ledoviaAdvanced>h2,.ledoviaAdvanced>.inputs{margin-left:12px;margin-right:12px}
+.ledoviaAdvanced .ledoviaSecondary{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ledoviaAdvanced .ledoviaSecondary button{font-size:13px;min-height:46px}
+.ledoviaAdvanced .inputs{margin-bottom:12px}
+@media(max-width:650px){.ledoviaPrimary{grid-template-columns:repeat(3,minmax(0,1fr))}.ledoviaPrimary #save{grid-column:auto}.ledoviaAdvanced .ledoviaSecondary{grid-template-columns:1fr 1fr}.ledoviaAdvanced summary span{font-size:10px}}
 </style></head><body><main class="shell"><header class="brand"><div><div class="logo">△ LEDOVIA</div><div class="sub">RANGEFINDER LAB · DEVELOPMENT PROTOTYPE</div></div><span class="badge">NOT FOR EMERGENCY NAVIGATION</span></header>
 <section class="stage" id="stage" aria-label="Camera rangefinder preview"><div class="fallback"><span>⌖</span><h1>Rangefinder Camera</h1><p>Enable camera to display live view</p></div><video id="camera" autoplay muted playsinline></video><div class="hud"><div class="heading" id="heading">—° · Heading unavailable</div><div class="cross"></div><div class="readout"><div>AZIMUTH <strong id="az">—°</strong></div><div>BACK AZIMUTH <strong id="back">—°</strong></div><div>MAP DISTANCE <strong id="distance">—</strong></div><div id="source">No mapped target selected</div></div></div></section>
-<div class="actions"><button id="startCamera">Enable Camera</button><button id="stopCamera">Stop Camera</button><button id="orientation">Enable Compass</button><button id="locate">Get GPS Location</button><button id="save">Save Bearing</button></div>
+<div class="actions ledoviaPrimary"><button id="startCamera">Start Camera</button><button id="markTarget" type="button">Mark Target</button><button id="save">Save</button></div><details class="ledoviaAdvanced" id="advanced"><summary>Advanced Tools <span>Compass · GPS · Manual target</span></summary><div class="actions ledoviaSecondary"><button id="stopCamera">Stop Camera</button><button id="orientation">Enable Compass</button><button id="locate">Get GPS Location</button></div>
 <div class="panel"><div class="tile"><small>Heading source</small><strong id="headingSource">Manual</strong></div><div class="tile"><small>GPS accuracy</small><strong id="accuracy">—</strong></div><div class="tile"><small>Saved bearings</small><strong id="savedCount">0</strong></div></div>
 <h2>Heading & mapped target</h2><div class="inputs"><label class="field">Manual azimuth (degrees)<input id="manual" type="number" min="0" max="359.99" step=".1" value="62"></label><label class="field">Target name<input id="targetName" placeholder="e.g. Ridge Summit"></label><label class="field">Your latitude<input id="lat" type="number" step="any" placeholder="GPS fills this"></label><label class="field">Your longitude<input id="lon" type="number" step="any" placeholder="GPS fills this"></label><label class="field">Mapped target latitude<input id="targetLat" type="number" step="any" placeholder="Known map coordinate"></label><label class="field">Mapped target longitude<input id="targetLon" type="number" step="any" placeholder="Known map coordinate"></label></div>
-<p id="status" role="status" aria-live="polite">Manual bearing mode. No camera, GPS, or compass permissions requested.</p>
+</details><p id="status" role="status" aria-live="polite">Demo bearing shown. Start Camera to begin; enable sensors in Advanced Tools.</p>
 <p class="note"><b>Accuracy:</b> Map distance is straight-line ground distance between two coordinates, not camera-measured distance or walking-route distance. A heading alone cannot identify a hill. Compass readings can be disturbed by nearby metal and magnetic interference; device headings may be magnetic rather than true north. Always verify the target and use appropriate navigation tools.</p></main>
 <script>
 (()=>{'use strict';
@@ -63,4 +79,6 @@ $('orientation').onclick=async()=>{try{if(!('DeviceOrientationEvent' in window))
 $('save').onclick=()=>{const az=compassActive&&liveHeading!==null?liveHeading:valid('manual',0,360);if(az===null){status('Enter a valid azimuth before saving.');return}const key='ledovia-rangefinder-lab-bearings-v1';let saved=[];try{saved=JSON.parse(localStorage.getItem(key)||'[]');if(!Array.isArray(saved))saved=[]}catch{}saved.push({name:$('targetName').value.trim().slice(0,80)||'Unnamed bearing',azimuth:deg(az),backAzimuth:deg(az+180),created:new Date().toISOString(),targetLat:valid('targetLat',-90,90),targetLon:valid('targetLon',-180,180)});try{localStorage.setItem(key,JSON.stringify(saved));$('savedCount').textContent=saved.length;status('Bearing saved locally on this device.')}catch(e){status('Local save failed: '+e.message)}};
 try{const s=JSON.parse(localStorage.getItem('ledovia-rangefinder-lab-bearings-v1')||'[]');$('savedCount').textContent=Array.isArray(s)?s.length:0}catch{}update();window.addEventListener('pagehide',()=>stream?.getTracks().forEach(t=>t.stop()));
 })();
+</script><script id="ledovia-simple-actions-v3">
+(()=>{'use strict';const mark=document.getElementById('markTarget'),adv=document.getElementById('advanced'),name=document.getElementById('targetName');if(mark&&adv&&name){mark.addEventListener('click',()=>{adv.open=true;name.focus();document.getElementById('status').textContent='Enter a target name and mapped coordinates if known. Camera crosshairs alone cannot determine distance.'})}})();
 </script></body></html>
