@@ -1,0 +1,32 @@
+/* LEDOVIA home refresh v43 — isolated review asset, NOT deployed.
+   Preserve emergency and weather handlers; visual styling only.
+   Photography is a progressive enhancement; offline gradients remain legible. */
+@media(max-width:1049px){
+ #appMain.scHomeActive .scHomeGrid>.scHomeSOS,
+ #appMain.scHomeActive .scHomeGrid>.scHomeNWS{
+   position:relative!important;isolation:isolate!important;
+   overflow:hidden!important;min-height:106px!important;
+   border-radius:17px!important;padding:17px 18px!important;
+   background-size:cover!important;background-position:center!important;
+   background-repeat:no-repeat!important;
+   text-shadow:0 2px 6px #000b!important;
+ }
+ #appMain.scHomeActive .scHomeGrid>.scHomeSOS{
+   background-color:#660e1e!important;
+   background-image:linear-gradient(100deg,rgba(85,3,20,.94),rgba(80,7,22,.79)),url('https://images.unsplash.com/photo-1599708153386-62bf3f035c28?auto=format&fit=crop&w=1000&q=75')!important;
+   border:2px solid #f55368!important;
+ }
+ #appMain.scHomeActive .scHomeGrid>.scHomeNWS{
+   background-color:#073650!important;
+   background-image:linear-gradient(100deg,rgba(3,42,68,.95),rgba(5,58,89,.72)),url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=75')!important;
+   border:2px solid #49d5f1!important;
+ }
+ #appMain.scHomeActive .scHomeGrid>.scHomeSOS strong,
+ #appMain.scHomeActive .scHomeGrid>.scHomeNWS strong{color:white!important;font-size:clamp(16px,4vw,19px)!important}
+ #appMain.scHomeActive .scHomeGrid>.scHomeSOS span,
+ #appMain.scHomeActive .scHomeGrid>.scHomeNWS span{color:#f4f9fc!important}
+}
+@media(prefers-reduced-data:reduce){
+ #appMain.scHomeActive .scHomeGrid>.scHomeSOS{background-image:linear-gradient(120deg,#9d172d,#410816)!important}
+ #appMain.scHomeActive .scHomeGrid>.scHomeNWS{background-image:linear-gradient(120deg,#08648b,#092d4c)!important}
+}
