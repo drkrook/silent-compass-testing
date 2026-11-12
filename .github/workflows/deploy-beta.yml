@@ -528,6 +528,18 @@ jobs:
           s=s.replace(marker,'<script src="./ledovia-password-recovery-v41.js?v=2"></script>'+marker)
           p.write_text(s)
           PY
+          # Beta-only mobile photographic Home cards; navigation and Stable untouched.
+          cp beta/beta-assets/ledovia-photo-cards-v42.css app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-photo-cards-v42.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-photo-cards-v42.css?v=42">'+marker)
+          p.write_text(s)
+          PY
           # Release version is authoritative after all baseline substitutions.
           python3 - <<'PY'
           from pathlib import Path
