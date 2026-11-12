@@ -46,3 +46,50 @@ style.textContent=`
 document.head.append(style);
 if(!init()){let n=0;const t=setInterval(()=>{if(init()||++n>120)clearInterval(t)},100)}
 })();
+
+/* Approved mockup layout phase 1: move existing emergency actions above trip/account
+   panels; keep original button nodes and event listeners. Emergency card artwork is
+   intentionally deferred to phase 2. */
+(()=>{'use strict';
+ function arrange(){
+  const home=document.querySelector('.scSimpleHome');
+  const grid=home?.querySelector('.scHomeGrid');
+  const account=document.getElementById('ldMobileAccountSection');
+  const trips=document.getElementById('ldMobileTrips');
+  if(!grid||!account||!trips)return false;
+  const emergency=grid.querySelector('.scHomeSOS');
+  const weather=grid.querySelector('.scHomeNWS');
+  if(!emergency||!weather)return false;
+  let safety=document.getElementById('ldSafetyFirst');
+  if(!safety){safety=document.createElement('section');safety.id='ldSafetyFirst';safety.setAttribute('aria-label','Safety first');grid.before(safety);}
+  if(emergency.parentElement!==safety)safety.append(emergency);
+  if(weather.parentElement!==safety)safety.append(weather);
+  let adventure=document.getElementById('ldAdventureTiles');
+  if(!adventure){adventure=document.createElement('section');adventure.id='ldAdventureTiles';adventure.setAttribute('aria-label','Adventure and navigation');grid.before(adventure);}
+  if(account.parentElement!==adventure)adventure.append(account);
+  if(trips.parentElement!==adventure)adventure.append(trips);
+  if(grid.parentElement!==adventure)adventure.append(grid);
+  return true;
+ }
+ const css=document.createElement('style');css.id='ldMockupLayoutPhase1';
+ css.textContent=`
+ @media(max-width:1049px){
+ #appMain.scHomeActive .scSimpleHome{max-width:760px!important}
+ #appMain.scHomeActive #ldSafetyFirst{display:grid;gap:9px;margin:8px 0 14px}
+ #appMain.scHomeActive #ldSafetyFirst>button{display:flex!important;width:100%!important;min-height:75px!important;margin:0!important;grid-column:auto!important}
+ #appMain.scHomeActive #ldAdventureTiles{border-top:1px solid #2f8d88;padding-top:13px}
+ #appMain.scHomeActive #ldMobileAccountSection{margin:0 0 9px!important;padding:0!important;border:0!important;background:transparent!important}
+ #appMain.scHomeActive #ldAccountOpenMobile{width:100%!important;min-height:43px!important;text-align:left!important}
+ #appMain.scHomeActive #ldMobileTrips{margin:0 0 10px!important;padding:0!important;border:0!important;background:transparent!important}
+ #appMain.scHomeActive #ldMobileTrips>h2,#appMain.scHomeActive #ldMobileTrips>p{display:none!important}
+ #appMain.scHomeActive #ldMobileTrips .ldMobileTripActions{gap:8px!important}
+ #appMain.scHomeActive #ldMobileTrips button{min-height:105px!important;align-items:flex-end!important;text-align:left!important;padding:12px!important;border-color:#4fa7a3!important;background:linear-gradient(0deg,#001a22ed,#002b3566 70%),url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=650&q=75') center/cover,#073a44!important}
+ #appMain.scHomeActive #ldMobileTrips #ldMobileManage{background-image:linear-gradient(0deg,#001a22ed,#002b3566 70%),url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=650&q=75')!important}
+ #appMain.scHomeActive #ldAdventureTiles .scHomeGrid{gap:7px!important}
+ #appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button{min-height:105px!important}
+ }
+ @media(min-width:1050px){#ldSafetyFirst,#ldAdventureTiles{display:contents}}
+ `;
+ document.head.append(css);
+ if(!arrange()){let tries=0;const timer=setInterval(()=>{if(arrange()||++tries>120)clearInterval(timer)},100)}
+})();
