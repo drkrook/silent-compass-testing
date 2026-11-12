@@ -165,3 +165,54 @@ padding:12px!important;min-height:110px!important;gap:3px!important;
 @media(prefers-reduced-data:reduce){#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button{background-image:linear-gradient(155deg,#06464a,#03232b)!important}}
 `;document.head.append(style);
 })();
+
+
+/* Beta Phase 4: category-specific photographic cards and clearer safety imagery.
+   Purely visual: existing actions, card order, account drawer and offline logic unchanged. */
+(()=>{'use strict';
+const style=document.createElement('style');style.id='ldCategoryPhotographyPhase4';
+style.textContent=`
+@media(max-width:1049px){
+/* Leave the emergency label side dark; expose more photo on the right. */
+#appMain.scHomeActive #ldSafetyFirst>.scHomeSOS{
+ background-image:linear-gradient(90deg,rgba(95,3,18,.96) 0%,rgba(115,7,26,.77) 48%,rgba(18,2,12,.24) 100%),url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=900&q=80')!important;
+ background-position:center,center!important;background-size:cover!important;
+}
+#appMain.scHomeActive #ldSafetyFirst>.scHomeNWS{
+ background-image:linear-gradient(90deg,rgba(0,37,64,.96) 0%,rgba(0,66,104,.73) 48%,rgba(3,16,39,.23) 100%),url('https://images.unsplash.com/photo-1500534623283-312aade485b7?w=900&q=80')!important;
+ background-position:center,center!important;background-size:cover!important;
+}
+/* Each card now has its own subject; gradients preserve legible white labels. */
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button.scLedoviaCompass{
+ background-image:linear-gradient(0deg,#001b21f2 0%,#002a2d17 85%),url('https://images.unsplash.com/photo-1472396961693-142e6e269027?w=650&q=80')!important;
+}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-map-action="open"]{
+ background-image:linear-gradient(0deg,#00141df0 0%,#001b2730 85%),url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=650&q=80')!important;
+}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-map-action="gps"]{
+ background-image:linear-gradient(0deg,#00141df0 0%,#001b2730 85%),url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=650&q=80')!important;
+}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-go="routes"]{
+ background-image:linear-gradient(0deg,#00141df0 0%,#001b2730 85%),url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=650&q=80')!important;
+}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-go="survival"]{
+ background-image:linear-gradient(0deg,#00141df0 0%,#001b2730 85%),url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=650&q=80')!important;
+}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button[data-go="hazards"]{
+ background-image:linear-gradient(0deg,#00141df0 0%,#001b2730 85%),url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=650&q=80')!important;
+}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button#scFamilyOpen{
+ background-image:linear-gradient(0deg,#00141df0 0%,#001b2730 85%),url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=650&q=80')!important;
+}
+/* Stronger image contrast, readable labels and distinct card outline. */
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button:not(.scHomeSOS):not(.scHomeNWS){
+ background-position:center!important;background-size:cover!important;
+ border-color:#4a9e99!important;
+}
+}
+@media(prefers-reduced-data:reduce){
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button,
+#appMain.scHomeActive #ldSafetyFirst>button{background-image:linear-gradient(135deg,#083e46,#071c27)!important}
+}
+`;document.head.append(style);
+})();
