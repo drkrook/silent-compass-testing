@@ -1,0 +1,27 @@
+/* LEDOVIA Beta home photographic card trial — visual-only; no handler changes. */
+/* Remote images are optional enhancements. Teal gradients remain when offline. */
+@media(max-width:1049px){
+#appMain.scHomeActive .scHomeGrid>button:not(.scHomeSOS):not(.scHomeNWS){
+  position:relative!important;isolation:isolate!important;overflow:hidden!important;
+  min-height:158px!important;border-radius:18px!important;
+  border:1px solid #3b9c9b!important;
+  background-color:#0b3a43!important;
+  background-image:linear-gradient(180deg,rgba(4,22,33,.16) 0%,rgba(4,22,33,.48) 44%,rgba(2,19,29,.94) 100%),var(--ledovia-photo,linear-gradient(145deg,#165963,#092e40))!important;
+  background-size:cover!important;background-position:center!important;
+  box-shadow:inset 0 1px #ffffff3d,0 10px 22px #00121c88!important;
+  justify-content:flex-end!important;align-items:center!important;
+  padding:18px 12px!important;text-shadow:0 2px 7px #000d!important;
+}
+#appMain.scHomeActive .scHomeGrid>button:not(.scHomeSOS):not(.scHomeNWS) strong{color:#fff!important;font-weight:850!important;text-shadow:0 2px 8px #000!important}
+#appMain.scHomeActive .scHomeGrid>button:not(.scHomeSOS):not(.scHomeNWS) span:not(.scLedoviaNew){color:#f0f8f8!important;text-shadow:0 2px 7px #000!important}
+#appMain.scHomeActive .scHomeGrid>button:not(.scHomeSOS):not(.scHomeNWS) .ledoviaIcon{filter:drop-shadow(0 2px 5px #001a23)!important}
+#appMain.scHomeActive .scHomeGrid>button[data-go="map"]{--ledovia-photo:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=650&q=75')}
+#appMain.scHomeActive .scHomeGrid>button.scLedoviaCompass{--ledovia-photo:url('https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=650&q=75')}
+#appMain.scHomeActive .scHomeGrid>button[data-go="places"]{--ledovia-photo:url('https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=650&q=75')}
+#appMain.scHomeActive .scHomeGrid>button[data-go="routes"]{--ledovia-photo:url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=650&q=75')}
+#appMain.scHomeActive .scHomeGrid>button[data-go="survival"]{--ledovia-photo:url('https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=650&q=75')}
+#appMain.scHomeActive .scHomeGrid>button[data-go="hazards"]{--ledovia-photo:url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=650&q=75')}
+#appMain.scHomeActive .scHomeGrid>button#scFamilyOpen{--ledovia-photo:url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=650&q=75')}
+#appMain.scHomeActive .scHomeGrid>button[data-go="offline"]{--ledovia-photo:url('https://images.unsplash.com/photo-1458668383970-8ddd3927deed?auto=format&fit=crop&w=650&q=75')}
+@media(max-width:380px){#appMain.scHomeActive .scHomeGrid>button:not(.scHomeSOS):not(.scHomeNWS){min-height:148px!important;padding:12px 7px!important}}
+}
