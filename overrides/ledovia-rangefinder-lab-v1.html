@@ -181,6 +181,32 @@ body.smartRed .ledoviaPortraitCompass .value b,body.smartRed .ledoviaPortraitCom
 body.smartGreen .ledoviaPortraitCompass{border-color:#62c98c;box-shadow:0 0 0 8px #0b2519,0 0 25px #30b96b55;background:radial-gradient(circle,#102e1c,#07150d)}
 body.smartGreen .ledoviaPortraitCompass .value b,body.smartGreen .ledoviaPortraitCompass .pointer{color:#7bffa8}
 @media(orientation:landscape){.smartCompassControls{display:none!important}}
+</style><style id="ledovia-night-blackout-v8">
+/* Full interface blackout in portrait night modes; no change to Standard or live camera logic. */
+@media(orientation:portrait){
+body.smartRed,body.smartGreen{background:#000!important;color:#bbb!important}
+body.smartRed .shell,body.smartGreen .shell{background:#000!important}
+body.smartRed .brand,body.smartGreen .brand{background:#000!important;border-color:#171717!important;box-shadow:none!important}
+body.smartRed .stage,body.smartGreen .stage{background:#000!important;border-color:#171717!important;box-shadow:none!important}
+body.smartRed .stage:not(.camera-on) .fallback,body.smartGreen .stage:not(.camera-on) .fallback{background:#000!important}
+body.smartRed .ledoviaPortraitCompass,body.smartGreen .ledoviaPortraitCompass{background:#000!important;box-shadow:none!important}
+body.smartRed .ledoviaPortraitCompass:before,body.smartGreen .ledoviaPortraitCompass:before{opacity:.4}
+body.smartRed .ledoviaPortraitCompass .points span:not(.n){color:#b45a5a!important}
+body.smartGreen .ledoviaPortraitCompass .points span:not(.n){color:#529a67!important}
+body.smartRed .ledoviaPortraitCompass .value strong{color:#f48b8b!important;text-shadow:none!important}
+body.smartGreen .ledoviaPortraitCompass .value strong{color:#82d39b!important;text-shadow:none!important}
+body.smartRed .ledoviaModeHint,body.smartRed .smartStatus,body.smartRed .ledoviaAdvanced,body.smartRed #status,body.smartRed .tile,body.smartRed .inputs{background:#000!important;border-color:#462222!important;color:#b36b6b!important;box-shadow:none!important;text-shadow:none!important}
+body.smartGreen .ledoviaModeHint,body.smartGreen .smartStatus,body.smartGreen .ledoviaAdvanced,body.smartGreen #status,body.smartGreen .tile,body.smartGreen .inputs{background:#000!important;border-color:#1e462b!important;color:#70aa7b!important;box-shadow:none!important;text-shadow:none!important}
+body.smartRed button,body.smartRed input{background:#080000!important;border-color:#512525!important;color:#d87c7c!important;box-shadow:none!important}
+body.smartGreen button,body.smartGreen input{background:#000a02!important;border-color:#235732!important;color:#87bd92!important;box-shadow:none!important}
+body.smartRed button[aria-pressed=true]{background:#351014!important;border-color:#b14c4c!important}
+body.smartGreen button[aria-pressed=true]{background:#0b2913!important;border-color:#4a995f!important}
+body.smartRed .logo,body.smartRed h2,body.smartRed .field,body.smartRed .sub,body.smartRed .badge,body.smartRed .note,body.smartRed .readout{color:#9d5d5d!important}
+body.smartGreen .logo,body.smartGreen h2,body.smartGreen .field,body.smartGreen .sub,body.smartGreen .badge,body.smartGreen .note,body.smartGreen .readout{color:#66966e!important}
+body.smartRed .ledoviaPortraitCompass .n{color:#d85e5e!important}
+body.smartGreen .ledoviaPortraitCompass .n{color:#6ac583!important}
+body.smartRed .ledoviaPortraitCompass .value small,body.smartGreen .ledoviaPortraitCompass .value small{color:inherit!important}
+}
 </style></head><body><main class="shell"><header class="brand"><div><div class="logo">△ LEDOVIA</div><div class="sub">RANGEFINDER LAB · DEVELOPMENT PROTOTYPE</div></div><span class="badge">NOT FOR EMERGENCY NAVIGATION</span></header>
 <div class="rangeViewport"><section class="stage" id="stage" aria-label="Camera rangefinder preview"><div class="fallback"><span>⌖</span><h1>Rangefinder Camera</h1><p>Enable camera to display live view</p></div><video id="camera" autoplay muted playsinline></video><div class="hud"><div class="ledoviaModeHint"><strong id="modeName">Compass Dashboard</strong><span id="modeDetail">Demo bearing until compass enabled</span></div><div class="smartCompassControls"><div class="smartMode" role="group" aria-label="Compass mode"><button type="button" id="smartSimple" aria-pressed="true">Compass</button><button type="button" id="smartAzimuth" aria-pressed="false">Azimuth</button></div><div class="smartLights" role="group" aria-label="Lighting mode"><button type="button" data-light="standard" aria-pressed="true">Standard</button><button type="button" data-light="red" aria-pressed="false">Red Night</button><button type="button" data-light="green" aria-pressed="false">Green Night</button></div><div class="smartStatus" id="smartStatus" role="status">Heading: Manual/demo · GPS course: unavailable</div></div><div class="ledoviaPortraitCompass" aria-hidden="true"><div class="points"><span class="n">N</span><span class="e">E</span><span class="s">S</span><span class="w">W</span></div><span class="pointer">▲</span><div class="value"><small>AZIMUTH</small><strong id="portraitAz">62°</strong><small>BACK AZIMUTH</small><b id="portraitBack">242°</b></div></div><div class="heading" id="heading">—° · Heading unavailable</div><div class="cross"></div><div class="headingTape" aria-hidden="true"><span>NW</span><span>N</span><span>NE</span><span>E</span><span>SE</span></div><div class="compassDial" aria-hidden="true"><div class="dialTicks"><span class="north">N</span><span class="east">E</span><span class="south">S</span><span class="west">W</span><div class="dialNeedle">➤</div><div class="dialCenter" id="dialCenter">62°</div></div></div><div class="readout"><div>AZIMUTH <strong id="az">—°</strong></div><div>BACK AZIMUTH <strong id="back">—°</strong></div><div>MAP DISTANCE <strong id="distance">—</strong></div><div id="source">No mapped target selected</div></div></div></section>
 <button class="ledoviaFullscreen" id="ledoviaFullscreen" type="button" aria-label="Toggle fullscreen" title="Toggle fullscreen">⛶</button><div class="actions ledoviaPrimary"><button id="startCamera">Start Camera</button><button id="markTarget" type="button">Mark Target</button><button id="save">Save</button></div></div><details class="ledoviaAdvanced" id="advanced"><summary>Advanced Tools <span>Compass · GPS · Manual target</span></summary><div class="actions ledoviaSecondary"><button id="stopCamera">Stop Camera</button><button id="orientation">Enable Compass</button><button id="locate">Get GPS Location</button></div>
