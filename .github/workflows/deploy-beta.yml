@@ -502,7 +502,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-home-account-v39.js' not in s
-          s=s.replace(marker,'<script src="./ledovia-home-account-v39.js?v=46"></script>'+marker)
+          s=s.replace(marker,'<script src="./ledovia-home-account-v39.js?v=47"></script>'+marker)
           p.write_text(s)
           PY
           cp beta/beta-assets/ledovia-guest-gate-v40.js app/
