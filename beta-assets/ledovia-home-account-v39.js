@@ -216,3 +216,26 @@ style.textContent=`
 }
 `;document.head.append(style);
 })();
+
+
+/* Phase 4B: verified subject-specific Unsplash photos: emergency response, lightning, compass/map.
+   This is CSS-only; no changes to app behavior, safety order or account navigation. */
+(()=>{'use strict';
+const style=document.createElement('style');style.id='ldThreePhotoCorrectionPhase4B';
+style.textContent=`
+@media(max-width:1049px){
+#appMain.scHomeActive #ldSafetyFirst>.scHomeSOS{
+background-image:linear-gradient(90deg,rgba(85,0,14,.98) 0%,rgba(101,3,19,.89) 38%,rgba(41,2,12,.24) 100%),url('https://images.unsplash.com/photo-1766605371887-b26184e90e3d?auto=format&fit=crop&w=1000&q=82')!important;
+background-position:center,center 56%!important;background-size:cover!important;
+}
+#appMain.scHomeActive #ldSafetyFirst>.scHomeNWS{
+background-image:linear-gradient(90deg,rgba(0,31,54,.98) 0%,rgba(0,51,84,.86) 39%,rgba(0,18,44,.22) 100%),url('https://images.unsplash.com/photo-1763568972598-02eeb63efce1?auto=format&fit=crop&w=1000&q=82')!important;
+background-position:center,center 50%!important;background-size:cover!important;
+}
+#appMain.scHomeActive #ldAdventureTiles .scHomeGrid>button.scLedoviaCompass{
+background-image:linear-gradient(0deg,rgba(0,22,26,.96) 0%,rgba(0,22,26,.05) 82%),url('https://images.unsplash.com/photo-1488628278511-2177a435414d?auto=format&fit=crop&w=700&q=82')!important;
+background-position:center!important;background-size:cover!important;
+}
+}
+`;document.head.append(style);
+})();
