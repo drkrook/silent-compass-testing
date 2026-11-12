@@ -447,7 +447,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-mobile-trips-v38.js' not in s
-          s=s.replace(marker,'<script src="./ledovia-mobile-trips-v38.js?v=39"></script>'+marker)
+          s=s.replace(marker,'<script src="./ledovia-mobile-trips-v38.js?v=44"></script>'+marker)
           p.write_text(s)
           PY
           # Beta-only auth recovery: direct reset emails to the Beta app, never the Pages root.
