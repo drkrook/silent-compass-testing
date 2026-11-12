@@ -101,3 +101,37 @@ const css=document.createElement('style');css.textContent=`
 `;document.head.append(css);
 if(!init()){let n=0;const t=setInterval(()=>{if(init()||++n>120)clearInterval(t)},100)}
 })();
+
+/* Beta Phase 2: premium safety cards and Account moved to hamburger.
+   Reuses the original account button and its existing auth handler. */
+(()=>{'use strict';
+const css=document.createElement('style');css.id='ldSafetyAccountPhase2';css.textContent=`
+#appMain.scHomeActive #ldMobileAccountSection,#appMain.scHomeActive #ldDesktopAccountSection{display:none!important}
+#ledoviaMenuPanel #ldAccountOpenMobile{display:flex!important;align-items:center;justify-content:space-between;width:100%!important;min-height:48px!important;margin:8px 0!important;padding:12px 15px!important;border:1px solid #59b4aa!important;border-radius:10px!important;background:#10494f!important;color:white!important;font-size:15px!important;font-weight:750!important;text-align:left!important}
+#ledoviaMenuPanel #ldAccountOpenMobile:after{content:'›';font-size:24px;line-height:1}
+@media(max-width:1049px){
+#appMain.scHomeActive #ldSafetyFirst{gap:7px!important;margin:5px 0 12px!important}
+#appMain.scHomeActive #ldSafetyFirst>button{box-sizing:border-box!important;position:relative!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:3px!important;width:100%!important;min-height:86px!important;padding:12px 43px 12px 58px!important;text-align:left!important;border-radius:13px!important;color:#fff!important;overflow:hidden!important;text-shadow:0 2px 4px #000!important;box-shadow:0 4px 14px #00151a80!important}
+#appMain.scHomeActive #ldSafetyFirst>.scHomeSOS{background:linear-gradient(90deg,#710816f5 0%,#a9081eea 55%,#1a0916c0 100%),url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=900&q=75') center/cover,#760a18!important;border:2px solid #ff475a!important}
+#appMain.scHomeActive #ldSafetyFirst>.scHomeNWS{background:linear-gradient(90deg,#00334eea 0%,#065477df 58%,#061c39c4 100%),url('https://images.unsplash.com/photo-1500534623283-312aade485b7?w=900&q=75') center/cover,#064768!important;border:2px solid #35c8ec!important}
+#appMain.scHomeActive #ldSafetyFirst>button strong{display:block!important;width:100%!important;font-size:clamp(16px,4.1vw,19px)!important;line-height:1.2!important;margin:0!important;padding:0!important;text-align:left!important}
+#appMain.scHomeActive #ldSafetyFirst>button span{font-size:11px!important;line-height:1.35!important;text-align:left!important}
+#appMain.scHomeActive #ldSafetyFirst>button:before{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:29px;line-height:1}
+#appMain.scHomeActive #ldSafetyFirst>.scHomeSOS:before{content:'🚨'}
+#appMain.scHomeActive #ldSafetyFirst>.scHomeNWS:before{content:'⛈'}
+#appMain.scHomeActive #ldSafetyFirst>button:after{content:'›';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:29px;font-weight:300}
+#appMain.scHomeActive #ldSafetyFirst>button>svg,#appMain.scHomeActive #ldSafetyFirst>button>.ledoviaIcon{display:none!important}
+}
+`;document.head.append(css);
+function move(){
+ const menu=document.getElementById('ledoviaMenuPanel'),button=document.getElementById('ldAccountOpenMobile');
+ if(!menu||!button)return false;
+ if(button.parentElement!==menu){
+  const anchor=menu.querySelector('.ledoviaPanelTop');
+  if(anchor)anchor.after(button);else menu.prepend(button);
+  button.addEventListener('click',()=>menu.querySelector('[data-close-menu]')?.click());
+ }
+ return true;
+}
+if(!move()){let n=0;const timer=setInterval(()=>{if(move()||++n>120)clearInterval(timer)},100)}
+})();
