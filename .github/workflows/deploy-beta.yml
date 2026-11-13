@@ -138,7 +138,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-navigation-v7.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-navigation-v7.css?v=7"><script src="./ledovia-navigation-v7.js?v=8"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-navigation-v7.css?v=7"><script src="./ledovia-navigation-v7.js?v=9"></script>'+marker)
           p.write_text(s)
           PY
           python3 - <<'PY'
