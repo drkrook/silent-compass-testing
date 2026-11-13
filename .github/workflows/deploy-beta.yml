@@ -78,7 +78,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1, 'Beta closing body anchor missing'
           assert 'ledovia-compass-home.js' not in s, 'Duplicate compass injection'
-          s=s.replace(marker,'<script src="./ledovia-compass-home.js?v=1"></script>'+marker)
+          s=s.replace(marker,'<script src="./ledovia-compass-home.js?v=2"></script>'+marker)
           p.write_text(s)
           PY
           python3 - <<'PY'
