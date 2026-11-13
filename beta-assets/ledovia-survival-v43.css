@@ -23,3 +23,11 @@
 #panel-survival .ldvHubDetails>summary{cursor:pointer;font-weight:700;color:#c6f7f3;min-height:35px;padding:7px}
 #panel-survival .ldvGuideNote{color:#b9d4d1;font-size:11px;line-height:1.4;margin:10px 3px}
 @media(max-width:360px){#panel-survival .ldvGuideGrid{gap:8px}#panel-survival .ldvGuideCard{min-height:122px;padding:10px 7px;border-radius:15px}#panel-survival .ldvGuideCard .ldvIcon{font-size:23px;margin-right:5px}}
+
+/* v44: original tools are moved, not copied; no duplicate dashboard */
+#panel-survival .ldvHubDetails[hidden],#panel-survival .ldvGuideLanding[hidden]{display:none!important}
+#panel-survival .ldvHubDetails{padding:14px;margin-top:4px}
+#panel-survival .ldvGuideBack{min-height:48px;margin:0 0 12px;border:1px solid #5fe4df;background:#123d42;color:white;font-weight:700}
+#panel-survival .ldvSectionHeading{font-size:23px;color:#fff;margin:0 0 12px}
+#panel-survival .ldvOriginalHub>.survivalHead{display:none}
+#panel-survival .ldvOriginalHub>#survival-content{margin-top:0}
