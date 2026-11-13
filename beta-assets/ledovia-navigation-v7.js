@@ -80,3 +80,51 @@ style.textContent=`
  #appMain:has(#panel-survival.active) #panel-survival{display:block!important;width:100%!important;margin:0!important}
 }`;document.head.append(style);
 })();
+
+
+/* LEDOVIA Survival master design — Row 1 only, mobile Beta. */
+(()=>{'use strict';
+const css=document.createElement('style');css.id='ldSurvivalPhotoRow1';
+css.textContent=`
+@media(max-width:760px){
+ #ldSurvivalRow1{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0 18px}
+ #ldSurvivalRow1 button{position:relative;overflow:hidden;min-width:0;width:100%;height:135px;min-height:135px;border:2px solid #57e4da;border-radius:17px;margin:0!important;padding:0!important;text-align:left;background:#123b3b;color:#fff;box-shadow:0 5px 18px #00191b99}
+ #ldSurvivalRow1 button::before{content:"";position:absolute;inset:0;background-size:cover;background-position:center}
+ #ldSurvivalRow1 button[data-topic="firstaid"]::before{background-image:linear-gradient(0deg,#001d25ed 0%,#06232908 75%),url('https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=560&q=80')}
+ #ldSurvivalRow1 button[data-topic="shelter"]::before{background-image:linear-gradient(0deg,#001d25ed 0%,#06232908 75%),url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=560&q=80')}
+ #ldSurvivalRow1 button>span{position:absolute;bottom:13px;left:11px;right:7px;display:flex;gap:6px;align-items:center;font-size:17px;font-weight:750;line-height:1.12;text-shadow:0 2px 5px #001d22}
+ #ldSurvivalRow1 .ldIcon{font-size:24px;flex-shrink:0}
+ #ldSurvivalRow1 button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+ #ldSurvivalRow1Note{font-size:12px;color:#b8dad5;margin:0 0 12px}
+}
+@media(min-width:761px){#ldSurvivalRow1,#ldSurvivalRow1Note{display:none}}
+`;document.head.append(css);
+function init(){
+ const panel=document.getElementById('panel-survival');if(!panel)return false;
+ if(document.getElementById('ldSurvivalRow1'))return true;
+ const row=document.createElement('div');row.id='ldSurvivalRow1';row.setAttribute('aria-label','Survival guide categories');
+ for(const [topic,label,icon] of [['firstaid','First Aid','♡'],['shelter','Shelter','⌂']]){
+  const button=document.createElement('button');button.type='button';button.dataset.topic=topic;
+  button.innerHTML='<span><span class="ldIcon" aria-hidden="true">'+icon+'</span>'+label+'</span>';
+  button.setAttribute('aria-label','Explore '+label+' survival guides');
+  button.onclick=()=>{
+   const guide=[...panel.querySelectorAll('button')].find(b=>/survival guides|guides/i.test(b.textContent)&&!row.contains(b));
+   if(guide)guide.click();
+   const words=topic==='firstaid'?/first aid|medical|injur/i:/shelter|exposure|camp/i;
+   const headings=[...panel.querySelectorAll('h2,h3,h4,summary')];
+   const match=headings.find(el=>words.test(el.textContent));
+   if(match)match.scrollIntoView({block:'start',behavior:'smooth'});
+   else {
+    let notice=document.getElementById('ldSurvivalRow1Notice');
+    if(!notice){notice=document.createElement('p');notice.id='ldSurvivalRow1Notice';notice.setAttribute('role','status');row.after(notice)}
+    notice.textContent=label+' selected. Category-specific lessons will be organized during the content review.';
+   }
+  };
+  row.append(button);
+ }
+ const note=document.createElement('p');note.id='ldSurvivalRow1Note';note.textContent='Explore essential outdoor skills';
+ panel.prepend(note);note.after(row);
+ return true;
+}
+if(!init()){let tries=0;const timer=setInterval(()=>{if(init()||++tries>120)clearInterval(timer)},150)}
+})();
