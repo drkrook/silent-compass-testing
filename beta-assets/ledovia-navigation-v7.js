@@ -41,3 +41,28 @@ function init(){
 }
 if(!init()){let n=0;const t=setInterval(()=>{if(init()||++n>100)clearInterval(t)},100)}
 })();
+
+/* Mobile Survival focus v1: keep original guide and checklist handlers. */
+(()=>{'use strict';
+const style=document.createElement('style');style.id='ldSurvivalMobileFocusV1';
+style.textContent=`
+@media(max-width:760px){
+ #appMain:has(#panel-survival.active) .atlasTabs{display:none!important}
+ #panel-survival.active{padding:10px 12px 28px!important}
+ #panel-survival.active .survivalSubnav{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ #panel-survival.active .survivalSubnav button{margin:0!important;min-height:48px!important;border-radius:12px!important;font-size:14px!important}
+ #panel-survival.active .survivalHead{padding:4px 0 10px!important}
+ #panel-survival.active .survivalPack{border-radius:14px!important;padding:14px!important}
+}`;document.head.append(style);
+function focusSurvival(){
+ if(!matchMedia('(max-width:760px)').matches)return;
+ const panel=document.getElementById('panel-survival');
+ if(!panel?.classList.contains('active'))return;
+ requestAnimationFrame(()=>requestAnimationFrame(()=>{
+  if(panel.classList.contains('active'))panel.scrollIntoView({block:'start',behavior:'instant'});
+ }));
+}
+document.addEventListener('click',e=>{
+ if(e.target.closest('[data-go="survival"],#tab-survival'))focusSurvival();
+});
+})();
