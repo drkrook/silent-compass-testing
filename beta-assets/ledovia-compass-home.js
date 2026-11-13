@@ -67,3 +67,43 @@ return true;
 }
 if(!init()){let n=0;const timer=setInterval(()=>{if(init()||++n>80)clearInterval(timer)},200)}
 })();
+
+
+/* Beta landscape Rangefinder bridge v1.
+   Portrait compass and sensor logic remain unchanged. Landscape uses the existing
+   Rangefinder Lab in an isolated frame; no simulated distance measurement. */
+(()=>{'use strict';
+function init(){
+ const compass=document.getElementById('scLedoviaCompassView');
+ if(!compass)return false;
+ if(document.getElementById('ldLandscapeRangefinderBridge'))return true;
+ const wrap=document.createElement('div');wrap.id='ldLandscapeRangefinderBridge';
+ wrap.setAttribute('aria-label','Advanced landscape rangefinder');
+ const frame=document.createElement('iframe');frame.title='LEDOVIA Advanced Rangefinder';
+ frame.allow='camera; geolocation; fullscreen';frame.setAttribute('allowfullscreen','');
+ const exit=document.createElement('button');exit.type='button';exit.textContent='← Compass';exit.setAttribute('aria-label','Return to compass');
+ exit.onclick=()=>{compass.querySelector('#scCompassClose')?.click();sync()};
+ wrap.append(frame,exit);document.body.append(wrap);
+ const style=document.createElement('style');style.id='ldLandscapeRangefinderBridgeStyle';
+ style.textContent=`
+ #ldLandscapeRangefinderBridge{display:none;position:fixed;inset:0;z-index:100002;background:#03151b}
+ #ldLandscapeRangefinderBridge iframe{display:block;width:100%;height:100%;height:100dvh;border:0}
+ #ldLandscapeRangefinderBridge>button{position:absolute;top:calc(7px + env(safe-area-inset-top,0px));left:calc(7px + env(safe-area-inset-left,0px));z-index:3;background:#061d25e8;color:#fff;border:1px solid #75bfb8;border-radius:9px;padding:8px 11px;font:600 12px system-ui}
+ @media(orientation:landscape){#ldLandscapeRangefinderBridge.ldActive{display:block}}
+ `;document.head.append(style);
+ const landscape=matchMedia('(orientation:landscape)');
+ function sync(){
+  const active=compass.classList.contains('scOpen')&&landscape.matches;
+  wrap.classList.toggle('ldActive',active);
+  wrap.setAttribute('aria-hidden',String(!active));
+  if(active){if(!frame.getAttribute('src'))frame.src='./ledovia-rangefinder-lab-v1.html?v=8';}
+  else if(frame.getAttribute('src')){frame.removeAttribute('src');}
+ }
+ new MutationObserver(sync).observe(compass,{attributes:true,attributeFilter:['class']});
+ landscape.addEventListener?.('change',sync);
+ window.addEventListener('orientationchange',sync);
+ window.addEventListener('resize',sync);
+ sync();return true;
+}
+if(!init()){let count=0;const t=setInterval(()=>{if(init()||++count>100)clearInterval(t)},100)}
+})();
