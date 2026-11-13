@@ -11,8 +11,8 @@
 #panel-survival .ldvGuideCard.ldvWide{grid-column:1/-1;min-height:108px;align-items:center;padding-left:25%;background-position:center 55%}
 #panel-survival .ldvGuideCard.ldvWide .ldvLabel{font-size:clamp(17px,4.3vw,23px)}
 #panel-survival .ldvGuideCard.ldvWide small{display:block;margin-top:6px;font-size:12px;font-weight:400}
-#panel-survival .ldvGuideCard[data-guide="first"]{--ldv-photo:url('https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=650&q=75')}
-#panel-survival .ldvGuideCard[data-guide="shelter"]{--ldv-photo:url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=650&q=75')}
+#panel-survival .ldvGuideCard[data-guide="first"]{--ldv-photo:url('./first-aid.webp')}
+#panel-survival .ldvGuideCard[data-guide="shelter"]{--ldv-photo:url('./shelter.webp')}
 #panel-survival .ldvGuideCard[data-guide="water"]{--ldv-photo:url('https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?auto=format&fit=crop&w=650&q=75')}
 #panel-survival .ldvGuideCard[data-guide="fire"]{--ldv-photo:url('https://images.unsplash.com/photo-1475738198235-4b30fc083d4a?auto=format&fit=crop&w=650&q=75')}
 #panel-survival .ldvGuideCard[data-guide="navigation"]{--ldv-photo:url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=650&q=75')}
