@@ -1,0 +1,25 @@
+/* Ledovia Survival Guides approved Beta visual shell v43. Existing hub remains functional. */
+#panel-survival .ldvGuideLanding{max-width:780px;margin:0 auto;padding:10px 0 24px;color:#fff}
+#panel-survival .ldvGuideBrand{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 8px}
+#panel-survival .ldvGuideBrand strong{font-size:clamp(20px,5vw,29px);letter-spacing:.01em}
+#panel-survival .ldvGuideBrand span{color:#65e5df;font-size:11px;letter-spacing:.17em}
+#panel-survival .ldvGuideGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#panel-survival .ldvGuideCard{margin:0;position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:flex-end;justify-content:flex-start;width:100%;min-height:138px;padding:14px 11px;border:2px solid #5fe4df;border-radius:20px;background-color:#073039;background-image:linear-gradient(180deg,#03202b10 0%,#031c28ee 100%),var(--ldv-photo,linear-gradient(130deg,#15545a,#092a36));background-position:center;background-size:cover;text-align:left;color:#fff;box-shadow:0 6px 18px #001a2180}
+#panel-survival .ldvGuideCard:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#panel-survival .ldvGuideCard .ldvIcon{font-size:28px;line-height:1;margin-right:8px;filter:drop-shadow(0 2px 3px #000)}
+#panel-survival .ldvGuideCard .ldvLabel{font-size:clamp(13px,3.8vw,20px);font-weight:800;line-height:1.1;text-shadow:0 2px 7px #000}
+#panel-survival .ldvGuideCard.ldvWide{grid-column:1/-1;min-height:108px;align-items:center;padding-left:25%;background-position:center 55%}
+#panel-survival .ldvGuideCard.ldvWide .ldvLabel{font-size:clamp(17px,4.3vw,23px)}
+#panel-survival .ldvGuideCard.ldvWide small{display:block;margin-top:6px;font-size:12px;font-weight:400}
+#panel-survival .ldvGuideCard[data-guide="first"]{--ldv-photo:url('https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=650&q=75')}
+#panel-survival .ldvGuideCard[data-guide="shelter"]{--ldv-photo:url('https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=650&q=75')}
+#panel-survival .ldvGuideCard[data-guide="water"]{--ldv-photo:url('https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?auto=format&fit=crop&w=650&q=75')}
+#panel-survival .ldvGuideCard[data-guide="fire"]{--ldv-photo:url('https://images.unsplash.com/photo-1475738198235-4b30fc083d4a?auto=format&fit=crop&w=650&q=75')}
+#panel-survival .ldvGuideCard[data-guide="navigation"]{--ldv-photo:url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=650&q=75')}
+#panel-survival .ldvGuideCard[data-guide="weather"]{--ldv-photo:url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=650&q=75')}
+#panel-survival .ldvGuideCard[data-guide="checklists"]{--ldv-photo:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=850&q=75')}
+#panel-survival .ldvGuideCard[data-guide="library"]{--ldv-photo:url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=850&q=75')}
+#panel-survival .ldvHubDetails{margin:15px 0;border:1px solid #2e6669;border-radius:14px;padding:10px;background:#102d32}
+#panel-survival .ldvHubDetails>summary{cursor:pointer;font-weight:700;color:#c6f7f3;min-height:35px;padding:7px}
+#panel-survival .ldvGuideNote{color:#b9d4d1;font-size:11px;line-height:1.4;margin:10px 3px}
+@media(max-width:360px){#panel-survival .ldvGuideGrid{gap:8px}#panel-survival .ldvGuideCard{min-height:122px;padding:10px 7px;border-radius:15px}#panel-survival .ldvGuideCard .ldvIcon{font-size:23px;margin-right:5px}}
