@@ -143,3 +143,17 @@ css.textContent=`
  background-position:center!important}
 }`;document.head.append(css);
 })();
+
+
+/* Shelter visibility correction v3: brighter tent-focused composition only. */
+(()=>{'use strict';if(document.getElementById('ldShelterVisibilityV3'))return;
+const css=document.createElement('style');css.id='ldShelterVisibilityV3';
+css.textContent=`
+@media(max-width:760px){
+ #ldSurvivalRow1 button[data-topic="shelter"]::before{
+ background-image:linear-gradient(0deg,rgba(0,24,30,.84) 0%,rgba(0,24,30,.02) 55%),url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=700&q=85')!important;
+ background-position:center center!important;
+ filter:brightness(1.13) saturate(1.16);
+ }
+}`;document.head.append(css);
+})();
