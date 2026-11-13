@@ -66,3 +66,17 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-go="survival"],#tab-survival'))focusSurvival();
 });
 })();
+
+
+/* Mobile Survival dedicated page v2: hide map presentation only in Survival. */
+(()=>{'use strict';
+const style=document.createElement('style');style.id='ldSurvivalDedicatedMobileV2';
+style.textContent=`
+@media(max-width:760px){
+ #appMain:has(#panel-survival.active){display:block!important;min-height:0!important}
+ #appMain:has(#panel-survival.active)>#mapwrap{display:none!important}
+ #appMain:has(#panel-survival.active)>#sidePanel{display:block!important;width:100%!important;max-width:none!important;max-height:none!important;height:auto!important;overflow:visible!important;margin:0!important;padding:0 10px 24px!important}
+ #appMain:has(#panel-survival.active) #sidePanel>.panelTop{display:none!important}
+ #appMain:has(#panel-survival.active) #panel-survival{display:block!important;width:100%!important;margin:0!important}
+}`;document.head.append(style);
+})();
