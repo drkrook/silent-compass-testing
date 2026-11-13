@@ -6,7 +6,7 @@ function init(){
  if(!header||!home||!grid||!language||!version||!connection)return false;
  if(document.getElementById('ledoviaMenuButton'))return true;
  const menuButton=document.createElement('button');menuButton.id='ledoviaMenuButton';menuButton.type='button';menuButton.textContent='☰';menuButton.setAttribute('aria-label','Open navigation menu');menuButton.setAttribute('aria-controls','ledoviaMenuPanel');menuButton.setAttribute('aria-expanded','false');
- const bell=document.createElement('button');bell.id='ledoviaBellButton';bell.type='button';bell.textContent='♧';bell.innerHTML='<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>';bell.setAttribute('aria-label','Open app notifications');bell.setAttribute('aria-controls','ledoviaNotificationPanel');bell.setAttribute('aria-expanded','false');
+ const bell=document.createElement('button');bell.id='ledoviaBellButton';bell.type='button';bell.textContent='♧';bell.innerHTML='<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg>';bell.setAttribute('aria-label','Go to Home');bell.setAttribute('title','Home');
  header.append(menuButton,bell);
  const backdrop=document.createElement('div');backdrop.id='ledoviaBackdrop';backdrop.hidden=true;
  const panel=document.createElement('nav');panel.id='ledoviaMenuPanel';panel.setAttribute('aria-label','Ledovia navigation');panel.hidden=true;
@@ -26,17 +26,15 @@ function init(){
  version.removeAttribute('style');version.setAttribute('aria-label','Ledovia Beta version');
  connection.classList.add('ledoviaConnectionHidden');
  function state(){const online=navigator.onLine;notice.querySelector('#ledoviaConnectionState').textContent=online?'● Device reports an internet connection. Download availability is not verified.':'○ Device reports offline. Only previously stored resources may be available.';}
- function close(){panel.hidden=true;notice.hidden=true;backdrop.hidden=true;menuButton.setAttribute('aria-expanded','false');bell.setAttribute('aria-expanded','false')}
+ function close(){panel.hidden=true;notice.hidden=true;backdrop.hidden=true;menuButton.setAttribute('aria-expanded','false');}
  function open(which){close();backdrop.hidden=false;which.hidden=false;(which===panel?menuButton:bell).setAttribute('aria-expanded','true');which.querySelector('button')?.focus();if(which===notice)state()}
- menuButton.onclick=()=>panel.hidden?open(panel):close();bell.onclick=()=>notice.hidden?open(notice):close();
+ menuButton.onclick=()=>panel.hidden?open(panel):close();bell.onclick=()=>{close();if(window.GridDownTabs&&typeof window.GridDownTabs.activate==='function'){window.GridDownTabs.activate('home')}else{document.querySelector('[data-tab="home"]')?.click()}};
  backdrop.onclick=close;panel.querySelector('[data-close-menu]').onclick=()=>{close();menuButton.focus()};
  notice.querySelector('[data-close-notice]').onclick=()=>{close();bell.focus()};
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&(!panel.hidden||!notice.hidden))close()});
  panel.querySelectorAll('#ledoviaPlaces button,#ledoviaFamily button,#ledoviaPreparedness button').forEach(b=>b.addEventListener('click',close));
  notice.querySelector('#ledoviaOfflineLink').onclick=()=>{close();offline.click()};
  window.addEventListener('online',state);window.addEventListener('offline',state);
- const update=document.getElementById('scUpdateNotice');
- if(update){const observer=new MutationObserver(()=>{if(!update.hidden){bell.classList.add('ledoviaHasNotice');bell.setAttribute('aria-label','App update available; open notifications')}else{bell.classList.remove('ledoviaHasNotice');bell.setAttribute('aria-label','Open app notifications')}});observer.observe(update,{attributes:true,attributeFilter:['hidden']});}
  return true;
 }
 if(!init()){let n=0;const t=setInterval(()=>{if(init()||++n>100)clearInterval(t)},100)}
