@@ -8,14 +8,14 @@ function init(){
  landing.innerHTML='<div class="ldvGuideBrand"><div><strong>LEDOVIA | Survival Guides</strong><div><span>SURVIVAL / PREPAREDNESS / SAFETY</span></div></div></div><div class="ldvGuideGrid"></div><p class="ldvGuideNote">Online references require internet. Checklist data stays on this device. No premium access or offline article downloads are active.</p>';
  const grid=landing.querySelector('.ldvGuideGrid');
  const cards=[
+ ['checklists','☑','Preparedness Checklists','lists',''],
+ ['library','⇩','Offline Guide Library','library',''],
  ['first','♡','First Aid','guides','First Aid'],
  ['shelter','⌂','Shelter','guides','Shelter Building'],
  ['water','♧','Water & Food','guides','Water Purification'],
  ['fire','♨','Fire & Warmth','guides','Fire Starting'],
  ['navigation','◉','Navigation','guides','Navigation'],
- ['weather','⚡','Weather & Hazards','hazards',''],
- ['checklists','☑','Preparedness Checklists','lists',''],
- ['library','⇩','Offline Guide Library','library','']
+ ['weather','⚡','Weather & Hazards','hazards','']
  ];
  const details=document.createElement('section');details.className='ldvHubDetails';details.hidden=true;
  const back=document.createElement('button');back.type='button';back.className='ldvGuideBack';back.textContent='← All Survival Guides';
