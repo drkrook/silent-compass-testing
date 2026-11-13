@@ -128,3 +128,18 @@ function init(){
 }
 if(!init()){let tries=0;const timer=setInterval(()=>{if(init()||++tries>120)clearInterval(timer)},150)}
 })();
+
+
+/* Approved Survival Row 1 photography correction — preserve layout and handlers. */
+(()=>{'use strict';if(document.getElementById('ldSurvivalRow1PhotosV2'))return;
+const css=document.createElement('style');css.id='ldSurvivalRow1PhotosV2';
+css.textContent=`
+@media(max-width:760px){
+ #ldSurvivalRow1 button[data-topic="firstaid"]::before{
+ background-image:linear-gradient(0deg,rgba(0,24,30,.92) 0%,rgba(0,24,30,.05) 65%),url('https://images.stockcake.com/public/1/5/4/15432da4-dcb4-4485-9128-3cd3eb706f17_medium/outdoor-medical-kit-stockcake.jpg')!important;
+ background-position:center!important}
+ #ldSurvivalRow1 button[data-topic="shelter"]::before{
+ background-image:linear-gradient(0deg,rgba(0,24,30,.92) 0%,rgba(0,24,30,.05) 65%),url('https://images.unsplash.com/photo-1465695954255-a262b0f57b40?w=650&q=80')!important;
+ background-position:center!important}
+}`;document.head.append(css);
+})();
