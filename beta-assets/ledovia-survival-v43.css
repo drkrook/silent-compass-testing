@@ -13,12 +13,12 @@
 #panel-survival .ldvGuideCard.ldvWide small{display:block;margin-top:6px;font-size:12px;font-weight:400}
 #panel-survival .ldvGuideCard[data-guide="first"]{--ldv-photo:url('./first-aid.webp')}
 #panel-survival .ldvGuideCard[data-guide="shelter"]{--ldv-photo:url('./shelter.webp')}
-#panel-survival .ldvGuideCard[data-guide="water"]{--ldv-photo:url('https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?auto=format&fit=crop&w=650&q=75')}
-#panel-survival .ldvGuideCard[data-guide="fire"]{--ldv-photo:url('https://images.unsplash.com/photo-1475738198235-4b30fc083d4a?auto=format&fit=crop&w=650&q=75')}
-#panel-survival .ldvGuideCard[data-guide="navigation"]{--ldv-photo:url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=650&q=75')}
-#panel-survival .ldvGuideCard[data-guide="weather"]{--ldv-photo:url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=650&q=75')}
-#panel-survival .ldvGuideCard[data-guide="checklists"]{--ldv-photo:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=850&q=75')}
-#panel-survival .ldvGuideCard[data-guide="library"]{--ldv-photo:url('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=850&q=75')}
+#panel-survival .ldvGuideCard[data-guide="water"]{--ldv-photo:url('./file_00000000efbc81f6a3253933c86e501a.png')}
+#panel-survival .ldvGuideCard[data-guide="fire"]{--ldv-photo:url('./fire-warmth.webp')}
+#panel-survival .ldvGuideCard[data-guide="navigation"]{--ldv-photo:url('./navigation.webp')}
+#panel-survival .ldvGuideCard[data-guide="weather"]{--ldv-photo:url('./weather-hazards.webp')}
+#panel-survival .ldvGuideCard[data-guide="checklists"]{--ldv-photo:url('./preparedness-checklists.webp')}
+#panel-survival .ldvGuideCard[data-guide="library"]{--ldv-photo:url('./offline-guide-library.webp')}
 #panel-survival .ldvHubDetails{margin:15px 0;border:1px solid #2e6669;border-radius:14px;padding:10px;background:#102d32}
 #panel-survival .ldvHubDetails>summary{cursor:pointer;font-weight:700;color:#c6f7f3;min-height:35px;padding:7px}
 #panel-survival .ldvGuideNote{color:#b9d4d1;font-size:11px;line-height:1.4;margin:10px 3px}
