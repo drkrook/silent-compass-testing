@@ -157,3 +157,33 @@ css.textContent=`
  }
 }`;document.head.append(css);
 })();
+
+
+/* Survival compact Pantry-style wordmark header v1 (mobile Beta only).
+   Uses live styled lettering, not a baked-in image, to keep text crisp and offline. */
+(()=>{'use strict';
+if(document.getElementById('ldSurvivalCompactBrand'))return;
+const header=document.querySelector('body > header');
+const panel=document.getElementById('panel-survival');
+if(!header||!panel)return;
+const brand=document.createElement('div');brand.id='ldSurvivalCompactBrand';
+brand.setAttribute('aria-label','LEDOVIA — Ready for the Adventure');
+brand.innerHTML='<div class="ldCompactWord">LEDO<span>VIA</span></div><div class="ldCompactTag">READY FOR THE ADVENTURE</div>';
+header.append(brand);
+const style=document.createElement('style');style.id='ldSurvivalCompactHeaderStyle';
+style.textContent=`
+@media(max-width:760px){
+ body.ldSurvivalCompact header{position:relative!important;box-sizing:border-box!important;min-height:112px!important;height:112px!important;padding:8px 12px!important;background:#062b33!important;background-image:radial-gradient(ellipse at 65% 35%,#0b5355 0%,#062b33 62%,#031c25 100%)!important;border-bottom:1px solid #2baba4!important}
+ body.ldSurvivalCompact header h1{display:none!important}
+ body.ldSurvivalCompact #ldSurvivalCompactBrand{position:absolute;left:50%;top:10px;transform:translateX(-50%);width:calc(100% - 128px);text-align:center;pointer-events:none;color:white}
+ body.ldSurvivalCompact .ldCompactWord{font:900 clamp(24px,7vw,38px)/1.15 system-ui,sans-serif;letter-spacing:.11em;white-space:nowrap;text-shadow:0 2px 9px #001c24}
+ body.ldSurvivalCompact .ldCompactWord span{color:#4fe1d0}
+ body.ldSurvivalCompact .ldCompactTag{margin-top:8px;font:700 clamp(8px,2.1vw,11px)/1.3 system-ui,sans-serif;letter-spacing:.15em;color:#c7e5e3;white-space:nowrap}
+}
+#ldSurvivalCompactBrand{display:none}
+@media(max-width:760px){body.ldSurvivalCompact #ldSurvivalCompactBrand{display:block}}
+`;document.head.append(style);
+function sync(){document.body.classList.toggle('ldSurvivalCompact',panel.classList.contains('active'))}
+new MutationObserver(sync).observe(panel,{attributes:true,attributeFilter:['class','style']});
+sync();
+})();
