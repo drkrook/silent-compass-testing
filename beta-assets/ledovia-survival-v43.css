@@ -17,8 +17,8 @@
 #panel-survival .ldvGuideCard[data-guide="fire"]{--ldv-photo:url('./fire-warmth.webp')}
 #panel-survival .ldvGuideCard[data-guide="navigation"]{--ldv-photo:url('./navigation.webp')}
 #panel-survival .ldvGuideCard[data-guide="weather"]{--ldv-photo:url('./weather-hazards.webp')}
-#panel-survival .ldvGuideCard[data-guide="checklists"]{--ldv-photo:url('./preparedness-checklists.webp')}
-#panel-survival .ldvGuideCard[data-guide="library"]{--ldv-photo:url('./offline-guide-library.webp')}
+#panel-survival .ldvGuideCard[data-guide="checklists"]{--ldv-photo:url('./preparedness-checklists-photo.webp')}
+#panel-survival .ldvGuideCard[data-guide="library"]{--ldv-photo:url('./offline-guide-library-photo.webp')}
 #panel-survival .ldvHubDetails{margin:15px 0;border:1px solid #2e6669;border-radius:14px;padding:10px;background:#102d32}
 #panel-survival .ldvHubDetails>summary{cursor:pointer;font-weight:700;color:#c6f7f3;min-height:35px;padding:7px}
 #panel-survival .ldvGuideNote{color:#b9d4d1;font-size:11px;line-height:1.4;margin:10px 3px}
