@@ -528,13 +528,25 @@ jobs:
           s=s.replace(marker,'<script src="./ledovia-password-recovery-v41.js?v=2"></script>'+marker)
           p.write_text(s)
           PY
+          # Restore the previously selected workspace after mobile pull-to-refresh.
+          # Patch the generated Beta HTML only; never modify the Stable source.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          old="activate('home');\n window.GridDownTabs={activate};"
+          new="activate(names.some(([id])=>id===saved)?saved:'home');\n window.GridDownTabs={activate};"
+          assert s.count(old)==1, 'Expected active-tab startup sequence not found'
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
           # Release version is authoritative after all baseline substitutions.
           python3 - <<'PY'
           from pathlib import Path
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.341', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.342', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
