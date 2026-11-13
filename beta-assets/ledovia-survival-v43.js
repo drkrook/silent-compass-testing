@@ -17,9 +17,12 @@ function init(){
  ['checklists','☑','Preparedness Checklists','lists',''],
  ['library','⇩','Offline Guide Library','library','']
  ];
- const details=document.createElement('details');details.className='ldvHubDetails';
- const summary=document.createElement('summary');summary.textContent='Existing Survival Hub tools';details.append(summary);
- oldNodes.forEach(n=>details.append(n));panel.append(landing,details);
+ const details=document.createElement('section');details.className='ldvHubDetails';details.hidden=true;
+ const back=document.createElement('button');back.type='button';back.className='ldvGuideBack';back.textContent='← All Survival Guides';
+ back.addEventListener('click',()=>{details.hidden=true;landing.hidden=false;landing.scrollIntoView({block:'start'});});
+ const heading=document.createElement('h2');heading.className='ldvSectionHeading';details.append(back,heading);
+ const original=document.createElement('div');original.className='ldvOriginalHub';
+ oldNodes.forEach(n=>original.append(n));details.append(original);panel.append(landing,details);
  cards.forEach(([key,icon,label,view,category])=>{
   const b=document.createElement('button');b.type='button';b.className='ldvGuideCard'+(['checklists','library'].includes(key)?' ldvWide':'');
   b.dataset.guide=key;b.setAttribute('aria-label','Open '+label);
@@ -27,7 +30,8 @@ function init(){
   b.innerHTML='<span class="ldvIcon" aria-hidden="true">'+icon+'</span><span class="ldvLabel">'+label+(subtitle?'<small>'+subtitle+'</small>':'')+'</span>';
   b.addEventListener('click',()=>{
    if(view==='hazards'){const tab=document.getElementById('tab-hazards');if(tab)tab.click();return;}
-   details.open=true;
+   heading.textContent=label;
+   landing.hidden=true;details.hidden=false;
    const nav=details.querySelector('.survivalSubnav [data-view="'+view+'"]');if(nav)nav.click();
    if(category){const select=details.querySelector('#guide-category');if(select&&[...select.options].some(o=>o.value===category)){select.value=category;select.dispatchEvent(new Event('change',{bubbles:true}));}}
    details.scrollIntoView({block:'start',behavior:'auto'});
