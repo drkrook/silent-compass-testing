@@ -223,3 +223,28 @@ body.ldvViewerActive{overflow:hidden!important}
 /* Beta: hero supplies the Water/Food title; keep heading for other guide pages. */
 #panel-survival .ldvHubDetails.ldvWaterMode>.ldvSectionHeading{display:none!important}
 #panel-survival .ldvHubDetails.ldvWaterMode>.ldvWaterHomeButton{display:none!important}
+
+/* Beta v0.8.382: approved premium Off-Grid Cooking scaffold. */
+#panel-survival .ldvCookingHub{display:grid;gap:17px;padding-top:8px}
+#panel-survival .ldvCookingHub[hidden]{display:none!important}
+#panel-survival .ldvCookingHero{min-height:180px;border:1px solid #42d4d0;border-radius:17px;overflow:hidden;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:22px 18px;color:#fff;background:linear-gradient(90deg,#05292df5 0%,#05292dd0 48%,#05292d44 100%),url('./ledovia-water-food-card-photos-1.webp') center/cover;box-shadow:0 5px 18px #00191e77}
+#panel-survival .ldvCookingHero span{font-size:11px;letter-spacing:.15em;font-weight:800;color:#a6f6ef}
+#panel-survival .ldvCookingHero strong{font-size:clamp(27px,7vw,40px);font-weight:900;line-height:1.15;margin:8px 0;color:#fff}
+#panel-survival .ldvCookingHero em{font-style:normal;font-size:13px;font-weight:700;color:#52ece3}
+#panel-survival .ldvCookingSafety{width:100%;text-align:left;display:flex;flex-direction:column;gap:8px;padding:17px;border:2px solid #e7bf4a;border-radius:17px;background:linear-gradient(135deg,#213c32,#092b2d);color:#fff;box-shadow:0 0 12px #d9a82a55}
+#panel-survival .ldvCookingSafety strong{font-size:19px}
+#panel-survival .ldvCookingSafety span{font-size:14px;line-height:1.4}
+#panel-survival .ldvCookingSafety small{color:#d6d8cb;font-size:12px}
+#panel-survival .ldvCookingHub h3{border-left:4px solid #39e5dc;padding-left:10px;margin:5px 0 0;color:#fff}
+#panel-survival .ldvCookingGrid,#panel-survival .ldvCookingEssentials{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#panel-survival .ldvCookingCard{padding:0;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;text-align:left;background:#123d43;color:#fff;border:1px solid #315c62;border-radius:15px;min-width:0}
+#panel-survival .ldvCookingCard strong{font-size:15px;padding:10px 12px 3px}
+#panel-survival .ldvCookingCard small{font-size:12px;color:#b8c9c8;padding:0 12px 12px;line-height:1.35}
+#panel-survival .ldvCookingPhoto{height:128px;width:100%;display:block;background-image:url('./ledovia-water-food-card-photos-1.webp');background-size:400% 200%;background-position:0% 100%;background-repeat:no-repeat}
+#panel-survival .ldvCookingPhoto2 .ldvCookingPhoto{background-position:33.333% 100%}
+#panel-survival .ldvCookingPhoto3 .ldvCookingPhoto{background-position:66.666% 100%}
+#panel-survival .ldvCookingPhoto4 .ldvCookingPhoto{background-position:100% 100%}
+#panel-survival .ldvCookingPhoto5 .ldvCookingPhoto{background-position:0% 0%}
+#panel-survival .ldvCookingPhoto6 .ldvCookingPhoto{background-position:66.666% 0%}
+#panel-survival .ldvCookingPending{font-size:13px;color:#f0d898}
+#panel-survival .ldvCookingPending[hidden]{display:none!important}
