@@ -251,3 +251,13 @@ body.ldvViewerActive{overflow:hidden!important}
 
 /* Beta: individual uploaded cooking photos fill each card without cropping into a collage. */
 #panel-survival .ldvCookingCard .ldvCookingPhoto{background-size:cover!important;background-position:center!important}
+
+/* Beta Emergency Priorities photo card and real viewer shortcuts */
+#panel-survival .ldvWaterEmergency{min-height:185px;justify-content:flex-end;padding:16px!important;background:linear-gradient(0deg,#04262bf5 0%,#04262bc0 35%,#04262b10 100%),url('./ledovia-emergency-priorities.png') center 10%/cover no-repeat!important;border:1px solid #39ded6!important;box-shadow:0 5px 18px #00191e77!important}
+#panel-survival .ldvWaterEmergency strong{font-size:20px;text-shadow:0 2px 5px #001c20}
+#panel-survival .ldvWaterEmergency span{color:#fff;font-weight:600}
+.ldvEmergencyGuideNav[hidden],.ldvEmergencyFoodNote[hidden]{display:none!important}
+.ldvEmergencyGuideNav{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;padding:10px;background:#082c32;border-top:1px solid #32d7d2;max-height:130px;overflow:auto}
+.ldvEmergencyGuideNav button{background:#12515a;color:#fff;border:1px solid #42d7d0;border-radius:9px;padding:8px 10px;font-size:12px;font-weight:700}
+.ldvEmergencyGuideNav button:focus-visible{outline:2px solid #fff}
+.ldvEmergencyFoodNote{color:#fff;font-size:12px;padding:6px}
