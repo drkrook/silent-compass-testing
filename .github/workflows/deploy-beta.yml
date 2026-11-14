@@ -570,7 +570,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-survival-v43.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=70"><script src="./ledovia-survival-v43.js?v=76"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=71"><script src="./ledovia-survival-v43.js?v=77"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
           p.write_text(s)
           PY
           # Release version is authoritative after all baseline substitutions.
@@ -579,7 +579,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.379', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.380', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
