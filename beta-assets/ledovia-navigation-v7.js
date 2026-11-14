@@ -215,3 +215,37 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-go="survival"],#tab-survival'))setTimeout(topOnEntry,0);
 },true);
 })();
+
+/* Beta v0.8.381: weather warning banner from verified live NWS results only.
+   Does not poll, change alert fetching, or treat saved/offline alerts as live. */
+(()=>{'use strict';
+ function initWeatherBanner(){
+  const results=document.getElementById('scNwsResults'),status=document.getElementById('scNwsStatus');
+  if(!results||!status||results.dataset.ldvBannerWatch)return false;
+  results.dataset.ldvBannerWatch='1';
+  const banner=document.createElement('div');banner.id='ldvWeatherWarningBanner';banner.hidden=true;
+  banner.setAttribute('role','alert');
+  banner.innerHTML='<div><strong>⚠ Official Weather Alert</strong><span></span><small>From the latest online check. Tap for details; alerts can change.</small></div><button type="button" class="ldvWxView">View</button><button type="button" class="ldvWxDismiss" aria-label="Dismiss this banner">×</button>';
+  document.body.append(banner);
+  let lastSignature='';
+  const view=()=>{banner.hidden=true;if(window.GridDownTabs?.activate)window.GridDownTabs.activate('nws');else document.querySelector('[data-tab="nws"]')?.click();};
+  banner.querySelector('.ldvWxView').addEventListener('click',view);
+  banner.querySelector('.ldvWxDismiss').addEventListener('click',()=>{banner.hidden=true});
+  const update=()=>{
+   if(!status.textContent.startsWith('Last successful check:')){banner.hidden=true;return}
+   const alerts=[...results.querySelectorAll('.scNwsAlert summary')];
+   if(!alerts.length){banner.hidden=true;lastSignature='';return}
+   const signature=status.textContent+'|'+alerts.map(x=>x.textContent).join('|');
+   if(signature===lastSignature)return;
+   lastSignature=signature;
+   banner.querySelector('span').textContent=alerts.length+' active alert'+(alerts.length===1?'':'s')+': '+alerts.slice(0,2).map(x=>x.textContent.replace(/^⚠\s*/, '')).join(' · ');
+   banner.hidden=false;
+  };
+  new MutationObserver(update).observe(results,{childList:true});
+  return true;
+ }
+ if(!initWeatherBanner()){
+  const observer=new MutationObserver(()=>{if(initWeatherBanner())observer.disconnect()});
+  observer.observe(document.documentElement,{childList:true,subtree:true});
+ }
+})();
