@@ -553,6 +553,7 @@ jobs:
           cp beta/file_00000000efbc81f6a3253933c86e501a.png app/
           cp beta/preparedness-checklists-photo.webp beta/offline-guide-library-photo.webp app/
           cp beta/ledovia-water-food-card-photos-1.webp app/
+          cp 'beta/beta/ledovia-wild-food-banner.png' 'beta/beta/ledovia-foraging-safety-card.png' 'beta/beta/Foraging Safety Survival Guide Infographic.png' app/
           cp beta/file_00000000ca9481f6b81d1e193bfcf3a3.png app/
           cp beta/a_vertical_infographic_poster_in_the_same_style_as.png app/
           cp beta/file_00000000c23881f6aada86093724af1e.png app/
@@ -573,7 +574,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-survival-v43.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=78"><script src="./ledovia-survival-v43.js?v=85"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=79"><script src="./ledovia-survival-v43.js?v=86"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
           p.write_text(s)
           PY
           # Release version is authoritative after all baseline substitutions.
@@ -582,7 +583,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.390', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.391', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
