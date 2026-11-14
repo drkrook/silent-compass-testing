@@ -128,3 +128,13 @@ body.ldvViewerActive{overflow:hidden!important}
 .ldvGameViewer .ldvViewerScroll{overflow:auto;min-height:0}
 .ldvGameViewer .ldvViewerScroll img{max-width:none;display:block;height:auto}
 @media(orientation:landscape){.ldvViewerModes{padding:3px 12px;gap:8px}.ldvGameViewer .ldvViewerModes button{min-height:36px}}
+
+/* Image-only landscape reader; portrait keeps Back, Download and +/- controls. */
+@media(orientation:landscape){
+ .ldvGameViewer .ldvGameViewerBar,
+ .ldvGameViewer .ldvViewerControls,
+ .ldvGameViewer .ldvViewerWarning,
+ .ldvGameViewer .ldvViewerModes{display:none!important}
+ .ldvGameViewer .ldvViewerScroll{flex:1 1 auto!important;width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:auto!important;background:#081e25!important}
+ .ldvGameViewer .ldvViewerScroll img{display:block!important;max-width:none!important;height:auto!important}
+}
