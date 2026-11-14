@@ -181,3 +181,11 @@ body.ldvViewerActive{overflow:hidden!important}
 #panel-survival .ldvHunterSafetyTile .ldvGameAnimalPhoto{font-size:0!important;background-image:url('./file_00000000b55081f6bb8c7c5203b847cd.png')!important;background-size:210% auto!important;background-position:right top!important;background-repeat:no-repeat!important}
 #panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(9) .ldvGameAnimalPhoto{font-size:0!important;color:transparent!important;background-image:url('./file_00000000148081f69c05b4f562c22625.png')!important;background-size:210% auto!important;background-position:right top!important;background-repeat:no-repeat!important}
 #panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(10) .ldvGameAnimalPhoto{font-size:0!important;color:transparent!important;background-image:url('./file_00000000ccec81f69449d3cb58586060.png')!important;background-size:210% auto!important;background-position:right top!important;background-repeat:no-repeat!important}
+
+/* v0.8.375: photo-only header crops and full-width Hunter Safety card.
+   Uploaded poster art is cropped to the wildlife/hunter photograph area;
+   no infographic lettering or panels should appear on the cards. */
+#panel-survival .ldvHunterSafetyTile{width:100%!important;max-width:none!important;margin-bottom:18px!important}
+#panel-survival .ldvHunterSafetyTile .ldvGameAnimalPhoto{height:145px!important;background-size:300% 750%!important;background-position:right top!important}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(9) .ldvGameAnimalPhoto,
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(10) .ldvGameAnimalPhoto{background-size:400% 750%!important;background-position:right top!important}
