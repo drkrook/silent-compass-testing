@@ -84,3 +84,25 @@
 #panel-survival .ldvWaterTile.ldvPhotoCooking .ldvWaterTileArt{background-position:33.3333% 100%}
 #panel-survival .ldvWaterTile.ldvPhotoPreserve .ldvWaterTileArt{background-position:66.6667% 100%}
 #panel-survival .ldvWaterTile.ldvPhotoForage .ldvWaterTileArt{background-position:100% 100%}
+
+/* Approved Wild Game Preparation navigation; original Water/Food grid preserved. */
+#panel-survival .ldvGameHub[hidden],#panel-survival .ldvGameSelect[hidden],#panel-survival .ldvGameAnimal[hidden],#panel-survival .ldvGameArtwork[hidden]{display:none!important}
+#panel-survival .ldvGameHub{color:#fff;margin:0 auto;max-width:780px;padding:6px 0 22px}
+#panel-survival .ldvGameAlert{background:#17383d;border:1px solid #387b7e;border-radius:13px;padding:15px;color:#e5eeee}
+#panel-survival .ldvGameAlert strong{font-size:16px;color:#fff}
+#panel-survival .ldvGameAlert p{font-size:13px;line-height:1.45;margin:7px 0 0}
+#panel-survival .ldvGameHub h3{font-size:20px;color:#fff;margin:20px 0 12px}
+#panel-survival .ldvGameGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#panel-survival .ldvGameAnimalTile{padding:0 0 12px;overflow:hidden;min-width:0;border-radius:13px;background:#123840;border:1px solid #28676b;color:#fff;text-align:left}
+#panel-survival .ldvGameAnimalPhoto{height:115px;display:flex;align-items:center;justify-content:center;font-size:53px;background:linear-gradient(145deg,#235d60,#0c2b32)}
+#panel-survival .ldvGameAnimalTile strong{display:block;padding:12px 11px 0;font-size:15px}
+#panel-survival .ldvGameBack{background:#144951;border:1px solid #3a999d;border-radius:10px;color:#fff;padding:10px 13px;min-height:44px}
+#panel-survival .ldvGameChoice{display:flex;flex-direction:column;text-align:left;gap:7px;width:100%;margin:12px 0;padding:17px;border-radius:13px;background:#17454a;border:1px solid #55c8c4;color:#fff}
+#panel-survival .ldvGameChoice strong{font-size:17px}
+#panel-survival .ldvGameChoice small{font-size:13px;line-height:1.4;color:#c5e1e2}
+#panel-survival .ldvModernChoice{background:#123840;border-color:#397b82}
+#panel-survival .ldvGameNotice{color:#b7d8d9;font-size:13px}
+#panel-survival .ldvGameArtwork{background:#123840;border-radius:12px;padding:10px}
+#panel-survival .ldvGameArtwork p{color:#ffd68b;font-size:12px;margin:0 0 10px}
+#panel-survival .ldvGameArtwork img{display:block;width:100%;height:auto;border-radius:8px}
+#panel-survival .ldvGameHub button:focus-visible{outline:3px solid #fff;outline-offset:2px}
