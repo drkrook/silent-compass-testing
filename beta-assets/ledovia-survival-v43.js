@@ -48,14 +48,21 @@ function init(){
   if(resetScroll)viewerScroll.scrollTo(0,0);
  }
  function setZoom(n){zoom=Math.min(8,Math.max(1,n));applyViewerSize();}
+ const viewerHistoryKey='ldvWildGameViewer';
  function closeViewer(){viewer.hidden=true;document.body.classList.remove('ldvViewerActive');}
- viewer.querySelector('.ldvViewerClose').onclick=closeViewer;
+ function backFromViewer(){
+  if(viewer.hidden)return;
+  if(history.state&&history.state[viewerHistoryKey])history.back();
+  else closeViewer();
+ }
+ window.addEventListener('popstate',()=>{if(!viewer.hidden)closeViewer();});
+ viewer.querySelector('.ldvViewerClose').onclick=backFromViewer;
  viewer.querySelector('.ldvZoomIn').onclick=()=>setZoom(zoom*1.5);
  viewer.querySelector('.ldvZoomOut').onclick=()=>setZoom(zoom/1.5);
  viewerImg.addEventListener('load',()=>applyViewerSize(true));
  window.addEventListener('resize',()=>{if(!viewer.hidden)requestAnimationFrame(()=>applyViewerSize());});
  viewer.addEventListener('keydown',e=>{if(e.key==='Escape')closeViewer();});
- function openViewer(name,file){viewer.querySelector('.ldvViewerTitle').textContent=name+' · Grid-Off';viewerImg.alt=name+' illustrated Grid-Off guide draft';viewer.querySelector('.ldvViewerDownload').href='./'+file;viewer.querySelector('.ldvViewerDownload').download='Ledovia-'+name.replace(/[^a-z0-9]+/gi,'-')+'-Grid-Off.png';viewer.hidden=false;document.body.classList.add('ldvViewerActive');zoom=1;viewerImg.src='./'+file;viewer.querySelector('.ldvViewerClose').focus();requestAnimationFrame(()=>applyViewerSize(true));}
+ function openViewer(name,file){viewer.querySelector('.ldvViewerTitle').textContent=name+' · Grid-Off';viewerImg.alt=name+' illustrated Grid-Off guide draft';viewer.querySelector('.ldvViewerDownload').href='./'+file;viewer.querySelector('.ldvViewerDownload').download='Ledovia-'+name.replace(/[^a-z0-9]+/gi,'-')+'-Grid-Off.png';viewer.hidden=false;document.body.classList.add('ldvViewerActive');try{history.pushState({...((history.state&&typeof history.state==='object')?history.state:{}),[viewerHistoryKey]:true},'',location.href);}catch{}zoom=1;viewerImg.src='./'+file;viewer.querySelector('.ldvViewerClose').focus();requestAnimationFrame(()=>applyViewerSize(true));}
  function showGameIndex(){gameSelect.hidden=false;animalPanel.hidden=true;art.hidden=true;rememberPage('water-game');}
  game.querySelector('.ldvGameBack').addEventListener('click',showGameIndex);
  animals.forEach(([name,file,emoji])=>{const btn=document.createElement('button');btn.type='button';btn.className='ldvGameAnimalTile';btn.innerHTML='<span class="ldvGameAnimalPhoto" aria-hidden="true"></span><strong></strong>';btn.querySelector('strong').textContent=name;btn.querySelector('.ldvGameAnimalPhoto').textContent=emoji;btn.addEventListener('click',()=>{gameSelect.hidden=true;animalPanel.hidden=false;art.hidden=true;game.querySelector('.ldvGameAnimalTitle').textContent=name+' Preparation Guide';notice.textContent='Choose a guide option below.';game.querySelector('.ldvGridChoice').onclick=()=>{openViewer(name,file);notice.textContent='Grid-Off illustrated draft. Safety validation is still pending.';};game.querySelector('.ldvModernChoice').onclick=()=>{art.hidden=true;notice.textContent='Modern Convenience guide content is not yet available.';};rememberPage('water-game-'+animals.indexOf(animals.find(a=>a[0]===name)));});gameGrid.append(btn);});
