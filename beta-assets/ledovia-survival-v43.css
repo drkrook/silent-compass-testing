@@ -62,3 +62,9 @@
 #panel-survival .ldvHubDetails.ldvWaterMode>.ldvWaterHomeButton{display:flex;align-items:center;justify-content:center;gap:5px;position:absolute;right:12px;top:12px;min-height:42px;padding:7px 10px;background:#15515a;color:#fff;border:1px solid #58dcd5;border-radius:10px;font-weight:700;font-size:13px}
 #panel-survival .ldvHubDetails.ldvWaterMode>.ldvSectionHeading{max-width:calc(100% - 95px);font-size:clamp(19px,4.6vw,23px);line-height:1.22;min-height:45px;margin:0 0 12px}
 #panel-survival .ldvWaterHomeButton:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* Approved premium photo sheet: first pair only. The original 4x2 sheet stays local/offline. */
+#panel-survival .ldvWaterTile.ldvPhotoPurify .ldvWaterTileArt,
+#panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{font-size:0;background-image:url('./ledovia-water-food-card-photos-1.webp');background-repeat:no-repeat;background-size:400% 200%;background-color:#123840}
+#panel-survival .ldvWaterTile.ldvPhotoPurify .ldvWaterTileArt{background-position:0% 0%}
+#panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{background-position:33.3333% 0%}
