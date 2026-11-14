@@ -70,3 +70,17 @@
 #panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{background-position:33.3333% 0%}
 
 /* Beta photo pair deployment sync v0.8.354. */
+
+/* Finish approved 4x2 photo sheet: row-major, locally bundled. */
+#panel-survival .ldvWaterTile.ldvPhotoFilter .ldvWaterTileArt,
+#panel-survival .ldvWaterTile.ldvPhotoStore .ldvWaterTileArt,
+#panel-survival .ldvWaterTile.ldvPhotoGame .ldvWaterTileArt,
+#panel-survival .ldvWaterTile.ldvPhotoCooking .ldvWaterTileArt,
+#panel-survival .ldvWaterTile.ldvPhotoPreserve .ldvWaterTileArt,
+#panel-survival .ldvWaterTile.ldvPhotoForage .ldvWaterTileArt{font-size:0;background-image:url('./ledovia-water-food-card-photos-1.webp');background-repeat:no-repeat;background-size:400% 200%;background-color:#123840}
+#panel-survival .ldvWaterTile.ldvPhotoFilter .ldvWaterTileArt{background-position:66.6667% 0%}
+#panel-survival .ldvWaterTile.ldvPhotoStore .ldvWaterTileArt{background-position:100% 0%}
+#panel-survival .ldvWaterTile.ldvPhotoGame .ldvWaterTileArt{background-position:0% 100%}
+#panel-survival .ldvWaterTile.ldvPhotoCooking .ldvWaterTileArt{background-position:33.3333% 100%}
+#panel-survival .ldvWaterTile.ldvPhotoPreserve .ldvWaterTileArt{background-position:66.6667% 100%}
+#panel-survival .ldvWaterTile.ldvPhotoForage .ldvWaterTileArt{background-position:100% 100%}
