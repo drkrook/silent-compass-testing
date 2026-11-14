@@ -54,3 +54,11 @@
 #panel-survival .ldvOpenExisting{min-height:44px;background:#15515a;border:1px solid #58dcd5;border-radius:9px;color:white;font-weight:700}
 #panel-survival .ldvWaterPending{background:#123840;border-left:3px solid #54dad4;border-radius:8px;padding:13px;font-size:13px;color:#fff;margin-top:12px}
 #panel-survival .ldvWaterTile:focus-visible,#panel-survival .ldvWaterEmergency:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+/* Water/Food: one title and top-right Home action, no redundant back tab. */
+#panel-survival .ldvHubDetails.ldvWaterMode{position:relative;padding-top:18px}
+#panel-survival .ldvHubDetails.ldvWaterMode>.ldvGuideBack{display:none!important}
+#panel-survival .ldvHubDetails>.ldvWaterHomeButton{display:none}
+#panel-survival .ldvHubDetails.ldvWaterMode>.ldvWaterHomeButton{display:flex;align-items:center;justify-content:center;gap:5px;position:absolute;right:12px;top:12px;min-height:42px;padding:7px 10px;background:#15515a;color:#fff;border:1px solid #58dcd5;border-radius:10px;font-weight:700;font-size:13px}
+#panel-survival .ldvHubDetails.ldvWaterMode>.ldvSectionHeading{max-width:calc(100% - 95px);font-size:clamp(19px,4.6vw,23px);line-height:1.22;min-height:45px;margin:0 0 12px}
+#panel-survival .ldvWaterHomeButton:focus-visible{outline:3px solid #fff;outline-offset:2px}
