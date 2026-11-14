@@ -269,3 +269,10 @@ body.ldvViewerActive{overflow:hidden!important}
 .ldvGameViewer .ldvEmergencyImageWrap.ldvEmergencyActive .ldvEmergencyHotspot{display:block!important;position:absolute!important;min-height:0!important;min-width:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:5px!important;background:transparent!important;box-shadow:none!important;touch-action:manipulation;cursor:pointer}
 .ldvGameViewer .ldvEmergencyHotspot:focus-visible{outline:3px solid #fff!important;outline-offset:-3px}
 #panel-survival .ldvWaterEmergency{background:linear-gradient(0deg,#05272bf5 0%,#05272bba 65%,#05272b30 100%),url('./ledovia-water-food-card-photos-1.webp') center/cover no-repeat!important}
+
+/* Water/Food Beta navigation: mirror the global Ledovia menu and Home controls. */
+#panel-survival .ldvWaterTopNav{display:none}
+#panel-survival .ldvHubDetails.ldvWaterMode:has(>.ldvWaterHome:not([hidden]))>.ldvWaterTopNav{display:flex;align-items:center;justify-content:space-between;margin:0 0 14px;min-height:48px}
+#panel-survival .ldvWaterTopNav button{display:inline-flex;align-items:center;justify-content:center;width:46px;height:46px;min-height:46px;padding:0;border:1px solid #427d81;border-radius:12px;background:#123e45;color:#fff;box-shadow:none}
+#panel-survival .ldvWaterTopNav button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+#panel-survival .ldvWaterTopNav svg{display:block}
