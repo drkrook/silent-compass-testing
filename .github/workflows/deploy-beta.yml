@@ -559,6 +559,7 @@ jobs:
           cp beta/Ledovia_Find_Water_in_the_Wild_Guide.png app/
           cp beta/Ledovia_Hunter_Safety_Card_Corrected.jpg beta/Ledovia_Caribou_Card.jpg beta/Ledovia_Black_Bear_Card.jpg app/
           cp beta/file_00000000767881f69479abb2f89053cd.png beta/file_000000006ea881f6a47dc0aeaebeec0d.png beta/file_00000000148081f69c05b4f562c22625.png beta/file_00000000ccec81f69449d3cb58586060.png beta/file_00000000b55081f6bb8c7c5203b847cd.png app/
+          cp beta/file_00000000993481f69e46006ac02ef6e3.png beta/file_000000000e1081f69c57192e464d6b0d.png beta/file_00000000e6cc81f6b27e28cba3b62ffe.png beta/file_00000000d5dc81f6ac529bf5b980bdde.png beta/file_00000000509881f69eae02a8807a6032.png app/
           cp beta/file_00000000246c81f6a0455965dc0068ed.png beta/file_000000003cec81f69178979ef5be67f2.png beta/file_00000000a75881f6994245f9d61436d3.png beta/file_0000000000d481f6b8423f26d141f5ea.png beta/file_00000000d67081f6beb1db3950af5072.png beta/file_000000007c1081f689af8c15e11cdf4a.png beta/file_00000000c43c81f680c991b18c1e7e85.png beta/file_0000000019bc81f6beb2525cf74f8931.png app/
           python3 - <<'PY'
           from pathlib import Path
@@ -567,7 +568,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-survival-v43.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=70"><script src="./ledovia-survival-v43.js?v=73"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=70"><script src="./ledovia-survival-v43.js?v=74"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
           p.write_text(s)
           PY
           # Release version is authoritative after all baseline substitutions.
@@ -576,7 +577,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.376', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.377', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
