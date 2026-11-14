@@ -219,3 +219,7 @@ body.ldvViewerActive{overflow:hidden!important}
 #panel-survival .ldvWaterEmergency strong{font-size:clamp(16px,4.6vw,21px)}
 #panel-survival .ldvWaterEmergency small{color:#d6d8cb}
 #panel-survival .ldvWaterHome h3{border-left:4px solid #39e5dc;padding-left:10px}
+
+/* Beta: hero supplies the Water/Food title; keep heading for other guide pages. */
+#panel-survival .ldvHubDetails.ldvWaterMode>.ldvSectionHeading{display:none!important}
+#panel-survival .ldvHubDetails.ldvWaterMode>.ldvWaterHomeButton{display:none!important}
