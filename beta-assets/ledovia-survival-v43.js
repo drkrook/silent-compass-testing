@@ -8,6 +8,21 @@ function init(){
  landing.innerHTML='<div class="ldvGuideBrand"><div><strong>LEDOVIA | Survival Guides</strong><div><span>SURVIVAL / PREPAREDNESS / SAFETY</span></div></div></div><div class="ldvGuideGrid"></div><p class="ldvGuideNote">Online references require internet. Checklist data stays on this device. No premium access or offline article downloads are active.</p>';
  const grid=landing.querySelector('.ldvGuideGrid');
  const rememberPage=key=>{try{sessionStorage.setItem('ledovia-survival-page',key)}catch{}};
+ // Scoped navigation contract: every deeper Survival Guides screen has a history entry.
+ const navKey='ldvSurvivalRoute';
+ let currentRoute='landing';
+ function recordRoute(route){currentRoute=route;try{history.pushState({...((history.state&&typeof history.state==='object')?history.state:{}),[navKey]:route},'',location.href);}catch{}}
+ function returnRoute(fallback){if(history.state&&history.state[navKey]&&history.length>1)history.back();else renderRoute(fallback);}
+ function renderRoute(route){
+  currentRoute=route;
+  if(route==='landing'){viewer.hidden=true;document.body.classList.remove('ldvViewerActive');game.hidden=true;waterHome.hidden=true;details.hidden=true;landing.hidden=false;details.classList.remove('ldvWaterMode');rememberPage('landing');return;}
+  landing.hidden=true;details.hidden=false;details.classList.add('ldvWaterMode');original.hidden=true;
+  if(route==='water'){game.hidden=true;waterHome.hidden=false;heading.textContent='Water/Food Safety & Preparation';rememberPage('water');return;}
+  waterHome.hidden=true;game.hidden=false;heading.textContent='Wild Game Preparation';
+  if(route==='game'){gameSelect.hidden=false;animalPanel.hidden=true;rememberPage('water-game');return;}
+  if(route.startsWith('animal-')){const i=Number(route.slice(7));if(Number.isInteger(i)&&i>=0&&i<animals.length){gameGrid.children[i].click();return;}}
+ }
+
  const cards=[
  ['checklists','☑','Preparedness Checklists','lists',''],
  ['library','⇩','Offline Guide Library','library',''],
@@ -20,7 +35,7 @@ function init(){
  ];
  const details=document.createElement('section');details.className='ldvHubDetails';details.hidden=true;
  const back=document.createElement('button');back.type='button';back.className='ldvGuideBack';back.textContent='← All Survival Guides';
- back.addEventListener('click',()=>{details.hidden=true;waterHome.hidden=true;original.hidden=false;landing.hidden=false;details.classList.remove('ldvWaterMode');game.hidden=true;rememberPage('landing');landing.scrollIntoView({block:'start'});});
+ back.addEventListener('click',()=>returnRoute('landing'));
  const heading=document.createElement('h2');heading.className='ldvSectionHeading';details.append(back,heading);
  const waterHomeButton=document.createElement('button');waterHomeButton.type='button';waterHomeButton.className='ldvWaterHomeButton';waterHomeButton.setAttribute('aria-label','Go to Ledovia Home');waterHomeButton.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg><span>Home</span>';
  waterHomeButton.addEventListener('click',()=>{rememberPage('landing');if(window.GridDownTabs&&typeof window.GridDownTabs.activate==='function')window.GridDownTabs.activate('home');else document.querySelector('[data-tab="home"],#tab-home')?.click();});
@@ -55,7 +70,7 @@ function init(){
   if(history.state&&history.state[viewerHistoryKey])history.back();
   else closeViewer();
  }
- window.addEventListener('popstate',()=>{if(!viewer.hidden)closeViewer();});
+ window.addEventListener('popstate',e=>{if(!viewer.hidden){closeViewer();return;}const route=e.state&&e.state[navKey];if(route)renderRoute(route);else if(currentRoute!=='landing')renderRoute('landing');});
  viewer.querySelector('.ldvViewerClose').onclick=backFromViewer;
  viewer.querySelector('.ldvZoomIn').onclick=()=>setZoom(zoom*1.5);
  viewer.querySelector('.ldvZoomOut').onclick=()=>setZoom(zoom/1.5);
@@ -64,10 +79,10 @@ function init(){
  viewer.addEventListener('keydown',e=>{if(e.key==='Escape')closeViewer();});
  function openViewer(name,file){viewer.querySelector('.ldvViewerTitle').textContent=name+' · Grid-Off';viewerImg.alt=name+' illustrated Grid-Off guide draft';viewer.querySelector('.ldvViewerDownload').href='./'+file;viewer.querySelector('.ldvViewerDownload').download='Ledovia-'+name.replace(/[^a-z0-9]+/gi,'-')+'-Grid-Off.png';viewer.hidden=false;document.body.classList.add('ldvViewerActive');try{history.pushState({...((history.state&&typeof history.state==='object')?history.state:{}),[viewerHistoryKey]:true},'',location.href);}catch{}zoom=1;viewerImg.src='./'+file;viewer.querySelector('.ldvViewerClose').focus();requestAnimationFrame(()=>applyViewerSize(true));}
  function showGameIndex(){gameSelect.hidden=false;animalPanel.hidden=true;art.hidden=true;rememberPage('water-game');}
- game.querySelector('.ldvGameToGuides').addEventListener('click',()=>{game.hidden=true;waterHome.hidden=true;details.hidden=true;landing.hidden=false;details.classList.remove('ldvWaterMode');rememberPage('landing');landing.scrollIntoView({block:'start',behavior:'auto'});});
- game.querySelector('.ldvGameBack').addEventListener('click',showGameIndex);
- animals.forEach(([name,file,emoji])=>{const btn=document.createElement('button');btn.type='button';btn.className='ldvGameAnimalTile';btn.innerHTML='<span class="ldvGameAnimalPhoto" aria-hidden="true"></span><strong></strong>';btn.querySelector('strong').textContent=name;btn.querySelector('.ldvGameAnimalPhoto').textContent=emoji;btn.addEventListener('click',()=>{gameSelect.hidden=true;animalPanel.hidden=false;art.hidden=true;game.querySelector('.ldvGameAnimalTitle').textContent=name+' Preparation Guide';notice.textContent='Choose a guide option below.';game.querySelector('.ldvGridChoice').onclick=()=>{openViewer(name,file);notice.textContent='Grid-Off illustrated draft. Safety validation is still pending.';};game.querySelector('.ldvModernChoice').onclick=()=>{art.hidden=true;notice.textContent='Modern Convenience guide content is not yet available.';};rememberPage('water-game-'+animals.indexOf(animals.find(a=>a[0]===name)));});gameGrid.append(btn);});
- function openGame(){waterHome.hidden=true;game.hidden=false;gameSelect.hidden=false;animalPanel.hidden=true;heading.textContent='Wild Game Preparation';rememberPage('water-game');details.scrollIntoView({block:'start'});}
+ game.querySelector('.ldvGameToGuides').addEventListener('click',()=>returnRoute('water'));
+ game.querySelector('.ldvGameBack').addEventListener('click',()=>returnRoute('game'));
+ animals.forEach(([name,file,emoji])=>{const btn=document.createElement('button');btn.type='button';btn.className='ldvGameAnimalTile';btn.innerHTML='<span class="ldvGameAnimalPhoto" aria-hidden="true"></span><strong></strong>';btn.querySelector('strong').textContent=name;btn.querySelector('.ldvGameAnimalPhoto').textContent=emoji;btn.addEventListener('click',()=>{gameSelect.hidden=true;animalPanel.hidden=false;art.hidden=true;game.querySelector('.ldvGameAnimalTitle').textContent=name+' Preparation Guide';notice.textContent='Choose a guide option below.';game.querySelector('.ldvGridChoice').onclick=()=>{openViewer(name,file);notice.textContent='Grid-Off illustrated draft. Safety validation is still pending.';};game.querySelector('.ldvModernChoice').onclick=()=>{art.hidden=true;notice.textContent='Modern Convenience guide content is not yet available.';};rememberPage('water-game-'+animals.indexOf(animals.find(a=>a[0]===name)));if(currentRoute!=='animal-'+animals.indexOf(animals.find(a=>a[0]===name)))recordRoute('animal-'+animals.indexOf(animals.find(a=>a[0]===name)));});gameGrid.append(btn);});
+ function openGame(){waterHome.hidden=true;game.hidden=false;gameSelect.hidden=false;animalPanel.hidden=true;heading.textContent='Wild Game Preparation';rememberPage('water-game');recordRoute('game');details.scrollIntoView({block:'start'});}
  const original=document.createElement('div');original.className='ldvOriginalHub';
  oldNodes.forEach(n=>original.append(n));details.append(waterHome,game,original);panel.append(landing,details);
  cards.forEach(([key,icon,label,view,category])=>{
@@ -80,7 +95,7 @@ function init(){
    heading.textContent=key==='water'?'Water/Food Safety & Preparation':label;
    landing.hidden=true;details.hidden=false;details.classList.toggle('ldvWaterMode',key==='water');waterHome.hidden=key!=='water';game.hidden=true;original.hidden=key==='water';
    rememberPage(key);
-   if(key==='water'){details.scrollIntoView({block:'start',behavior:'auto'});return;}
+   if(key==='water'){recordRoute('water');details.scrollIntoView({block:'start',behavior:'auto'});return;}
    const nav=details.querySelector('.survivalSubnav [data-view="'+view+'"]');if(nav)nav.click();
    if(category){const select=details.querySelector('#guide-category');if(select&&[...select.options].some(o=>o.value===category)){select.value=category;select.dispatchEvent(new Event('change',{bubbles:true}));}}
    details.scrollIntoView({block:'start',behavior:'auto'});
