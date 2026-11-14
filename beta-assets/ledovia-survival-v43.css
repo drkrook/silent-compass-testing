@@ -138,3 +138,20 @@ body.ldvViewerActive{overflow:hidden!important}
  .ldvGameViewer .ldvViewerScroll{flex:1 1 auto!important;width:100%!important;height:100%!important;min-height:0!important;margin:0!important;padding:0!important;overflow:auto!important;background:#081e25!important}
  .ldvGameViewer .ldvViewerScroll img{display:block!important;max-width:none!important;height:auto!important}
 }
+
+/* Approved natural wildlife photo sheet: two columns x four rows; all assets local. */
+#panel-survival .ldvGameGrid .ldvGameAnimalTile .ldvGameAnimalPhoto{
+  font-size:0!important;color:transparent!important;
+  background-image:url('./file_00000000ca9481f6b81d1e193bfcf3a3.png')!important;
+  background-size:200% 400%!important;
+  background-repeat:no-repeat!important;
+  background-color:#123840!important;
+}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(1) .ldvGameAnimalPhoto{background-position:0% 0%!important}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(2) .ldvGameAnimalPhoto{background-position:100% 0%!important}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(3) .ldvGameAnimalPhoto{background-position:0% 33.3333%!important}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(4) .ldvGameAnimalPhoto{background-position:100% 33.3333%!important}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(5) .ldvGameAnimalPhoto{background-position:0% 66.6667%!important}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(6) .ldvGameAnimalPhoto{background-position:100% 66.6667%!important}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(7) .ldvGameAnimalPhoto{background-position:0% 100%!important}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(8) .ldvGameAnimalPhoto{background-position:100% 100%!important}
