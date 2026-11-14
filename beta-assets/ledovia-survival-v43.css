@@ -240,7 +240,7 @@ body.ldvViewerActive{overflow:hidden!important}
 #panel-survival .ldvCookingCard{padding:0;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;text-align:left;background:#123d43;color:#fff;border:1px solid #315c62;border-radius:15px;min-width:0}
 #panel-survival .ldvCookingCard strong{font-size:15px;padding:10px 12px 3px}
 #panel-survival .ldvCookingCard small{font-size:12px;color:#b8c9c8;padding:0 12px 12px;line-height:1.35}
-#panel-survival .ldvCookingPhoto{height:128px;width:100%;display:block;background-image:url('./ledovia-water-food-card-photos-1.webp');background-size:400% 200%;background-position:0% 100%;background-repeat:no-repeat}
+#panel-survival .ldvCookingPhoto{height:128px;width:100%;display:block;background-size:cover;background-position:center;background-repeat:no-repeat}
 #panel-survival .ldvCookingPhoto2 .ldvCookingPhoto{background-position:33.333% 100%}
 #panel-survival .ldvCookingPhoto3 .ldvCookingPhoto{background-position:66.666% 100%}
 #panel-survival .ldvCookingPhoto4 .ldvCookingPhoto{background-position:100% 100%}
@@ -248,3 +248,6 @@ body.ldvViewerActive{overflow:hidden!important}
 #panel-survival .ldvCookingPhoto6 .ldvCookingPhoto{background-position:66.666% 0%}
 #panel-survival .ldvCookingPending{font-size:13px;color:#f0d898}
 #panel-survival .ldvCookingPending[hidden]{display:none!important}
+
+/* Beta: individual uploaded cooking photos fill each card without cropping into a collage. */
+#panel-survival .ldvCookingCard .ldvCookingPhoto{background-size:cover!important;background-position:center!important}
