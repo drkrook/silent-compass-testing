@@ -556,6 +556,7 @@ jobs:
           cp beta/file_00000000ca9481f6b81d1e193bfcf3a3.png app/
           cp beta/a_vertical_infographic_poster_in_the_same_style_as.png app/
           cp beta/file_00000000c23881f6aada86093724af1e.png app/
+          cp beta/file_000000006a2481f691149e0b7bd3e2de.png beta/file_000000001ba881f6b03e47e0b2c3a2ce.png app/
           cp beta/campfire-cooking.webp beta/camp-stoves.webp beta/dutch-oven-cooking.webp beta/solar-cooking.webp beta/wood-burning-stoves.webp beta/foil-grill-cooking.webp beta/safe-cooking-temperatures.webp beta/emergency-one-pot-meals.webp beta/no-cook-emergency-meals.webp beta/cooking-wild-game-fish.webp app/
           cp beta/Ledovia_Emergency_Water_Filtration_Guide.png app/
           cp beta/Ledovia_Find_Water_in_the_Wild_Guide.png app/
@@ -571,7 +572,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-survival-v43.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=74"><script src="./ledovia-survival-v43.js?v=79"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=74"><script src="./ledovia-survival-v43.js?v=80"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
           p.write_text(s)
           PY
           # Release version is authoritative after all baseline substitutions.
@@ -580,7 +581,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.384', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.385', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
