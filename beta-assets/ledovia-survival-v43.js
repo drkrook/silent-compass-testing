@@ -19,8 +19,11 @@ function init(){
  ];
  const details=document.createElement('section');details.className='ldvHubDetails';details.hidden=true;
  const back=document.createElement('button');back.type='button';back.className='ldvGuideBack';back.textContent='← All Survival Guides';
- back.addEventListener('click',()=>{details.hidden=true;waterHome.hidden=true;original.hidden=false;landing.hidden=false;landing.scrollIntoView({block:'start'});});
+ back.addEventListener('click',()=>{details.hidden=true;waterHome.hidden=true;original.hidden=false;landing.hidden=false;details.classList.remove('ldvWaterMode');landing.scrollIntoView({block:'start'});});
  const heading=document.createElement('h2');heading.className='ldvSectionHeading';details.append(back,heading);
+ const waterHomeButton=document.createElement('button');waterHomeButton.type='button';waterHomeButton.className='ldvWaterHomeButton';waterHomeButton.setAttribute('aria-label','Go to Ledovia Home');waterHomeButton.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-7h6v7"/></svg><span>Home</span>';
+ waterHomeButton.addEventListener('click',()=>{if(window.GridDownTabs&&typeof window.GridDownTabs.activate==='function')window.GridDownTabs.activate('home');else document.querySelector('[data-tab="home"],#tab-home')?.click();});
+ details.append(waterHomeButton);
  const waterHome=document.createElement('section');waterHome.className='ldvWaterHome';waterHome.hidden=true;
  waterHome.innerHTML='<button type="button" class="ldvWaterEmergency"><strong>⚠ Start Here: Emergency Priorities</strong><span>What to do when safe drinking water or food is limited.</span><small>Essential offline guide · Content coming soon</small></button><h3>Water Survival</h3><div class="ldvWaterTiles"></div><h3>Food Survival</h3><div class="ldvFoodTiles"></div><div class="ldvWaterFooter"><span>↓ Downloadable guides will be added after review</span><button type="button" class="ldvOpenExisting">Open Existing Water Guides →</button></div><p class="ldvWaterPending" role="status" hidden></p>';
  const waterItems=[['Purify Water','Boiling, filters, disinfection','💧'],['Find Water','Sources, collection, risks','🏞️'],['Build a Filter','Prefiltering and limitations','⚙️'],['Store Water','Containers, sanitation','🚰']];
@@ -39,7 +42,7 @@ function init(){
   b.addEventListener('click',()=>{
    if(view==='hazards'){const tab=document.getElementById('tab-hazards');if(tab)tab.click();return;}
    heading.textContent=key==='water'?'Water/Food Safety & Preparation':label;
-   landing.hidden=true;details.hidden=false;waterHome.hidden=key!=='water';original.hidden=key==='water';
+   landing.hidden=true;details.hidden=false;details.classList.toggle('ldvWaterMode',key==='water');waterHome.hidden=key!=='water';original.hidden=key==='water';
    if(key==='water'){details.scrollIntoView({block:'start',behavior:'auto'});return;}
    const nav=details.querySelector('.survivalSubnav [data-view="'+view+'"]');if(nav)nav.click();
    if(category){const select=details.querySelector('#guide-category');if(select&&[...select.options].some(o=>o.value===category)){select.value=category;select.dispatchEvent(new Event('change',{bubbles:true}));}}
