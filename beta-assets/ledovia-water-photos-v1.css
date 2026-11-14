@@ -1,0 +1,13 @@
+/* Independent positional photo fallback: does not depend on cached JavaScript classes. */
+#panel-survival .ldvWaterHome .ldvWaterTiles .ldvWaterTile:nth-child(3) .ldvWaterTileArt,
+#panel-survival .ldvWaterHome .ldvWaterTiles .ldvWaterTile:nth-child(4) .ldvWaterTileArt,
+#panel-survival .ldvWaterHome .ldvFoodTiles .ldvWaterTile:nth-child(1) .ldvWaterTileArt,
+#panel-survival .ldvWaterHome .ldvFoodTiles .ldvWaterTile:nth-child(2) .ldvWaterTileArt,
+#panel-survival .ldvWaterHome .ldvFoodTiles .ldvWaterTile:nth-child(3) .ldvWaterTileArt,
+#panel-survival .ldvWaterHome .ldvFoodTiles .ldvWaterTile:nth-child(4) .ldvWaterTileArt{font-size:0!important;color:transparent!important;background-image:url('./ledovia-water-food-card-photos-1.webp')!important;background-repeat:no-repeat!important;background-size:400% 200%!important}
+#panel-survival .ldvWaterHome .ldvWaterTiles .ldvWaterTile:nth-child(3) .ldvWaterTileArt{background-position:66.6667% 0%!important}
+#panel-survival .ldvWaterHome .ldvWaterTiles .ldvWaterTile:nth-child(4) .ldvWaterTileArt{background-position:100% 0%!important}
+#panel-survival .ldvWaterHome .ldvFoodTiles .ldvWaterTile:nth-child(1) .ldvWaterTileArt{background-position:0% 100%!important}
+#panel-survival .ldvWaterHome .ldvFoodTiles .ldvWaterTile:nth-child(2) .ldvWaterTileArt{background-position:33.3333% 100%!important}
+#panel-survival .ldvWaterHome .ldvFoodTiles .ldvWaterTile:nth-child(3) .ldvWaterTileArt{background-position:66.6667% 100%!important}
+#panel-survival .ldvWaterHome .ldvFoodTiles .ldvWaterTile:nth-child(4) .ldvWaterTileArt{background-position:100% 100%!important}
