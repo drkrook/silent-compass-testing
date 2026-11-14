@@ -65,7 +65,7 @@
 
 /* Approved premium photo sheet: first pair only. The original 4x2 sheet stays local/offline. */
 #panel-survival .ldvWaterTile.ldvPhotoPurify .ldvWaterTileArt,
-#panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{font-size:0;background-image:url('./ledovia-water-food-card-photos-1.webp');background-repeat:no-repeat;background-size:400% 200%;background-color:#123840}
+#panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{font-size:0;background-image:url('./ledovia-wild-food-banner.png');background-repeat:no-repeat;background-size:400% 200%;background-color:#123840}
 #panel-survival .ldvWaterTile.ldvPhotoPurify .ldvWaterTileArt{background-position:0% 0%}
 #panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{background-position:33.3333% 0%}
 
@@ -299,3 +299,7 @@ body.ldvViewerActive{overflow:hidden!important}
 #panel-survival .ldvForagePending{font-size:13px;color:#f4db9e}
 #panel-survival .ldvForagePending[hidden]{display:none!important}
 #panel-survival .ldvForageSafety:focus-visible,#panel-survival .ldvForageTile:focus-visible{outline:3px solid white;outline-offset:2px}
+
+/* Beta Wild Food Safety: approved first photo card. */
+#panel-survival .ldvForageSafety{min-height:170px;justify-content:center;background:linear-gradient(90deg,#052c30ee 0%,#052c30cf 54%,#052c3033 100%),url('./ledovia-foraging-safety-card.png') center/cover no-repeat}
+#panel-survival .ldvForageSafety small{color:#8ff7ee;font-weight:700}
