@@ -38,7 +38,7 @@ function init(){
   b.innerHTML='<span class="ldvIcon" aria-hidden="true">'+icon+'</span><span class="ldvLabel">'+label+(subtitle?'<small>'+subtitle+'</small>':'')+'</span>';
   b.addEventListener('click',()=>{
    if(view==='hazards'){const tab=document.getElementById('tab-hazards');if(tab)tab.click();return;}
-   heading.textContent=key==='water'?'Water & Food Safety & Preparation':label;
+   heading.textContent=key==='water'?'Water/Food Safety & Preparation':label;
    landing.hidden=true;details.hidden=false;waterHome.hidden=key!=='water';original.hidden=key==='water';
    if(key==='water'){details.scrollIntoView({block:'start',behavior:'auto'});return;}
    const nav=details.querySelector('.survivalSubnav [data-view="'+view+'"]');if(nav)nav.click();
