@@ -31,3 +31,26 @@
 #panel-survival .ldvSectionHeading{font-size:23px;color:#fff;margin:0 0 12px}
 #panel-survival .ldvOriginalHub>.survivalHead{display:none}
 #panel-survival .ldvOriginalHub>#survival-content{margin-top:0}
+
+/* Water & Food approved dashboard shell: Beta only; guide content is not yet published. */
+#panel-survival .ldvWaterHome[hidden],#panel-survival .ldvOriginalHub[hidden]{display:none!important}
+#panel-survival .ldvWaterHome{color:#fff;max-width:780px;margin:0 auto;padding:4px 0 20px}
+#panel-survival .ldvWaterIntro{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 2px 16px}
+#panel-survival .ldvWaterIntro small{color:#54dad4;letter-spacing:.1em;font-weight:700;font-size:11px}
+#panel-survival .ldvWaterIntro h2{font-size:clamp(26px,6vw,34px);margin:4px 0;color:#fff}
+#panel-survival .ldvWaterIntro p{margin:0;color:#b6d0d2;font-size:13px}
+#panel-survival .ldvWaterIntro>span{font-size:36px}
+#panel-survival .ldvWaterEmergency{display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-align:left;width:100%;min-height:110px;border:1px solid #5bd5d0;border-radius:15px;padding:16px;background:#123840;color:#fff}
+#panel-survival .ldvWaterEmergency strong{font-size:17px}
+#panel-survival .ldvWaterEmergency span{font-size:13px;color:#e1eeee}
+#panel-survival .ldvWaterEmergency small{font-size:11px;color:#9fcdd0}
+#panel-survival .ldvWaterHome h3{font-size:19px;margin:20px 0 10px;color:#fff}
+#panel-survival .ldvWaterTiles,#panel-survival .ldvFoodTiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+#panel-survival .ldvWaterTile{display:flex;flex-direction:column;align-items:flex-start;text-align:left;overflow:hidden;padding:0 0 12px;border:1px solid #2c7477;border-radius:14px;background:#123840;color:#fff;min-width:0}
+#panel-survival .ldvWaterTileArt{width:100%;height:98px;display:flex;align-items:center;justify-content:center;font-size:48px;background:linear-gradient(145deg,#155c63,#09242d)}
+#panel-survival .ldvWaterTile strong{font-size:15px;padding:10px 10px 2px;line-height:1.2}
+#panel-survival .ldvWaterTile small{font-size:12px;color:#b8d1d2;padding:0 10px;line-height:1.4}
+#panel-survival .ldvWaterFooter{display:flex;flex-direction:column;gap:10px;margin-top:20px;padding:13px;border:1px solid #2c7477;border-radius:13px;color:#b8d1d2;font-size:12px}
+#panel-survival .ldvOpenExisting{min-height:44px;background:#15515a;border:1px solid #58dcd5;border-radius:9px;color:white;font-weight:700}
+#panel-survival .ldvWaterPending{background:#123840;border-left:3px solid #54dad4;border-radius:8px;padding:13px;font-size:13px;color:#fff;margin-top:12px}
+#panel-survival .ldvWaterTile:focus-visible,#panel-survival .ldvWaterEmergency:focus-visible{outline:3px solid #fff;outline-offset:2px}
