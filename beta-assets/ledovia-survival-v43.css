@@ -261,3 +261,11 @@ body.ldvViewerActive{overflow:hidden!important}
 .ldvEmergencyGuideNav button{background:#12515a;color:#fff;border:1px solid #42d7d0;border-radius:9px;padding:8px 10px;font-size:12px;font-weight:700}
 .ldvEmergencyGuideNav button:focus-visible{outline:2px solid #fff}
 .ldvEmergencyFoodNote{color:#fff;font-size:12px;padding:6px}
+
+/* Emergency infographic: tappable, scaled image regions instead of bottom toolbar. */
+.ldvGameViewer .ldvEmergencyImageWrap{position:relative;flex:0 0 auto;margin:0 auto;max-width:none;line-height:0}
+.ldvGameViewer .ldvEmergencyImageWrap img{width:100%!important;margin:0!important;height:auto!important;display:block!important}
+.ldvGameViewer .ldvEmergencyHotspot{display:none!important}
+.ldvGameViewer .ldvEmergencyImageWrap.ldvEmergencyActive .ldvEmergencyHotspot{display:block!important;position:absolute!important;min-height:0!important;min-width:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:5px!important;background:transparent!important;box-shadow:none!important;touch-action:manipulation;cursor:pointer}
+.ldvGameViewer .ldvEmergencyHotspot:focus-visible{outline:3px solid #fff!important;outline-offset:-3px}
+#panel-survival .ldvWaterEmergency{background:linear-gradient(0deg,#05272bf5 0%,#05272bba 65%,#05272b30 100%),url('./ledovia-water-food-card-photos-1.webp') center/cover no-repeat!important}
