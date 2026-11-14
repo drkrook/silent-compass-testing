@@ -168,3 +168,7 @@ body.ldvViewerActive{overflow:hidden!important}
  .ldvGameViewer .ldvViewerHeading small{font-size:9px;font-weight:700;letter-spacing:.08em;color:#65ded5}
  .ldvGameViewer .ldvGameViewerBar .ldvViewerClose,.ldvGameViewer .ldvGameViewerBar .ldvViewerDownload{display:inline-flex;align-items:center;justify-content:center;min-width:46px;min-height:46px;padding:8px;border:1px solid #367a7d;border-radius:12px;background:#18545a;font-size:20px}
 }
+
+/* Center shorter illustrated guides without stretching; retain scrolling and pinch gestures. */
+.ldvGameViewer .ldvViewerScroll{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+.ldvGameViewer .ldvViewerScroll img{flex:0 0 auto!important;margin:auto!important;max-width:none!important;height:auto!important}
