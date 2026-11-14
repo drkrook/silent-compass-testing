@@ -189,3 +189,20 @@ body.ldvViewerActive{overflow:hidden!important}
 #panel-survival .ldvHunterSafetyTile .ldvGameAnimalPhoto{height:145px!important;background-size:300% 750%!important;background-position:right top!important}
 #panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(9) .ldvGameAnimalPhoto,
 #panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(10) .ldvGameAnimalPhoto{background-size:400% 750%!important;background-position:right top!important}
+
+/* v0.8.376 approved standalone photos: center animals, preserve card sizing. */
+#panel-survival .ldvHunterSafetyTile .ldvGameAnimalPhoto{
+ background-image:url('./Ledovia_Hunter_Safety_Card_Corrected.jpg')!important;
+ background-size:cover!important;background-position:center center!important;
+ background-repeat:no-repeat!important;
+}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(9) .ldvGameAnimalPhoto{
+ background-image:url('./Ledovia_Caribou_Card.jpg')!important;
+ background-size:cover!important;background-position:center center!important;
+ background-repeat:no-repeat!important;
+}
+#panel-survival .ldvGameGrid .ldvGameAnimalTile:nth-child(10) .ldvGameAnimalPhoto{
+ background-image:url('./Ledovia_Black_Bear_Card.jpg')!important;
+ background-size:cover!important;background-position:center center!important;
+ background-repeat:no-repeat!important;
+}
