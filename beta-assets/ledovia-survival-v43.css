@@ -206,3 +206,16 @@ body.ldvViewerActive{overflow:hidden!important}
  background-size:cover!important;background-position:center center!important;
  background-repeat:no-repeat!important;
 }
+
+/* Beta premium Water/Food hero: existing offline image sheet, no new dependencies. */
+#panel-survival .ldvWaterHero{position:relative;isolation:isolate;overflow:hidden;min-height:178px;margin:6px 0 17px;padding:25px 18px 20px;border:1px solid #40c8c4;border-radius:17px;background:#062a30;color:#fff;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;box-shadow:0 5px 18px #00191e77}
+#panel-survival .ldvWaterHero:before{content:"";position:absolute;z-index:-2;inset:0;background-image:url('./ledovia-water-food-card-photos-1.webp');background-size:400% 200%;background-position:33.333% 0%;filter:saturate(1.12)}
+#panel-survival .ldvWaterHero:after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#03232bf5 0%,#03232bde 46%,#03232b28 100%)}
+#panel-survival .ldvWaterHeroKicker{font-size:11px;font-weight:800;letter-spacing:.16em;color:#a6f6ef;margin-bottom:5px}
+#panel-survival .ldvWaterHero strong{font-size:clamp(27px,7.3vw,42px);font-weight:900;line-height:1.03;text-shadow:0 2px 5px #001b20}
+#panel-survival .ldvWaterHero em{font-size:clamp(20px,5.4vw,31px);font-weight:850;font-style:normal;line-height:1.14;color:#43e7df;text-shadow:0 2px 4px #001b20}
+#panel-survival .ldvWaterHeroSub{font-size:12px;font-weight:700;margin-top:13px;max-width:290px;line-height:1.35;text-shadow:0 1px 4px #001b20}
+#panel-survival .ldvWaterEmergency{min-height:118px;border:2px solid #e7bf4a;border-radius:17px;padding:16px;background:linear-gradient(135deg,#223a2f,#092b2d);box-shadow:0 0 12px #d9a82a55}
+#panel-survival .ldvWaterEmergency strong{font-size:clamp(16px,4.6vw,21px)}
+#panel-survival .ldvWaterEmergency small{color:#d6d8cb}
+#panel-survival .ldvWaterHome h3{border-left:4px solid #39e5dc;padding-left:10px}
