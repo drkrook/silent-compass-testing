@@ -172,3 +172,6 @@ body.ldvViewerActive{overflow:hidden!important}
 /* Center shorter illustrated guides without stretching; retain scrolling and pinch gestures. */
 .ldvGameViewer .ldvViewerScroll{display:flex!important;flex-direction:column!important;align-items:stretch!important}
 .ldvGameViewer .ldvViewerScroll img{flex:0 0 auto!important;margin:auto!important;max-width:none!important;height:auto!important}
+
+/* New wild-game slots: never show an incorrect animal photo. */
+#panel-survival .ldvGameGrid .ldvGamePhotoPending .ldvGameAnimalPhoto{background-image:none!important;background:linear-gradient(145deg,#235d60,#0c2b32)!important;color:#d8f5ef!important;font-size:13px!important;font-weight:700!important;letter-spacing:.08em;text-align:center;padding:12px}
