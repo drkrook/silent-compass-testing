@@ -69,7 +69,7 @@ function init(){
  function applyViewerSize(resetScroll=false){
   if(viewer.hidden||!viewerImg.naturalWidth||!viewerImg.naturalHeight)return;
   const w=viewerScroll.clientWidth;if(!w)return;
-  viewerImg.style.width=(w*zoom)+'px';
+  if(viewerImg.src.includes('ledovia-emergency-priorities.png')){emergencyWrap.style.width=(w*zoom)+'px';viewerImg.style.width='100%';}else{viewerImg.style.width=(w*zoom)+'px';}
   viewer.querySelector('.ldvZoomValue').textContent=Math.round(zoom*100)+'%';
   if(resetScroll)viewerScroll.scrollTo(0,0);
  }
@@ -88,14 +88,21 @@ function init(){
  viewerImg.addEventListener('load',()=>applyViewerSize(true));
  window.addEventListener('resize',()=>{if(!viewer.hidden)requestAnimationFrame(()=>applyViewerSize());});
  viewer.addEventListener('keydown',e=>{if(e.key==='Escape')closeViewer();});
- function openViewer(name,file){viewer.querySelector('.ldvViewerTitle').textContent=name;viewerImg.alt=name+' illustrated Grid-Off guide draft';viewer.querySelector('.ldvViewerDownload').href='./'+file;viewer.querySelector('.ldvViewerDownload').download='Ledovia-'+name.replace(/[^a-z0-9]+/gi,'-')+'-Grid-Off.png';viewer.hidden=false;document.body.classList.add('ldvViewerActive');try{history.pushState({...((history.state&&typeof history.state==='object')?history.state:{}),[viewerHistoryKey]:true},'',location.href);}catch{}zoom=1;viewerImg.src='./'+file;viewer.querySelector('.ldvViewerClose').focus();requestAnimationFrame(()=>applyViewerSize(true));}
+ function openViewer(name,file){viewer.querySelector('.ldvViewerTitle').textContent=name;viewerImg.alt=name+' illustrated Grid-Off guide draft';viewer.querySelector('.ldvViewerDownload').href='./'+file;viewer.querySelector('.ldvViewerDownload').download='Ledovia-'+name.replace(/[^a-z0-9]+/gi,'-')+'-Grid-Off.png';viewer.hidden=false;document.body.classList.add('ldvViewerActive');try{history.pushState({...((history.state&&typeof history.state==='object')?history.state:{}),[viewerHistoryKey]:true},'',location.href);}catch{}zoom=1;emergencyWrap.hidden=!file.includes('ledovia-emergency-priorities.png');viewerImg.src='./'+file;viewer.querySelector('.ldvViewerClose').focus();requestAnimationFrame(()=>applyViewerSize(true));}
  /* Emergency priorities: accessible live shortcuts, not fake image hotspots. */
- const emergencyNav=document.createElement('nav');emergencyNav.className='ldvEmergencyGuideNav';emergencyNav.hidden=true;emergencyNav.setAttribute('aria-label','Emergency priorities quick actions');
- const emergencyActions=[['No Safe Water','Purify Water'],['Food May Be Spoiled',null],['Need to Cook Without Power','Off-Grid Cooking'],['Purify Water','Purify Water'],['Find Water','Find Water'],['Build a Filter','Build a Filter'],['Store Water','Store Water']];
- emergencyActions.forEach(([label,target])=>{const btn=document.createElement('button');btn.type='button';btn.textContent=label;btn.addEventListener('click',()=>{if(!target){const note=emergencyNav.querySelector('.ldvEmergencyFoodNote');note.hidden=false;return;}closeViewer();if(target==='Off-Grid Cooking'){openCooking();return;}returnRoute('water');const tile=[...waterHome.querySelectorAll('.ldvWaterTile')].find(el=>el.querySelector('strong')?.textContent===target);if(tile)tile.click();});emergencyNav.append(btn)});
- const foodNote=document.createElement('p');foodNote.className='ldvEmergencyFoodNote';foodNote.hidden=true;foodNote.textContent='Food can be unsafe even if it looks and smells normal. When in doubt, discard it. See Step 3 in the guide.';emergencyNav.append(foodNote);
- viewer.querySelector('.ldvViewerScroll').after(emergencyNav);
- viewerImg.addEventListener('load',()=>{emergencyNav.hidden=!viewerImg.src.includes('ledovia-emergency-priorities.png')});
+ const emergencyWrap=document.createElement('div');emergencyWrap.className='ldvEmergencyImageWrap';emergencyWrap.hidden=true;viewerImg.parentNode.insertBefore(emergencyWrap,viewerImg);emergencyWrap.append(viewerImg);
+ const hotspots=[
+ ['No Safe Water','Purify Water',35.0,20.8,19.0,4.0],
+ ['Food May Be Spoiled',null,55.0,20.8,19.8,4.0],
+ ['Need to Cook Without Power','Off-Grid Cooking',75.8,20.8,22.3,4.0],
+ ['Purify Water','Purify Water',49.8,83.3,12.0,12.8],
+ ['Find Water','Find Water',62.2,83.3,12.0,12.8],
+ ['Build a Filter','Build a Filter',74.5,83.3,12.0,12.8],
+ ['Store Water','Store Water',86.9,83.3,12.0,12.8]
+ ];
+ hotspots.forEach(([label,target,left,top,width,height])=>{const btn=document.createElement('button');btn.type='button';btn.className='ldvEmergencyHotspot';btn.setAttribute('aria-label',label);btn.title=label;Object.assign(btn.style,{left:left+'%',top:top+'%',width:width+'%',height:height+'%'});btn.addEventListener('click',()=>{if(!target){viewerScroll.scrollTo({top:viewerImg.clientHeight*.45,behavior:'smooth'});return;}closeViewer();if(target==='Off-Grid Cooking'){openCooking();return;}returnRoute('water');const tile=[...waterHome.querySelectorAll('.ldvWaterTile')].find(el=>el.querySelector('strong')?.textContent===target);if(tile)tile.click();});emergencyWrap.append(btn)});
+ function updateEmergencyWrap(){const active=viewerImg.src.includes('ledovia-emergency-priorities.png');emergencyWrap.hidden=!active;if(active){emergencyWrap.style.width=viewerImg.style.width||'100%';viewerImg.style.width='100%';}}
+ viewerImg.addEventListener('load',updateEmergencyWrap);
 function showGameIndex(){gameSelect.hidden=false;animalPanel.hidden=true;art.hidden=true;rememberPage('water-game');}
  game.querySelector('.ldvGameToGuides').addEventListener('click',()=>returnRoute('water'));
  game.querySelector('.ldvGameBack').addEventListener('click',()=>returnRoute('game'));
