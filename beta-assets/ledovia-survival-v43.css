@@ -307,3 +307,19 @@ body.ldvViewerActive{overflow:hidden!important}
 /* Beta v0.8.392: artwork already contains its typography; do not overlay UI copy. */
 #panel-survival .ldvForageHero{min-height:0;aspect-ratio:2.2/1;padding:0;display:block;background-image:url('./ledovia-wild-food-banner.png');background-position:center;background-size:100% 100%;background-repeat:no-repeat}
 #panel-survival .ldvForageSafety{min-height:0;aspect-ratio:2.55/1;padding:0;display:block;background-image:url('./ledovia-foraging-safety-card.png');background-position:center;background-size:100% 100%;background-repeat:no-repeat;cursor:pointer}
+
+
+/* Day 6 Beta: six approved Wild Food topic photographs from local 3x2 sheet. */
+#panel-survival .ldvForageTile .ldvForagePhoto{
+  background-image:url('../a_detailed_nature_collage_with_six_close_up_outdoo.png');
+  background-repeat:no-repeat;
+  background-size:300% 200%;
+  background-color:#123a42;
+}
+#panel-survival .ldvForageTile .ldvForagePhoto span{display:none}
+#panel-survival .ldvForage-plants .ldvForagePhoto{background-position:0% 0%}
+#panel-survival .ldvForage-berries .ldvForagePhoto{background-position:50% 0%}
+#panel-survival .ldvForage-mushrooms .ldvForagePhoto{background-position:100% 0%}
+#panel-survival .ldvForage-nuts .ldvForagePhoto{background-position:0% 100%}
+#panel-survival .ldvForage-fish .ldvForagePhoto{background-position:50% 100%}
+#panel-survival .ldvForage-hazards .ldvForagePhoto{background-position:100% 100%}
