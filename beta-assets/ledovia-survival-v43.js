@@ -135,13 +135,18 @@ function init(){
  ['Edible Wild Plants',null],
  ['Start Here — Foraging Safety','Foraging Safety Survival Guide Infographic.png']
  ];
+ const cookingGuideSequence=[
+ ['Cooking Safety Overview — Draft','file_000000006a2481f691149e0b7bd3e2de.png'],
+ ['Campfire Cooking','file_000000001ba881f6b03e47e0b2c3a2ce.png']
+ ];
+ let activeGuideSequence=guideSequence;
  const guideBar=viewer.querySelector('.ldvGameViewerBar');
  const guideNav=document.createElement('nav');guideNav.className='ldvPremiumGuideNav';guideNav.setAttribute('aria-label','Survival guide navigation');
  guideNav.innerHTML='<button type="button" class="ldvPremiumPrevious" aria-label="Previous guide or Home">⌂<small>Home</small></button><a class="ldvPremiumSave" aria-label="Save current guide offline" download>↓<small>Save Offline</small></a><button type="button" class="ldvPremiumNext" aria-label="Next guide or Home">→<small>Next</small></button><span class="ldvPremiumProgress" aria-live="polite"></span>';
  guideBar.after(guideNav);
  let guideIndex=-1;
- function setGuideNav(name){guideIndex=guideSequence.findIndex(g=>g[0]===name);guideNav.hidden=guideIndex<0;if(guideIndex<0)return;const first=guideIndex===0,last=guideIndex===guideSequence.length-1;const left=guideNav.querySelector('.ldvPremiumPrevious'),right=guideNav.querySelector('.ldvPremiumNext'),save=guideNav.querySelector('.ldvPremiumSave');left.firstChild.textContent=first?'⌂':'←';left.querySelector('small').textContent=first?'Home':'Previous';right.firstChild.textContent=last?'⌂':'→';right.querySelector('small').textContent=last?'Home':'Next';guideNav.querySelector('.ldvPremiumProgress').textContent='Guide '+(guideIndex+1)+' of '+guideSequence.length;save.hidden=!guideSequence[guideIndex][1];if(!save.hidden){save.href='./'+guideSequence[guideIndex][1];save.download='Ledovia-'+name.replace(/[^a-z0-9]+/gi,'-')+'.png';}}
- function showGuideAt(index){if(index<0||index>=guideSequence.length){backFromViewer();return;}const [name,file]=guideSequence[index];if(file)openViewer(name,file);else openPlantGuide();}
+ function setGuideNav(name){activeGuideSequence=cookingGuideSequence.some(g=>g[0]===name)?cookingGuideSequence:guideSequence;guideIndex=activeGuideSequence.findIndex(g=>g[0]===name);guideNav.hidden=guideIndex<0;if(guideIndex<0)return;const first=guideIndex===0,last=guideIndex===activeGuideSequence.length-1;const left=guideNav.querySelector('.ldvPremiumPrevious'),right=guideNav.querySelector('.ldvPremiumNext'),save=guideNav.querySelector('.ldvPremiumSave');left.firstChild.textContent=first?'⌂':'←';left.querySelector('small').textContent=first?'Home':'Previous';right.firstChild.textContent=last?'⌂':'→';right.querySelector('small').textContent=last?'Home':'Next';guideNav.querySelector('.ldvPremiumProgress').textContent='Guide '+(guideIndex+1)+' of '+activeGuideSequence.length;save.hidden=!activeGuideSequence[guideIndex][1];if(!save.hidden){save.href='./'+activeGuideSequence[guideIndex][1];save.download='Ledovia-'+name.replace(/[^a-z0-9]+/gi,'-')+'.png';}}
+ function showGuideAt(index){if(index<0||index>=activeGuideSequence.length){backFromViewer();return;}const [name,file]=activeGuideSequence[index];if(file)openViewer(name,file);else openPlantGuide();}
  guideNav.querySelector('.ldvPremiumPrevious').onclick=()=>showGuideAt(guideIndex-1);
  guideNav.querySelector('.ldvPremiumNext').onclick=()=>showGuideAt(guideIndex+1);
  const guideNavStyle=document.createElement('style');guideNavStyle.textContent=`
