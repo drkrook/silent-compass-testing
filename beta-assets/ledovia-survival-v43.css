@@ -65,7 +65,7 @@
 
 /* Approved premium photo sheet: first pair only. The original 4x2 sheet stays local/offline. */
 #panel-survival .ldvWaterTile.ldvPhotoPurify .ldvWaterTileArt,
-#panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{font-size:0;background-image:url('./ledovia-wild-food-banner.png');background-repeat:no-repeat;background-size:400% 200%;background-color:#123840}
+#panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{font-size:0;background-image:url('./ledovia-water-food-card-photos-1.webp');background-repeat:no-repeat;background-size:400% 200%;background-color:#123840}
 #panel-survival .ldvWaterTile.ldvPhotoPurify .ldvWaterTileArt{background-position:0% 0%}
 #panel-survival .ldvWaterTile.ldvPhotoFind .ldvWaterTileArt{background-position:33.3333% 0%}
 
