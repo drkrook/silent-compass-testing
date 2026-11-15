@@ -575,7 +575,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-survival-v43.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=81"><script src="./ledovia-survival-v43.js?v=91"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=81"><script src="./ledovia-survival-v43.js?v=92"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
           p.write_text(s)
           PY
           # Release version is authoritative after all baseline substitutions.
