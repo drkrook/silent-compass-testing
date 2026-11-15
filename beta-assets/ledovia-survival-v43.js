@@ -210,7 +210,7 @@ function showGameIndex(){gameSelect.hidden=false;animalPanel.hidden=true;art.hid
  // Restore the last Survival Guides subpage after a browser refresh.
  if(document.getElementById('panel-survival')?.classList.contains('active')){
   let last='landing';try{last=sessionStorage.getItem('ledovia-survival-page')||'landing'}catch{}
-  if(last.startsWith('water-game')){const card=grid.querySelector('[data-guide="water"]');if(card)card.click();openGame();const index=Number(last.split('-')[2]);if(Number.isInteger(index)&&index>=0&&index<animals.length)gameGrid.children[index].click();}else if(last!=='landing'){const card=grid.querySelector('[data-guide="'+last+'"]');if(card)card.click();}
+  if(last.startsWith('water-game')){const card=grid.querySelector('[data-guide="water"]');if(card)card.click();openGame();const index=Number(last.split('-')[2]);if(Number.isInteger(index)&&index>=0&&index<animals.length)gameGrid.children[index].click();}else if(last==='water-forage'){renderRoute('forage');}else if(last==='water-cooking'){renderRoute('cooking');}else if(last==='water'){renderRoute('water');}else if(last==='water-game'){renderRoute('game');}else if(last!=='landing'){const card=grid.querySelector('[data-guide="'+last+'"]');if(card)card.click();}
  }
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,0));else setTimeout(init,0);
