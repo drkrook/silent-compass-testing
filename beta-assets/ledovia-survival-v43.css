@@ -311,7 +311,7 @@ body.ldvViewerActive{overflow:hidden!important}
 
 /* Day 6 Beta: six approved Wild Food topic photographs from local 3x2 sheet. */
 #panel-survival .ldvForageTile .ldvForagePhoto{
-  background-image:url('../a_detailed_nature_collage_with_six_close_up_outdoo.png');
+  background-image:url('./a_detailed_nature_collage_with_six_close_up_outdoo.png');
   background-repeat:no-repeat;
   background-size:300% 200%;
   background-color:#123a42;
