@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout beta repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: beta
       - name: Prepare app from versioned local baseline
@@ -604,14 +604,14 @@ jobs:
           print(f"Package verified: {len(files)} files, {len(images)} images")
           PY
       - name: Upload package inventory
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ledovia-package-inventory
           path: package-inventory.json
           if-no-files-found: error
           retention-days: 14
       - name: Upload complete candidate package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ledovia-beta-candidate
           path: app/
