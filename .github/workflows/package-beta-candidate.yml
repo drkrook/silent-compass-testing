@@ -1,6 +1,9 @@
 name: Package Ledovia Beta Candidate
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - release/independent-build-prep
 permissions:
   contents: read
 jobs:
