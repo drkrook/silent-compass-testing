@@ -615,5 +615,6 @@ jobs:
         with:
           name: ledovia-beta-candidate
           path: app/
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 14
