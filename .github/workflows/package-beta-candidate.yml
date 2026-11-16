@@ -582,7 +582,7 @@ jobs:
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
-          touch app/.nojekyll
+          printf 'LEDOVIA GitHub Pages: disable Jekyll processing\n' > app/.nojekyll
       - name: Verify package files and generate inventory
         shell: bash
         run: |
