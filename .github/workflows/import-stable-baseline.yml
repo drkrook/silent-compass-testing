@@ -1,0 +1,45 @@
+name: Import Stable Baseline into Beta Preparation
+on:
+  push:
+    branches:
+      - release/independent-build-prep
+    paths:
+      - .github/workflows/import-stable-baseline.yml
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout preparation branch
+        uses: actions/checkout@v4
+        with:
+          path: beta
+          persist-credentials: true
+      - name: Checkout current Stable baseline
+        uses: actions/checkout@v4
+        with:
+          repository: drkrook/silent-compass-family-beta
+          ref: main
+          path: stable-source
+          persist-credentials: false
+      - name: Import baseline without overwriting existing files
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd beta
+          test "$(git branch --show-current)" = "release/independent-build-prep"
+          test ! -e baseline
+          mkdir baseline
+          cp -a ../stable-source/. baseline/
+          rm -rf baseline/.git baseline/.github
+          test -s baseline/index.html
+          test -s baseline/manifest.webmanifest
+          test -s baseline/sw.js || test -s baseline/service-worker.js
+          python3 -m json.tool baseline/manifest.webmanifest > /dev/null
+          git add baseline
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Vendor Stable baseline for independent Beta candidate build"
+          git push origin HEAD:release/independent-build-prep
+# One-time, branch-scoped import. No Pages deployment.
