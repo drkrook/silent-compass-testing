@@ -82,7 +82,57 @@ jobs:
               f.write("\nThis checks selected entry files only, not the complete site or functional equivalence.\n")
           print(json.dumps(report,indent=2))
           PY
+      - name: Compare every packaged asset with public Beta
+        env:
+          SITE: https://drkrook.github.io/silent-compass-testing/
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import concurrent.futures,hashlib,json,os,pathlib,urllib.request,urllib.error,urllib.parse
+          root=pathlib.Path("candidate")
+          inventory=json.loads(pathlib.Path("inventory/package-inventory.json").read_text())
+          entries=inventory["files"]
+          def check(entry):
+              name=entry["path"]
+              # Encode path segments independently to avoid URL query or fragment interpretation.
+              url=os.environ["SITE"]+("/".join(urllib.parse.quote(x,safe="") for x in name.split("/")))
+              try:
+                  req=urllib.request.Request(url,headers={"User-Agent":"LEDOVIA-ReadOnly-Asset-Verification/1.0","Accept-Encoding":"identity"})
+                  with urllib.request.urlopen(req,timeout=45) as response:
+                      digest=hashlib.sha256()
+                      size=0
+                      while True:
+                          chunk=response.read(1024*1024)
+                          if not chunk:break
+                          size+=len(chunk)
+                          digest.update(chunk)
+                  status="MATCH" if size==entry["bytes"] and digest.hexdigest()==entry["sha256"] else "DIFFERENT"
+                  return {"path":name,"status":status,"bytes_live":size,"sha256_live":digest.hexdigest()}
+              except urllib.error.HTTPError as e:
+                  return {"path":name,"status":"HTTP_ERROR","http_status":e.code}
+              except Exception as e:
+                  return {"path":name,"status":"FETCH_ERROR","error":str(e)[:250]}
+          with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
+              results=list(pool.map(check,entries))
+          counts={s:sum(x["status"]==s for x in results) for s in ("MATCH","DIFFERENT","HTTP_ERROR","FETCH_ERROR")}
+          report={"site":os.environ["SITE"],"total_packaged_files":len(entries),"counts":counts,"results":results,"scope":"Packaged files only; excludes external services, runtime-downloaded resources, and functional testing"}
+          pathlib.Path("evidence/all-assets-comparison.json").write_text(json.dumps(report,indent=2)+"\\n")
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("\\n## Full packaged-asset comparison\\n\\n")
+              f.write(f"Compared {len(entries)} packaged files against the public Beta site.\\n\\n")
+              f.write("| Result | Count |\\n|---|---:|\\n")
+              for status,count in counts.items():f.write(f"| {status} | {count} |\\n")
+              issues=[x for x in results if x["status"]!="MATCH"]
+              if issues:
+                  f.write("\\n### Non-matching assets (first 50)\\n\\n")
+                  for x in issues[:50]:f.write(f"- \`{x['path']}\`: {x['status']}\\n")
+              f.write("\\nThis is a public-file comparison, not an offline or functional test.\\n")
+          print(json.dumps({"counts":counts,"total":len(entries),"issues":[x for x in results if x["status"]!="MATCH"][:25]},indent=2))
+          if counts["MATCH"]!=len(entries):
+              raise SystemExit("Some packaged assets did not match public Beta; see uploaded report")
+          PY
       - name: Upload comparison evidence
+        if: always()
         uses: actions/upload-artifact@v6
         with:
           name: ledovia-beta-live-comparison
