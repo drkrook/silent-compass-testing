@@ -1,0 +1,78 @@
+name: Audit Pinned Beta Artifact for Stable (No Deploy)
+on:
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download exact approved Beta artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh api repos/$GITHUB_REPOSITORY/actions/runs/43811995143 > run.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open("run.json"))
+          assert r["head_sha"]=="39213ae9165f28f015b4f70e975ad9ed515b5228"
+          assert r["conclusion"]=="success" and r["name"]=="Package Ledovia Beta Candidate"
+          PY
+          gh run download 43811995143 --repo "$GITHUB_REPOSITORY" -n ledovia-beta-candidate -D candidate
+          gh run download 43811995143 --repo "$GITHUB_REPOSITORY" -n ledovia-package-inventory -D inventory
+      - name: Verify inventory and audit Stable compatibility
+        run: |
+          set -euo pipefail
+          mkdir -p audit
+          python3 - <<'PY'
+          import pathlib,json,hashlib,re,os
+          root=pathlib.Path("candidate")
+          inv=json.loads(pathlib.Path("inventory/package-inventory.json").read_text())
+          expected={e["path"]:e for e in inv["files"]}
+          actual={str(p.relative_to(root)):p for p in root.rglob("*") if p.is_file()}
+          assert set(expected)==set(actual),"Inventory file list differs"
+          for name,p in actual.items():
+              e=expected[name]
+              assert p.stat().st_size==e["bytes"] and hashlib.sha256(p.read_bytes()).hexdigest()==e["sha256"],name
+          targets=["index.html","manifest.webmanifest","sw.js","service-worker.js"]
+          findings={}
+          for name in targets:
+              p=root/name
+              if not p.exists():continue
+              s=p.read_text(errors="replace")
+              findings[name]={
+                "size_bytes":p.stat().st_size,
+                "sha256":hashlib.sha256(p.read_bytes()).hexdigest(),
+                "silent_compass_mentions":len(re.findall("silent compass",s,re.I)),
+                "ledovia_mentions":len(re.findall("ledovia",s,re.I)),
+                "beta_label_snippets":list(dict.fromkeys(s[max(0,m.start()-65):min(len(s),m.end()+90)].replace("\\n"," ") for m in list(re.finditer(r"LEDOVIA.{0,35}BETA|beta version|beta build",s,re.I))[:15])),
+                "repository_path_mentions":{x:len(re.findall(re.escape(x),s,re.I)) for x in ("silent-compass-testing","silent-compass-family-beta")},
+                "absolute_path_examples":list(dict.fromkeys(re.findall(r"""(?:src|href)=["'](/[^"']+)""",s)[:20])),
+                "service_worker_mentions":len(re.findall("serviceWorker",s,re.I))
+              }
+          manifest=root/"manifest.webmanifest"
+          if manifest.exists():
+              obj=json.loads(manifest.read_text())
+              findings["manifest_fields"]={k:obj.get(k) for k in ("name","short_name","start_url","scope","display")}
+          report={"source_run":43811995143,"source_sha":"39213ae9165f28f015b4f70e975ad9ed515b5228","verified_inventory_files":len(actual),"findings":findings,"limitations":"Static inspection only; not a runtime test or deployment authorization."}
+          pathlib.Path("audit/pinned-beta-stable-audit.json").write_text(json.dumps(report,indent=2)+"\n")
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("## LEDOVIA pinned Beta artifact audit — NO DEPLOYMENT\n\n")
+              f.write(f"Verified {len(actual)} packaged files against inventory. Source run: 43811995143.\n\n")
+              f.write("| File | LEDOVIA | Silent Compass | Beta labels | Beta path refs | Stable path refs |\n|---|---:|---:|---:|---:|---:|\n")
+              for name,d in findings.items():
+                  if not isinstance(d,dict) or "size_bytes" not in d:continue
+                  f.write(f"| {name} | {d['ledovia_mentions']} | {d['silent_compass_mentions']} | {len(d['beta_label_snippets'])} | {d['repository_path_mentions']['silent-compass-testing']} | {d['repository_path_mentions']['silent-compass-family-beta']} |\n")
+              if "manifest_fields" in findings:f.write("\nManifest: `"+json.dumps(findings["manifest_fields"])+"`\n")
+              f.write("\nDetailed snippets and path examples are in the JSON artifact. Static inspection does not prove production compatibility.\n")
+          print(json.dumps(report,indent=2)[:10000])
+          PY
+      - name: Upload audit evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: ledovia-pinned-beta-stable-audit
+          path: audit/
+          retention-days: 14
