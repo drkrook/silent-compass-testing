@@ -1,0 +1,588 @@
+name: Package Ledovia Beta Candidate
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout beta repository
+        uses: actions/checkout@v4
+        with:
+          path: beta
+      - name: Checkout stable source as initial beta baseline
+        uses: actions/checkout@v4
+        with:
+          repository: drkrook/silent-compass-family-beta
+          ref: main
+          path: app
+          persist-credentials: false
+      - name: Apply beta-specific overrides
+        shell: bash
+        run: |
+          if [ -d beta/overrides ]; then cp -a beta/overrides/. app/; fi
+          cp beta/beta-assets/prepare-your-area.js app/prepare-your-area.js
+          cp beta/beta-assets/state-map-packages.json app/state-map-packages.json
+          cp beta/beta-assets/ledovia-compass-home.js app/ledovia-compass-home.js
+          cp beta/beta-assets/ledovia-premium-home.* app/
+          cp beta/beta-assets/ledovia-mountains.svg app/
+          cp beta/beta-assets/ledovia-logo.svg app/
+          cp beta/beta-assets/ledovia-landscape-*.svg app/
+          cp beta/beta-assets/ledovia-scenic-v3.* app/
+          cp beta/beta-assets/ledovia-landscape-*-v4.svg app/
+          cp beta/beta-assets/ledovia-icon-*-v4.svg app/
+          cp beta/beta-assets/ledovia-landscape-v4.css app/
+          cp beta/beta-assets/ledovia-photo-v5.css app/
+          cp beta/beta-assets/ledovia-clean-home-v6.css app/
+          cp beta/beta-assets/ledovia-navigation-v7.* app/
+          cp beta/beta-assets/ledovia-visual-v8.* app/
+          cp beta/beta-assets/ledovia-menu-v9.* app/
+          cp beta/beta-assets/ledovia-menu-v10.* app/
+          cp beta/beta-assets/ledovia-android-back-v11.js app/
+          cp beta/beta-assets/ledovia-compass-v12.* app/
+          cp beta/beta-assets/ledovia-compass-v13.css app/
+          cp beta/beta-assets/ledovia-desktop-v14.* app/
+          cp beta/beta-assets/ledovia-desktop-v15.css app/
+          cp beta/beta-assets/ledovia-desktop-v16.* app/
+          cp beta/beta-assets/ledovia-icon-*.svg app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,'<script src="./prepare-your-area.js?v=0861"></script>'+marker)
+          s=s.replace('STABLE RELEASE v0.8.3','BETA v0.8.31')
+          s=s.replace('Stable Release · Ready','Beta Testing · Ready')
+          s=s.replace('BETA v0.8.3','BETA v0.8.31')
+          s=s.replace('Family Preview · Ready','Beta Testing · Ready')
+          # Remove the obsolete State resources label from the rendered beta page only.
+          s=s.replace('<strong>📍 State resources</strong>','<strong hidden>📍 State resources</strong>')
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1, 'Beta closing body anchor missing'
+          assert 'ledovia-compass-home.js' not in s, 'Duplicate compass injection'
+          s=s.replace(marker,'<script src="./ledovia-compass-home.js?v=2"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-premium-home.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-premium-home.js?v=2"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-scenic-v3.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-scenic-v3.js?v=3"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-landscape-v4.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-landscape-v4.css?v=4">'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-photo-v5.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-photo-v5.css?v=5">'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-clean-home-v6.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-clean-home-v6.css?v=6">'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-navigation-v7.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-navigation-v7.css?v=8"><script src="./ledovia-navigation-v7.js?v=15"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-visual-v8.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-visual-v8.css?v=8"><script src="./ledovia-visual-v8.js?v=8"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-menu-v9.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-menu-v9.css?v=9"><script src="./ledovia-menu-v9.js?v=9"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-menu-v10.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-menu-v10.css?v=10"><script src="./ledovia-menu-v10.js?v=10"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-android-back-v11.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-android-back-v11.js?v=11"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-compass-v12.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-compass-v12.css?v=12"><script src="./ledovia-compass-v12.js?v=12"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-compass-v13.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-compass-v13.css?v=13">'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-desktop-v14.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-desktop-v14.css?v=14"><script src="./ledovia-desktop-v14.js?v=14"></script>'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-desktop-v15.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-desktop-v15.css?v=15">'+marker)
+          p.write_text(s)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-desktop-v16.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-desktop-v16.css?v=16"><script src="./ledovia-desktop-v16.js?v=16"></script>'+marker)
+          p.write_text(s)
+          PY
+          # Beta-only repair: release stuck desktop mouse dragging without altering touch gestures.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          original="canvas.addEventListener('pointermove',e=>{if(!activeTouches.has(e.pointerId))return;"
+          patched="canvas.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'&&activeTouches.has(e.pointerId)&&e.buttons===0){endPointer(e);return}if(!activeTouches.has(e.pointerId))return;"
+          assert s.count(original)==1, 'Expected one map pointermove handler'
+          s=s.replace(original,patched,1)
+          original="canvas.addEventListener('pointerup',endPointer);canvas.addEventListener('pointercancel',endPointer);"
+          patched="""canvas.addEventListener('pointerup',endPointer);canvas.addEventListener('pointercancel',endPointer);
+          // Desktop mouseup can be lost when the browser releases capture outside the canvas.
+          window.addEventListener('pointerup',e=>{if(e.pointerType==='mouse'&&activeTouches.has(e.pointerId))endPointer(e)},true);
+          canvas.addEventListener('lostpointercapture',e=>{if(e.pointerType==='mouse'&&activeTouches.has(e.pointerId)){activeTouches.delete(e.pointerId);drag=null;gesture=null;pinchMoved=false}});
+          window.addEventListener('blur',()=>{for(const id of activeTouches.keys()){try{canvas.releasePointerCapture(id)}catch(e){}}activeTouches.clear();drag=null;gesture=null;pinchMoved=false});"""
+          assert s.count(original)==1, 'Expected one map pointer end handler'
+          s=s.replace(original,patched,1)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-map-resource-v18.* app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-map-resource-v18.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-resource-v18.css?v=18"><script src="./ledovia-map-resource-v18.js?v=24"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-map-workspace-v19.* app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-map-workspace-v19.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-workspace-v19.css?v=19"><script src="./ledovia-map-workspace-v19.js?v=28"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-resource-navigation-v20.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-resource-navigation-v20.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-resource-navigation-v20.js?v=20"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-map-interactions-v21.* app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-map-interactions-v21.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-interactions-v21.css?v=21"><script src="./ledovia-map-interactions-v21.js?v=25"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-map-cleanup-v22.* app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-map-cleanup-v22.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-map-cleanup-v22.css?v=22"><script src="./ledovia-map-cleanup-v22.js?v=22"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-hazard-dock-v24.css app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-hazard-dock-v24.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-hazard-dock-v24.css?v=24">'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-collapsible-layers-v26.* app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-collapsible-layers-v26.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-collapsible-layers-v26.css?v=26"><script src="./ledovia-collapsible-layers-v26.js?v=26"></script>'+marker)
+          p.write_text(s)
+          PY
+          # Beta-only fix: consistent map marker selection and blank-map dismissal.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          old="if(f){if(selected&&placeKey(selected)===placeKey(f)){selected=null;scPlacePopup.hidden=true;$('selected').replaceChildren();$('routeSelected').disabled=true;render();drawMiniMap()}else pick(f)}}drag=null;"
+          new="if(f){pick(f)}else{if(!scPlacePopup.hidden){scPlacePopup.hidden=true;selected=null;$('selected').replaceChildren();$('routeSelected').disabled=true;render();drawMiniMap()}const hazardPopup=document.getElementById('scHazDetailPopup');if(hazardPopup&&!hazardPopup.hidden){hazardPopup.querySelector('.scHazPopupHeader button')?.click()}}}drag=null;"
+          assert s.count(old)==1, 'Expected exactly one base map marker selection handler'
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+          # Beta-only map reliability repair: offline readiness must not resize/clear canvas.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          old="const [w,h]=dimensions(),[cx,cy]=xy(lat,lon,z);"
+          new="const w=$('mapwrap').clientWidth,h=$('mapwrap').clientHeight,[cx,cy]=xy(lat,lon,z);"
+          assert s.count(old)==1, 'Expected one readiness-only canvas sizing call'
+          assert 'async function scCheckOfflineReady()' in s
+          assert s.index(old)>s.index('async function scCheckOfflineReady()')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-saved-hazards-v29.* app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-saved-hazards-v29.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-saved-hazards-v29.css?v=29"><script src="./ledovia-saved-hazards-v29.js?v=29"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-fullscreen-layers-v30.* app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-fullscreen-layers-v30.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-fullscreen-layers-v30.css?v=31"><script src="./ledovia-fullscreen-layers-v30.js?v=30"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-weather-v32.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-weather-v32.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-weather-v32.js?v=34"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-compact-hero-v33.css app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-compact-hero-v33.css' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-compact-hero-v33.css?v=34">'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-trip-planner-v34.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-trip-planner-v34.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-trip-planner-v34.js?v=41"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-trip-weather-v35.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-trip-weather-v35.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-trip-weather-v35.js?v=42"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-trip-date-fix-v36.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-trip-date-fix-v36.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-trip-date-fix-v36.js?v=40"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-my-trips-v37.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-my-trips-v37.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-my-trips-v37.js?v=37"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-mobile-trips-v38.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-mobile-trips-v38.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-mobile-trips-v38.js?v=44"></script>'+marker)
+          p.write_text(s)
+          PY
+          # Beta-only auth recovery: direct reset emails to the Beta app, never the Pages root.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          old="await scAuthRequest('recover','POST',{email:e})"
+          new="await scAuthRequest('recover?redirect_to='+encodeURIComponent(location.origin+'/silent-compass-testing/index.html'),'POST',{email:e})"
+          assert s.count(old)==1, 'Expected exactly one existing password recovery handler'
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+          # Beta-only PWA branding; stable source and installed user data are unchanged.
+          cp beta/beta-assets/ledovia-app-icon-stable.svg app/ledovia-app-icon-beta.svg
+          cp beta/beta-assets/ledovia-official-logo.svg app/ledovia-official-logo.svg
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+          manifest=Path('app/manifest.webmanifest')
+          data=json.loads(manifest.read_text())
+          data['name']='LEDOVIA - Beta'
+          data['short_name']='LEDOVIA - Beta'
+          data['description']='Ready for the Adventure. Prepared for the Unexpected.'
+          data['icons']=[
+            {'src':'./ledovia-app-icon-beta-192.png','sizes':'192x192','type':'image/png','purpose':'any'},
+            {'src':'./ledovia-app-icon-beta-512.png','sizes':'512x512','type':'image/png','purpose':'any'},
+            {'src':'./ledovia-app-icon-beta.svg','sizes':'any','type':'image/svg+xml','purpose':'any'}
+          ]
+          manifest.write_text(json.dumps(data,indent=2)+'\n')
+          p=Path('app/index.html')
+          s=p.read_text()
+          s=s.replace('<title>Silent Compass — Offline Survival Companion</title>','<title>LEDOVIA - Beta</title>',1)
+          s=s.replace('<link rel="icon" href="./icon.svg" type="image/svg+xml">','',1)
+          s=s.replace('</head>','<link rel="icon" type="image/png" sizes="192x192" href="./ledovia-app-icon-beta-192.png?v=2"><link rel="icon" type="image/svg+xml" href="./ledovia-app-icon-beta.svg?v=2"></head>',1)
+          p.write_text(s)
+          PY
+          # Windows installed apps may ignore SVG-only manifest icons. Supply raster PNG sizes.
+          python3 -m pip -q install cairosvg
+          python3 - <<'PY'
+          from pathlib import Path
+          import cairosvg
+          svg=Path('app/ledovia-app-icon-beta.svg').read_bytes()
+          for size in (192,512):
+              cairosvg.svg2png(bytestring=svg,write_to=f'app/ledovia-app-icon-beta-{size}.png',output_width=size,output_height=size)
+          PY
+          cp beta/beta-assets/ledovia-home-account-v39.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-home-account-v39.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-home-account-v39.js?v=48"></script>'+marker)
+          p.write_text(s)
+          PY
+          cp beta/beta-assets/ledovia-guest-gate-v40.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-guest-gate-v40.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-guest-gate-v40.js?v=6"></script>'+marker)
+          p.write_text(s)
+          PY
+          # Beta-only password visibility and recovery completion; Stable source untouched.
+          cp beta/beta-assets/ledovia-password-recovery-v41.js app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-password-recovery-v41.js' not in s
+          s=s.replace(marker,'<script src="./ledovia-password-recovery-v41.js?v=2"></script>'+marker)
+          p.write_text(s)
+          PY
+          # Restore the previously selected workspace after mobile pull-to-refresh.
+          # Patch the generated Beta HTML only; never modify the Stable source.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          old="activate('home');\n window.GridDownTabs={activate};"
+          new="activate(names.some(([id])=>id===saved)?saved:'home');\n window.GridDownTabs={activate};"
+          assert s.count(old)==1, 'Expected active-tab startup sequence not found'
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
+          # Approved Ledovia Survival Guides visual refresh (Beta only).
+          cp beta/beta-assets/ledovia-survival-v43.css app/
+          cp beta/a_detailed_nature_collage_with_six_close_up_outdoo.png app/
+          cp beta/beta-assets/ledovia-water-photos-v1.css app/
+          cp beta/beta-assets/ledovia-survival-v43.js app/
+          # Bundle approved Survival Guide photos locally for offline use.
+          cp beta/beta-assets/first-aid.webp app/
+          cp beta/beta-assets/shelter.webp app/
+          # Photos uploaded to Beta repository root; bundle into deployed app for offline access.
+          cp beta/fire-warmth.webp beta/navigation.webp beta/weather-hazards.webp app/
+          cp beta/preparedness-checklists.webp beta/offline-guide-library.webp app/
+          cp beta/file_00000000efbc81f6a3253933c86e501a.png app/
+          cp beta/preparedness-checklists-photo.webp beta/offline-guide-library-photo.webp app/
+          cp beta/ledovia-water-food-card-photos-1.webp app/
+          cp 'beta/beta/ledovia-wild-food-banner.png' 'beta/beta/ledovia-foraging-safety-card.png' 'beta/beta/Foraging Safety Survival Guide Infographic.png' app/
+          cp beta/file_00000000ca9481f6b81d1e193bfcf3a3.png app/
+          cp beta/a_vertical_infographic_poster_in_the_same_style_as.png app/
+          cp beta/file_00000000c23881f6aada86093724af1e.png app/
+          cp beta/file_000000006a2481f691149e0b7bd3e2de.png beta/file_000000001ba881f6b03e47e0b2c3a2ce.png app/
+          cp beta/ledovia-emergency-priorities.png app/
+          cp beta/campfire-cooking.webp beta/camp-stoves.webp beta/dutch-oven-cooking.webp beta/solar-cooking.webp beta/wood-burning-stoves.webp beta/foil-grill-cooking.webp beta/safe-cooking-temperatures.webp beta/emergency-one-pot-meals.webp beta/no-cook-emergency-meals.webp beta/cooking-wild-game-fish.webp app/
+          cp beta/Ledovia_Emergency_Water_Filtration_Guide.png app/
+          cp beta/Ledovia_Find_Water_in_the_Wild_Guide.png app/
+          cp beta/Ledovia_Hunter_Safety_Card_Corrected.jpg beta/Ledovia_Caribou_Card.jpg beta/Ledovia_Black_Bear_Card.jpg app/
+          cp beta/file_00000000767881f69479abb2f89053cd.png beta/file_000000006ea881f6a47dc0aeaebeec0d.png beta/file_00000000148081f69c05b4f562c22625.png beta/file_00000000ccec81f69449d3cb58586060.png beta/file_00000000b55081f6bb8c7c5203b847cd.png app/
+          cp beta/file_00000000c2c881f6b9ab370d60c71bc3.png app/
+          cp beta/file_00000000993481f69e46006ac02ef6e3.png beta/file_000000000e1081f69c57192e464d6b0d.png beta/file_00000000e6cc81f6b27e28cba3b62ffe.png beta/file_00000000d5dc81f6ac529bf5b980bdde.png beta/file_00000000509881f69eae02a8807a6032.png app/
+          cp beta/file_00000000246c81f6a0455965dc0068ed.png beta/file_000000003cec81f69178979ef5be67f2.png beta/file_00000000a75881f6994245f9d61436d3.png beta/file_0000000000d481f6b8423f26d141f5ea.png beta/file_00000000d67081f6beb1db3950af5072.png beta/file_000000007c1081f689af8c15e11cdf4a.png beta/file_00000000c43c81f680c991b18c1e7e85.png beta/file_0000000019bc81f6beb2525cf74f8931.png app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-survival-v43.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-survival-v43.css?v=81"><script src="./ledovia-survival-v43.js?v=93"></script><link rel="stylesheet" href="./ledovia-water-photos-v1.css?v=1">'+marker)
+          p.write_text(s)
+          PY
+          # Release version is authoritative after all baseline substitutions.
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('app/index.html')
+          s=p.read_text()
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.392', s)
+          assert n>0, 'Expected Beta version label not found'
+          p.write_text(s)
+          PY
+          touch app/.nojekyll
+      - name: Upload complete candidate package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ledovia-beta-candidate
+          path: app/
+          if-no-files-found: error
+          retention-days: 14
