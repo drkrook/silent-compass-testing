@@ -92,6 +92,10 @@ jobs:
           root=pathlib.Path("candidate")
           inventory=json.loads(pathlib.Path("inventory/package-inventory.json").read_text())
           entries=inventory["files"]
+          # .nojekyll is a GitHub Pages configuration marker, not a public HTTP asset.
+          # Its presence, size and digest were already verified against the inventory above.
+          assert any(e["path"]==".nojekyll" for e in entries), "Expected .nojekyll marker absent"
+          public_entries=[e for e in entries if e["path"]!=".nojekyll"]
           def check(entry):
               name=entry["path"]
               # Encode path segments independently to avoid URL query or fragment interpretation.
@@ -113,13 +117,13 @@ jobs:
               except Exception as e:
                   return {"path":name,"status":"FETCH_ERROR","error":str(e)[:250]}
           with concurrent.futures.ThreadPoolExecutor(max_workers=6) as pool:
-              results=list(pool.map(check,entries))
+              results=list(pool.map(check,public_entries))
           counts={s:sum(x["status"]==s for x in results) for s in ("MATCH","DIFFERENT","HTTP_ERROR","FETCH_ERROR")}
-          report={"site":os.environ["SITE"],"total_packaged_files":len(entries),"counts":counts,"results":results,"scope":"Packaged files only; excludes external services, runtime-downloaded resources, and functional testing"}
+          report={"site":os.environ["SITE"],"total_packaged_files":len(entries),"configuration_markers_not_http_compared":[".nojekyll"],"public_files_compared":len(public_entries),"counts":counts,"results":results,"scope":"Packaged files only; excludes external services, runtime-downloaded resources, and functional testing"}
           pathlib.Path("evidence/all-assets-comparison.json").write_text(json.dumps(report,indent=2)+"\\n")
           with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
               f.write("\\n## Full packaged-asset comparison\\n\\n")
-              f.write(f"Compared {len(entries)} packaged files against the public Beta site.\\n\\n")
+              f.write(f"Compared {len(public_entries)} public files against the public Beta site; .nojekyll was verified in the candidate inventory but excluded from HTTP comparison.\\n\\n")
               f.write("| Result | Count |\\n|---|---:|\\n")
               for status,count in counts.items():f.write(f"| {status} | {count} |\\n")
               issues=[x for x in results if x["status"]!="MATCH"]
@@ -127,8 +131,8 @@ jobs:
                   f.write("\\n### Non-matching assets (first 50)\\n\\n")
                   for x in issues[:50]:f.write(f"- \`{x['path']}\`: {x['status']}\\n")
               f.write("\\nThis is a public-file comparison, not an offline or functional test.\\n")
-          print(json.dumps({"counts":counts,"total":len(entries),"issues":[x for x in results if x["status"]!="MATCH"][:25]},indent=2))
-          if counts["MATCH"]!=len(entries):
+          print(json.dumps({"counts":counts,"total_public_files":len(public_entries),"issues":[x for x in results if x["status"]!="MATCH"][:25]},indent=2))
+          if counts["MATCH"]!=len(public_entries):
               raise SystemExit("Some packaged assets did not match public Beta; see uploaded report")
           PY
       - name: Upload comparison evidence
