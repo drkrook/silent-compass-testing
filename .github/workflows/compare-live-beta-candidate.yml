@@ -1,0 +1,91 @@
+name: Compare Live Beta with Candidate (No Deploy)
+on:
+  workflow_dispatch:
+    inputs:
+      package_run_id:
+        description: Successful Package Ledovia Beta Candidate run ID
+        required: true
+        type: string
+      expected_commit:
+        description: Full 40-character commit SHA of that run
+        required: true
+        type: string
+permissions:
+  actions: read
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Verify exact packaging run
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ inputs.package_run_id }}
+          EXPECTED_SHA: ${{ inputs.expected_commit }}
+        run: |
+          set -euo pipefail
+          [[ "$RUN_ID" =~ ^[0-9]+$ ]] || exit 1
+          [[ "$EXPECTED_SHA" =~ ^[a-fA-F0-9]{40}$ ]] || exit 1
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RUN_ID" > run.json
+          python3 - <<'PY'
+          import json,os
+          r=json.load(open("run.json"))
+          assert r["head_sha"].lower()==os.environ["EXPECTED_SHA"].lower()
+          assert r["head_branch"]=="release/independent-build-prep"
+          assert r["status"]=="completed" and r["conclusion"]=="success"
+          assert r["name"]=="Package Ledovia Beta Candidate"
+          PY
+          gh run download "$RUN_ID" -n ledovia-beta-candidate -D candidate
+          gh run download "$RUN_ID" -n ledovia-package-inventory -D inventory
+      - name: Verify candidate inventory and compare public Beta entry files
+        env:
+          SITE: https://drkrook.github.io/silent-compass-testing
+          RUN_ID: ${{ inputs.package_run_id }}
+          EXPECTED_SHA: ${{ inputs.expected_commit }}
+        run: |
+          set -euo pipefail
+          mkdir -p evidence/live
+          python3 - <<'PY'
+          import hashlib,json,pathlib
+          root=pathlib.Path("candidate")
+          inv=json.loads(pathlib.Path("inventory/package-inventory.json").read_text())
+          expected={e["path"]:e for e in inv["files"]}
+          actual={str(p.relative_to(root)):p for p in root.rglob("*") if p.is_file()}
+          assert set(expected)==set(actual),f"Candidate file set mismatch: {set(expected)^set(actual)}"
+          for name,p in actual.items():
+              e=expected[name]
+              assert p.stat().st_size==e["bytes"] and hashlib.sha256(p.read_bytes()).hexdigest()==e["sha256"],name
+          print(f"Candidate inventory verified: {len(actual)} files")
+          PY
+          for file in index.html manifest.webmanifest sw.js service-worker.js icon.svg; do
+            if [ -f "candidate/$file" ]; then
+              curl --fail --location --silent --show-error --retry 2 "$SITE/$file" -o "evidence/live/$file" || rm -f "evidence/live/$file"
+            fi
+          done
+          python3 - <<'PY'
+          import hashlib,json,pathlib,os
+          candidate=pathlib.Path("candidate")
+          live=pathlib.Path("evidence/live")
+          report={"beta_run_id":os.environ["RUN_ID"],"expected_commit":os.environ["EXPECTED_SHA"],"live_site":os.environ["SITE"]+"/","files":{}}
+          for name in ("index.html","manifest.webmanifest","sw.js","service-worker.js","icon.svg"):
+              p=candidate/name
+              if not p.is_file():continue
+              q=live/name
+              report["files"][name]={"status":"MATCH" if q.is_file() and hashlib.sha256(p.read_bytes()).digest()==hashlib.sha256(q.read_bytes()).digest() else ("DIFFERENT" if q.is_file() else "LIVE_FILE_NOT_FOUND"),"candidate_sha256":hashlib.sha256(p.read_bytes()).hexdigest(),"live_sha256":hashlib.sha256(q.read_bytes()).hexdigest() if q.is_file() else None}
+          report["all_compared_files_match"]=bool(report["files"]) and all(x["status"]=="MATCH" for x in report["files"].values())
+          pathlib.Path("evidence/comparison.json").write_text(json.dumps(report,indent=2)+"\n")
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f:
+              f.write("## LEDOVIA public Beta vs candidate — NO DEPLOYMENT\n\n")
+              f.write(f"Packaging run: {report['beta_run_id']}  \\nCommit: {report['expected_commit']}\n\n")
+              f.write("| File | Comparison |\n|---|---|\n")
+              for name,item in report["files"].items():f.write(f"| {name} | {item['status']} |\n")
+              f.write("\nThis checks selected entry files only, not the complete site or functional equivalence.\n")
+          print(json.dumps(report,indent=2))
+          PY
+      - name: Upload comparison evidence
+        uses: actions/upload-artifact@v6
+        with:
+          name: ledovia-beta-live-comparison
+          path: evidence/
+          retention-days: 14
+# Read-only. No deployment or repository mutation.
