@@ -52,6 +52,24 @@ jobs:
                 "absolute_path_examples":list(dict.fromkeys(re.findall(r"""(?:src|href)=["'](/[^"']+)""",s)[:20])),
                 "service_worker_mentions":len(re.findall("serviceWorker",s,re.I))
               }
+          # Capture every exact legacy-name occurrence with enough context to classify it.
+          # Read-only evidence; do not transform any packaged file.
+          detailed={}
+          for name in targets:
+              p=root/name
+              if not p.exists():continue
+              s=p.read_text(errors="replace")
+              patterns={"legacy_name":r"silent compass","beta_label":r"\\bbeta\\b","beta_repository_path":r"silent-compass-testing","stable_repository_path":r"silent-compass-family-beta"}
+              detailed[name]={}
+              for kind,pattern in patterns.items():
+                  hits=[]
+                  for m in re.finditer(pattern,s,re.I):
+                      line=s.count("\\n",0,m.start())+1
+                      snippet=s[max(0,m.start()-95):min(len(s),m.end()+115)]
+                      snippet=re.sub(r"\\s+"," ",snippet)
+                      hits.append({"line":line,"offset":m.start(),"match":m.group(),"context":snippet})
+                  detailed[name][kind]=hits
+          pathlib.Path("audit/branding-reference-contexts.json").write_text(json.dumps(detailed,indent=2)+"\\n")
           manifest=root/"manifest.webmanifest"
           if manifest.exists():
               obj=json.loads(manifest.read_text())
@@ -66,7 +84,7 @@ jobs:
                   if not isinstance(d,dict) or "size_bytes" not in d:continue
                   f.write(f"| {name} | {d['ledovia_mentions']} | {d['silent_compass_mentions']} | {len(d['beta_label_snippets'])} | {d['repository_path_mentions']['silent-compass-testing']} | {d['repository_path_mentions']['silent-compass-family-beta']} |\n")
               if "manifest_fields" in findings:f.write("\nManifest: `"+json.dumps(findings["manifest_fields"])+"`\n")
-              f.write("\nDetailed snippets and path examples are in the JSON artifact. Static inspection does not prove production compatibility.\n")
+              f.write("\nExact reference contexts are in `branding-reference-contexts.json` in the audit artifact. Static inspection does not prove production compatibility.\n")
           print(json.dumps(report,indent=2)[:10000])
           PY
       - name: Upload audit evidence
