@@ -82,7 +82,7 @@ function init(){
  const first=field('New password');const second=field('Confirm new password');
  const rules=document.createElement('div');rules.className='ldResetRules';
  rules.innerHTML='<strong>Password Requirements</strong>';
- const checks=[['At least 8 characters',v=>v.length>=8],['Uppercase letter (A–Z)',v=>/[A-Z]/.test(v)],['Lowercase letter (a–z)',v=>/[a-z]/.test(v)],['Number (0–9)',v=>/[0-9]/.test(v)],['Symbol (such as ! or #)',v=>/[^a-zA-Z0-9\\s]/.test(v)]];
+ const checks=[['At least 8 characters',v=>v.length>=8],['Uppercase letter (A–Z)',v=>/[A-Z]/.test(v)],['Lowercase letter (a–z)',v=>/[a-z]/.test(v)],['Number (0–9)',v=>/[0-9]/.test(v)],['Symbol (such as ! or #)',v=>/[^a-zA-Z0-9\s]/.test(v)]];
  const indicators=checks.map(([label])=>{const item=document.createElement('div');item.className='ldResetRule';item.textContent=label;item.dataset.valid='false';rules.append(item);return item});
  const match=document.createElement('div');match.className='ldResetMatch';match.setAttribute('aria-live','polite');match.textContent='Confirm your new password.';
  form.append(rules,match);
