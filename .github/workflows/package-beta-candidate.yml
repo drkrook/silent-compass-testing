@@ -18,10 +18,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test -s beta/baseline/index.html
-          test -s beta/baseline/manifest.webmanifest
+          test -s baseline/index.html
+          test -s baseline/manifest.webmanifest
           mkdir app
-          cp -a beta/baseline/. app/
+          cp -a baseline/. app/
       - name: Apply beta-specific overrides
         shell: bash
         run: |
