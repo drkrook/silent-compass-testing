@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "states": {
+    "SC": {
+      "file": "SC.json",
+      "count": 5128,
+      "generatedAt": "2026-11-07T03:45:47.223766+00:00",
+      "coverageNote": "Nodes and ways included; relations not included. Way markers are approximate, not entrances. Not a complete statewide inventory."
+    }
+  }
+}

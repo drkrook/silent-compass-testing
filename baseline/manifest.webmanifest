@@ -1,0 +1,18 @@
+{
+  "name": "Silent Compass \u2014 Family Preview",
+  "short_name": "Silent Compass",
+  "description": "Ready for the Adventure. Prepared for the Unexpected. Your Offline Survival Companion.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#101c20",
+  "theme_color": "#17282c",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

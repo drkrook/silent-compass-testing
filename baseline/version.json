@@ -1,0 +1,5 @@
+{
+  "version": "0.8.3",
+  "released": "2026-11-07",
+  "notes": "Explicit individual-circle cloud upload with confirmation, verified account, duplicate protection. No location or photo uploads."
+}
