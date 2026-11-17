@@ -31,3 +31,16 @@ body:has(#appMain.scMapSimple)>header #ld47CompactBrand{display:flex!important;f
 #ld47CompactBrand small{font-size:clamp(7px,1.7vw,10px);letter-spacing:.12em;color:#c5f5ef;font-weight:700;white-space:nowrap}
 body:has(#appMain.scMapSimple)>header #ledoviaMenuButton,body:has(#appMain.scMapSimple)>header #ledoviaBellButton{top:12px!important}
 @media(max-width:700px){body:has(#appMain.scMapSimple)>header{min-height:70px!important;height:70px!important;background:#07343c!important;background-image:none!important;padding:7px 58px!important}}
+
+/* v47.2: viewport-centered brand, independent of header's flex and other hidden children. */
+body:has(#appMain.scMapSimple)>header{position:relative!important;width:100%!important;max-width:100%!important;overflow:visible!important;flex-wrap:nowrap!important}
+body:has(#appMain.scMapSimple)>header #ld47CompactBrand{
+ position:absolute!important;display:flex!important;left:50%!important;right:auto!important;top:50%!important;
+ transform:translate(-50%,-50%)!important;margin:0!important;padding:0!important;
+ width:min(62vw,330px)!important;max-width:62vw!important;min-width:0!important;
+ z-index:1!important;align-items:center!important;white-space:nowrap!important;
+}
+body:has(#appMain.scMapSimple)>header #ld47CompactBrand strong{font-size:clamp(20px,5vw,29px)!important}
+body:has(#appMain.scMapSimple)>header #ld47CompactBrand small{font-size:clamp(6px,1.45vw,10px)!important;letter-spacing:.06em!important}
+body:has(#appMain.scMapSimple)>header #ledoviaMenuButton,
+body:has(#appMain.scMapSimple)>header #ledoviaBellButton{z-index:6!important}
