@@ -33,6 +33,35 @@ style.textContent=`
 #ldAccountDialog .ldResetMatch[data-valid="true"]{color:#79f1ba}
 #ldAccountDialog .ldResetPrimary:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(.4)}
 #ldAccountDialog .ldResetStatus{white-space:pre-wrap;line-height:1.5}
+
+/* Recovery-only premium visual treatment; account sign-in remains unchanged. */
+#ldAccountDialog.ldRecoveryPremium{width:min(96vw,640px)!important;max-height:calc(100dvh - 20px)!important;overflow-y:auto!important;box-sizing:border-box;padding:clamp(16px,4vw,30px)!important;border:1px solid #3de2dc!important;border-radius:22px!important;background:linear-gradient(180deg,rgba(0,24,35,.26),rgba(0,24,35,.75)),url('./ledovia-mountains.svg') center/cover no-repeat!important;color:#fff!important;box-shadow:0 24px 75px #00141de8!important}
+#ldAccountDialog.ldRecoveryPremium::backdrop{background:#00131cd9}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHeading{display:flex;align-items:center;justify-content:space-between;background:transparent!important;padding:0!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHeading h2{font-size:18px!important;margin:0!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHeading button{background:#003f4bcf;color:#fff;border:1px solid #55dcd7;border-radius:9px;padding:10px 14px}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHero{background:transparent!important;text-align:center;padding:0!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountLogo{display:block;width:min(78%,330px)!important;max-height:145px!important;object-fit:contain;margin:auto!important;filter:drop-shadow(0 3px 12px #001c26)}
+#ldAccountDialog.ldRecoveryPremium .ldResetTitle{font-size:clamp(24px,5vw,32px)!important;margin:6px 0!important;color:white!important;text-shadow:0 2px 10px #001923}
+#ldAccountDialog.ldRecoveryPremium .ldResetTitle::before{content:'🔒';font-size:.8em;margin-right:10px}
+#ldAccountDialog.ldRecoveryPremium .ldResetText{color:#fff!important;margin:0 0 16px!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountPanel{padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetStatus{padding:15px!important;margin:0 0 16px!important;border:1px solid #4de3aa;border-radius:13px;background:#003c3ce8;color:#e9fff6!important;font-weight:700}
+#ldAccountDialog.ldRecoveryPremium .ldResetStatus[data-verified="true"]::before{content:'✓';display:inline-block;margin-right:12px;padding:1px 9px;border:2px solid #83f7a5;border-radius:50%;color:#83f7a5;font-size:23px}
+#ldAccountDialog.ldRecoveryPremium .ldResetForm{gap:13px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetForm label{color:white!important;font-size:15px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetForm input{min-height:53px!important;background:#00313edc!important;border:1.5px solid #3ce4e2!important;border-radius:11px!important;color:white!important;font-size:16px!important}
+#ldAccountDialog.ldRecoveryPremium .ldPasswordEye{background:#00434d!important;border-color:#37c6c2!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRules{padding:17px!important;border:1px solid #3ad8d4!important;border-radius:16px!important;background:#003640ed!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRules strong{font-size:19px!important;color:white!important;margin-bottom:8px}
+#ldAccountDialog.ldRecoveryPremium .ldResetRules strong::before{content:'⚿';margin-right:10px;color:#d5fffa}
+#ldAccountDialog.ldRecoveryPremium .ldResetRule{font-size:15px!important;color:#eafff9!important;line-height:1.85!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRule::before{content:' ';display:inline-block;flex:none;width:18px;height:18px;border:2px solid #94b4b6;border-radius:50%}
+#ldAccountDialog.ldRecoveryPremium .ldResetRule[data-valid="true"]::before{content:'✓';border-color:#a3fb29;color:#a3fb29;text-align:center;line-height:16px}
+#ldAccountDialog.ldRecoveryPremium .ldResetPrimary{min-height:60px!important;border-radius:13px!important;background:linear-gradient(180deg,#10cbc9,#00727c)!important;box-shadow:0 0 20px #10c9c655!important;font-size:21px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetBack{display:block;margin:5px auto 0;padding:11px 22px;border:1px solid #39d4d0;border-radius:10px;background:#003944;color:#fff;font-weight:700}
+@media(max-width:480px){#ldAccountDialog.ldRecoveryPremium{width:calc(100vw - 20px)!important;max-height:calc(100dvh - 16px)!important;padding:16px!important}#ldAccountDialog.ldRecoveryPremium .ldAccountLogo{max-height:105px!important}#ldAccountDialog.ldRecoveryPremium .ldResetRules{padding:13px!important}}
+
 `;
 document.head.append(style);
 function eye(input){
@@ -62,7 +91,7 @@ function init(){
  if(typeof window.scFamilyAuthUI!=='function'||!document.body)return false;
  let dlg=document.getElementById('ldAccountDialog');
  if(!dlg){dlg=document.createElement('dialog');dlg.id='ldAccountDialog';document.body.append(dlg)}
- dlg.replaceChildren();
+ dlg.replaceChildren();dlg.classList.add('ldRecoveryPremium');
  const heading=document.createElement('div');heading.className='ldAccountHeading';
  const h=document.createElement('h2');h.textContent='My Account';
  const close=document.createElement('button');close.type='button';close.textContent='Close';close.onclick=()=>dlg.close();
@@ -98,7 +127,7 @@ function init(){
   return valid.every(Boolean)&&matching;
  }
  first.addEventListener('input',validate);second.addEventListener('input',validate);validate();
- const back=document.createElement('button');back.type='button';back.textContent='← Back to Sign In';back.onclick=()=>{dlg.close();const b=document.getElementById('ldAccountOpenDesktop')||document.getElementById('ldAccountOpenMobile');b?.click()};panel.append(back);
+ const back=document.createElement('button');back.type='button';back.className='ldResetBack';back.textContent='← Back to Sign In';back.onclick=()=>{dlg.close();const b=document.getElementById('ldAccountOpenDesktop')||document.getElementById('ldAccountOpenMobile');b?.click()};panel.append(back);
  if(!dlg.open)dlg.showModal();
  async function request(path,method,body){
   const response=await fetch(base+path,{method,headers:{apikey:key,Authorization:'Bearer '+token,'Content-Type':'application/json'},body:body?JSON.stringify(body):undefined,cache:'no-store'});
@@ -106,7 +135,7 @@ function init(){
   if(!response.ok)throw Error(data.msg||data.error_description||data.message||data.error||'Unable to verify recovery link');
   return data;
  }
- (async()=>{try{await request('/user','GET');status.textContent='Recovery link verified. Enter your new password.';form.hidden=false}catch(e){status.textContent='This recovery link is invalid or expired. Please request a new password-reset email.'}})();
+ (async()=>{try{await request('/user','GET');status.textContent='Recovery link verified. Enter your new password below.';status.dataset.verified='true';form.hidden=false}catch(e){status.textContent='This recovery link is invalid or expired. Please request a new password-reset email.'}})();
  form.onsubmit=async e=>{
   e.preventDefault();
   const value=first.value;
