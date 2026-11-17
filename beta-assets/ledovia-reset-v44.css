@@ -24,3 +24,13 @@
 #ldAccountDialog.ldRecoveryPremium .ldResetBack{display:block!important;margin:5px auto 0!important;padding:11px 20px!important;border:1px solid #42d7d2!important;border-radius:10px!important;background:#003c48!important;color:white!important}
 @media(min-width:600px){#ldAccountDialog.ldRecoveryPremium{background:linear-gradient(180deg,#00182411 0%,#00232a55 26%,#00222de8 65%,#001e2af5 100%),url('./ledovia-landscape-desktop-v4.svg') center top/100% auto no-repeat,#002833!important}}
 @media(max-width:480px){#ldAccountDialog.ldRecoveryPremium{width:calc(100vw - 20px)!important;padding:16px!important}#ldAccountDialog.ldRecoveryPremium .ldAccountLogo{max-height:105px!important}#ldAccountDialog.ldRecoveryPremium .ldResetRule{font-size:14px!important}}
+
+/* v45 approved: successful recovery verification is silent; errors remain visible. */
+#ldAccountDialog.ldRecoveryPremium .ldResetStatus[data-verified="true"]{display:none!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetStatus:not([data-verified="true"]){display:block!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetText{margin-bottom:11px!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHero{margin:8px auto 2px!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountPanel{backdrop-filter:blur(7px)}
+#ldAccountDialog.ldRecoveryPremium .ldResetForm input:focus-visible{outline:2px solid #a2fff0!important;outline-offset:2px!important;box-shadow:0 0 0 4px #15d7c528!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetPrimary:not(:disabled){background:linear-gradient(135deg,#36e4cf,#0496a4 55%,#006c83)!important;box-shadow:0 5px 24px #19d9d155!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetPrimary:disabled{opacity:.58!important;box-shadow:none!important}
