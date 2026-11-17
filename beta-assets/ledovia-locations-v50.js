@@ -131,3 +131,27 @@ enhanceLocationPhotoDialog();
 const observer=new MutationObserver(()=>enhanceLocationPhotoDialog());
 observer.observe(document.documentElement,{subtree:true,childList:true});
 })();
+
+/* BETA v0.8.509 — explicit cancel/collapse for Add New Location and Edit Location. */
+(()=>{'use strict';
+function setup(){
+ const editor=document.getElementById('scPlaceEditor');
+ if(!editor||editor.dataset.ldCollapseReady)return !!editor;
+ editor.dataset.ldCollapseReady='1';
+ const close=document.createElement('button');
+ close.type='button';close.className='ld50CollapseEditor';
+ close.textContent='✕ Cancel / Close';
+ close.setAttribute('aria-label','Close location form without saving');
+ close.addEventListener('click',()=>{
+   editor.open=false;
+   editor.removeAttribute('open');
+   editor.querySelector('summary')?.focus({preventScroll:true});
+ });
+ editor.append(close);
+ return true;
+}
+if(!setup()){
+ const watcher=new MutationObserver(()=>{if(setup())watcher.disconnect()});
+ watcher.observe(document.documentElement,{subtree:true,childList:true});
+}
+})();
