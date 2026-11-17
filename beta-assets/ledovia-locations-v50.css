@@ -297,3 +297,72 @@ body.ld510CompactPlacesHeader header #ledoviaBellButton{right:14px!important}
  body.ld510CompactPlacesHeader header #ledoviaMenuButton,
  body.ld510CompactPlacesHeader header #ledoviaBellButton{width:44px!important;height:44px!important}
 }
+
+/* BETA v0.8.511 — approved My Locations composition: compact navigation, scenic title banner,
+   integrated Add button, tighter saved list. Presentation only; all handlers/storage preserved. */
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #privatePlacesPanel{
+ padding:0 10px 16px!important;border:0!important;border-radius:0!important;
+ background:transparent!important;box-shadow:none!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #privatePlacesPanel>strong{
+ display:flex!important;align-items:center!important;
+ min-height:108px!important;margin:8px 0 0!important;
+ padding:16px 12px 16px 93px!important;
+ border:1px solid #3ad8ce!important;border-radius:14px 14px 0 0!important;
+ background-image:linear-gradient(90deg,#001b27d9,#003b46b8 52%,#031b27a0),url('./ledovia-landscape-mobile-v4.svg')!important;
+ background-size:cover!important;background-position:center!important;
+ font-size:clamp(27px,6.5vw,37px)!important;
+ text-shadow:0 2px 6px #001b22!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #privatePlacesPanel>strong::before{
+ content:'📍'!important;left:19px!important;top:24px!important;font-size:48px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #privatePlacesPanel>.scPlacesIntro{
+ margin:0 0 12px!important;padding:0 13px 13px 93px!important;
+ border:1px solid #3ad8ce!important;border-top:0!important;
+ border-radius:0 0 14px 14px!important;
+ background:linear-gradient(90deg,#042b35,#063d45)!important;
+ font-size:13px!important;line-height:1.35!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor{
+ margin:8px 0 14px!important;padding:6px!important;
+ border-radius:14px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor>summary{
+ min-height:58px!important;padding:12px!important;
+ font-size:clamp(17px,4.5vw,21px)!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations.ld50Premium{
+ margin-top:12px!important;padding:10px!important;border-radius:16px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations>h3{
+ font-size:clamp(22px,5vw,28px)!important;margin:0 0 4px!important;padding:4px 0 7px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations>h3::before{
+ content:'✧'!important;margin-right:6px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations>p{
+ display:none!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #privateList{gap:8px!important}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #privateList>.ld50Count{
+ margin:0 0 4px!important;padding:4px 11px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations .ld50Toggle{
+ min-height:65px!important;padding:8px 10px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations .ld50Icon{
+ flex-basis:46px!important;height:46px!important;font-size:26px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple .ld511PlacesNav{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ gap:7px!important;margin:9px 0 12px!important;
+}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple .ld511PlacesNav>button{
+ flex:1 1 0!important;min-width:0!important;min-height:43px!important;
+ margin:0!important;padding:8px 4px!important;
+ border:1px solid #45d7cd!important;border-radius:10px!important;
+ background:linear-gradient(#075b63,#06373e)!important;
+ box-shadow:0 0 8px #1ae0d033!important;
+ font-size:clamp(12px,3.3vw,15px)!important;line-height:1.15!important;
+}
