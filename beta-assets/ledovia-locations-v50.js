@@ -155,3 +155,12 @@ if(!setup()){
  watcher.observe(document.documentElement,{subtree:true,childList:true});
 }
 })();
+
+/* BETA v0.8.510 — compact header only on My Locations; map/home unaffected. */
+(()=>{'use strict';
+ const main=document.getElementById('appMain');
+ if(!main)return;
+ const sync=()=>document.body.classList.toggle('ld510CompactPlacesHeader',main.classList.contains('scPlacesSimple'));
+ sync();
+ new MutationObserver(sync).observe(main,{attributes:true,attributeFilter:['class']});
+})();
