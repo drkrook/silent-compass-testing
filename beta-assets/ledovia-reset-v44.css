@@ -34,3 +34,9 @@
 #ldAccountDialog.ldRecoveryPremium .ldResetForm input:focus-visible{outline:2px solid #a2fff0!important;outline-offset:2px!important;box-shadow:0 0 0 4px #15d7c528!important}
 #ldAccountDialog.ldRecoveryPremium .ldResetPrimary:not(:disabled){background:linear-gradient(135deg,#36e4cf,#0496a4 55%,#006c83)!important;box-shadow:0 5px 24px #19d9d155!important}
 #ldAccountDialog.ldRecoveryPremium .ldResetPrimary:disabled{opacity:.58!important;box-shadow:none!important}
+
+/* Approved LEDOVIA logo: exact existing cinematic artwork, not a generated substitute. */
+#ldAccountDialog.ldRecoveryPremium .ldAccountLogo{content:url('./ledovia-approved-logo-v45.jpg')!important;display:block!important;width:min(100%,430px)!important;max-height:none!important;height:auto!important;aspect-ratio:1200/640!important;object-fit:cover!important;border:1px solid #38d6d255!important;border-radius:12px!important;box-shadow:0 9px 26px #00172188!important;filter:none!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHero{margin:12px auto 9px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetTitle::before{content:'♙'!important;font-size:.75em!important;color:#8ce6dd!important}
+@media(max-width:480px){#ldAccountDialog.ldRecoveryPremium .ldAccountLogo{width:100%!important;max-height:none!important}}
