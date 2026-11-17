@@ -129,3 +129,77 @@
 #appMain.scPlacesSimple .ld50PlaceMeta p{margin:0 0 9px}
 #appMain.scPlacesSimple .ld50Actions{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(min-width:600px){#appMain.scPlacesSimple .ld50Actions{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* BETA v0.8.508: restore the native disclosure layout for Add/Edit Location.
+   Previous display:flex!important on #scPlaceEditor caused the summary to sit beside the form. */
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:0!important;
+  box-sizing:border-box!important;
+  padding:12px!important;
+  margin:12px 0 20px!important;
+  overflow:visible!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor:not([open]) > :not(summary){display:none!important}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor > summary{
+  display:block!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  padding:17px 14px!important;
+  margin:0!important;
+  text-align:center!important;
+  font-size:clamp(17px,4.7vw,23px)!important;
+  font-weight:800!important;
+  line-height:1.3!important;
+  cursor:pointer;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor[open] > summary{
+  border-bottom:1px solid #65e4d8;
+  margin-bottom:14px!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor[open]{
+  background:linear-gradient(155deg,#075d60,#063d45)!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor label,
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor input:not([type=checkbox]),
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor select,
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor textarea{
+  box-sizing:border-box!important;
+  max-width:100%!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor label{
+  display:block!important;
+  width:100%!important;
+  margin:12px 0 6px!important;
+  font-size:14px!important;
+  line-height:1.4!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor input:not([type=checkbox]):not([type=file]),
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor select,
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor textarea{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0 0 12px!important;
+  padding:12px!important;
+  font-size:16px!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor button{
+  max-width:100%!important;
+  white-space:normal!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor .row{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  gap:9px!important;
+  align-items:stretch!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor .row button{
+  flex:1 1 135px!important;
+  min-width:0!important;
+}
+#appMain.scPlacesSimple #privatePlacesPanel>strong::before{content:none!important}
+#appMain.scPlacesSimple .ld50PlaceMeta{overflow-wrap:anywhere}
