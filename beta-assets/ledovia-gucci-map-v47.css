@@ -177,3 +177,18 @@ body:has(#appMain.scMapSimple)>header #ld47CompactBrand small{font-size:clamp(7p
 
 /* Empty GPS status must never render as a decorative green bar. */
 #appMain.scMapSimple #ld47GpsStatus:empty{display:none!important}
+
+/* v48.3: align Map Style popup to the left of the six-button rail. */
+#appMain.scMapSimple #mapLayersControl #mapLayersMenu:not([hidden]){
+ box-sizing:border-box!important;
+ position:absolute!important;
+ right:calc(100% + 12px)!important;
+ left:auto!important;
+ top:0!important;
+ width:min(300px,calc(100vw - 110px))!important;
+ max-width:calc(100vw - 110px)!important;
+ z-index:25!important;
+}
+#appMain.scMapSimple #mapLayersControl #mapLayersMenu select{
+ box-sizing:border-box!important;max-width:100%!important;
+}
