@@ -46,7 +46,7 @@ function init(){
   navigator.geolocation.getCurrentPosition(p=>{
    position={latitude:p.coords.latitude,longitude:p.coords.longitude,accuracy:p.coords.accuracy};
    // Reuse the existing GPS map-centering action via the existing map engine.
-   document.getElementById('locate')?.click();
+   if(typeof window.__ld47SetCenter==='function')window.__ld47SetCenter(position.latitude,position.longitude,15);else document.getElementById('locate')?.click();
    locate.disabled=false;locate.removeAttribute('aria-busy');message('Location found. Blue dot shows your position.');draw();
   },e=>{locate.disabled=false;locate.removeAttribute('aria-busy');message('Location unavailable: '+e.message);},{enableHighAccuracy:true,timeout:12000,maximumAge:30000});
  });
