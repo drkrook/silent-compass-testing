@@ -1,3 +1,26 @@
-/* LEDOVIA approved reset panel: isolated visual stylesheet. */
-#ldAccountDialog.ldRecoveryPremium .ldResetStatus[data-verified="true"]{border-color:#70f5a2!important;background:#003d3ce8!important}
-#ldAccountDialog.ldRecoveryPremium .ldResetRules{width:100%!important;box-sizing:border-box}
+/* LEDOVIA v44 approved-reference recovery-only design. */
+#ldAccountDialog.ldRecoveryPremium{width:min(96vw,620px)!important;max-height:calc(100dvh - 18px)!important;overflow-y:auto!important;padding:clamp(15px,4vw,28px)!important;box-sizing:border-box!important;border:1px solid #38d6d2!important;border-radius:22px!important;background:linear-gradient(180deg,#00182411 0%,#00232a55 26%,#00222de8 65%,#001e2af5 100%),url('./ledovia-landscape-mobile-v4.svg') center top/100% auto no-repeat,#002833!important;box-shadow:0 20px 65px #000e18ed!important;color:#fff!important}
+#ldAccountDialog.ldRecoveryPremium::backdrop{background:#00111cdd}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHeading{margin:0!important;padding:0!important;background:transparent!important;display:flex!important;align-items:center!important;justify-content:space-between!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHeading h2{margin:0!important;font-size:18px!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHeading button{padding:9px 15px!important;background:#003944e8!important;color:white!important;border:1px solid #55ddd6!important;border-radius:10px!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountHero{padding:0!important;margin:0 auto!important;background:transparent!important;text-align:center!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountLogo{display:block!important;width:min(88%,330px)!important;height:auto!important;max-height:125px!important;object-fit:contain!important;margin:0 auto!important;filter:drop-shadow(0 3px 12px #001721)}
+#ldAccountDialog.ldRecoveryPremium .ldResetTitle{margin:4px 0!important;font-size:clamp(24px,5vw,31px)!important;line-height:1.2!important;color:#fff!important;text-shadow:0 2px 10px #001822}
+#ldAccountDialog.ldRecoveryPremium .ldResetText{margin:0 0 14px!important;color:#fff!important;line-height:1.4!important}
+#ldAccountDialog.ldRecoveryPremium .ldAccountPanel{margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetStatus{display:block!important;padding:15px 16px!important;margin:0 0 14px!important;border:1px solid #4ae3a3!important;border-radius:13px!important;background:#003c3de8!important;color:#effff7!important;font-weight:700!important;line-height:1.5!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetStatus[data-verified="true"]::before{content:'✓'!important;display:inline-grid!important;place-items:center!important;width:36px!important;height:36px!important;margin-right:12px!important;padding:0!important;border:2px solid #8cf8a8!important;border-radius:12px!important;color:#8cf8a8!important;font-size:24px!important;vertical-align:middle!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetForm{gap:12px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetForm label{font-size:15px!important;color:#fff!important;margin:0!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetForm .ldPasswordWrap{margin-top:6px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetForm input{min-height:52px!important;border:1.5px solid #39ded9!important;border-radius:11px!important;background:#002d3bde!important;color:white!important;font-size:16px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRules{width:100%!important;box-sizing:border-box!important;padding:15px 18px!important;margin-top:3px!important;border:1px solid #3bdad6!important;border-radius:15px!important;background:#00333fe8!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRules strong{font-size:18px!important;color:#fff!important;margin-bottom:8px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRule{display:flex!important;align-items:center!important;gap:10px!important;font-size:15px!important;line-height:1.8!important;color:#e9fff9!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRule::before{content:''!important;display:inline-grid!important;place-items:center!important;flex:none!important;width:19px!important;height:19px!important;border:2px solid #a5c4c3!important;border-radius:50%!important;box-sizing:border-box!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRule[data-valid="true"]::before{content:'✓'!important;color:#a5f33c!important;border-color:#a5f33c!important;font-size:14px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetPrimary{min-height:58px!important;border-radius:12px!important;background:linear-gradient(180deg,#10c9c5,#007580)!important;box-shadow:0 0 20px #0dd4cc44!important;font-size:21px!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetBack{display:block!important;margin:5px auto 0!important;padding:11px 20px!important;border:1px solid #42d7d2!important;border-radius:10px!important;background:#003c48!important;color:white!important}
+@media(min-width:600px){#ldAccountDialog.ldRecoveryPremium{background:linear-gradient(180deg,#00182411 0%,#00232a55 26%,#00222de8 65%,#001e2af5 100%),url('./ledovia-landscape-desktop-v4.svg') center top/100% auto no-repeat,#002833!important}}
+@media(max-width:480px){#ldAccountDialog.ldRecoveryPremium{width:calc(100vw - 20px)!important;padding:16px!important}#ldAccountDialog.ldRecoveryPremium .ldAccountLogo{max-height:105px!important}#ldAccountDialog.ldRecoveryPremium .ldResetRule{font-size:14px!important}}
