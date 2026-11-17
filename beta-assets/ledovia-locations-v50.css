@@ -212,3 +212,88 @@
  color:#effffb!important;font-size:16px!important;font-weight:700!important;
 }
 #appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor:not([open]) .ld50CollapseEditor{display:none!important}
+
+/* BETA v0.8.510 — condensed LEDOVIA brand bar matching the Map header reference.
+   Only active on My Locations; preserve the existing hamburger/home button handlers. */
+body.ld510CompactPlacesHeader header{
+ position:relative!important;
+ display:flex!important;
+ align-items:center!important;
+ justify-content:center!important;
+ width:100%!important;
+ height:94px!important;
+ min-height:94px!important;
+ max-height:94px!important;
+ padding:9px 72px!important;
+ margin:0!important;
+ overflow:hidden!important;
+ background:#064b52!important;
+ background-image:linear-gradient(115deg,#04363e,#067a7d 52%,#043840)!important;
+ background-size:cover!important;
+ border-bottom:2px solid #35e1d5!important;
+ box-shadow:0 5px 18px #001c24a8!important;
+}
+body.ld510CompactPlacesHeader header h1{
+ position:relative!important;
+ display:flex!important;
+ flex-direction:column!important;
+ align-items:center!important;
+ justify-content:center!important;
+ width:100%!important;
+ height:auto!important;
+ min-height:0!important;
+ margin:0!important;
+ padding:0!important;
+ font-size:0!important;
+ line-height:1!important;
+ text-align:center!important;
+ background:none!important;
+ background-image:none!important;
+ text-shadow:none!important;
+}
+body.ld510CompactPlacesHeader header h1::before{
+ content:'LEDOVIA'!important;
+ display:block!important;
+ position:static!important;
+ width:auto!important;
+ height:auto!important;
+ margin:0!important;
+ padding:0!important;
+ font-family:system-ui,-apple-system,'Segoe UI',sans-serif!important;
+ font-size:clamp(27px,7vw,39px)!important;
+ font-weight:850!important;
+ letter-spacing:.055em!important;
+ line-height:1.1!important;
+ color:#fff!important;
+ background:none!important;
+ background-image:none!important;
+ filter:none!important;
+ text-shadow:0 2px 8px #002c34!important;
+}
+body.ld510CompactPlacesHeader header h1::after{
+ content:'READY FOR THE ADVENTURE'!important;
+ display:block!important;
+ position:static!important;
+ width:auto!important;
+ height:auto!important;
+ margin:5px 0 0!important;
+ font:600 clamp(8px,1.9vw,10px)/1.2 system-ui,sans-serif!important;
+ letter-spacing:.16em!important;
+ color:#a6c7c5!important;
+ background:none!important;
+}
+body.ld510CompactPlacesHeader header h1 small{display:none!important}
+body.ld510CompactPlacesHeader header #ledoviaMenuButton,
+body.ld510CompactPlacesHeader header #ledoviaBellButton{
+ top:50%!important;transform:translateY(-50%)!important;
+ width:48px!important;height:48px!important;
+ border:1px solid #8bc8c8!important;
+ background:#083943bb!important;
+}
+body.ld510CompactPlacesHeader header #ledoviaMenuButton{left:14px!important}
+body.ld510CompactPlacesHeader header #ledoviaBellButton{right:14px!important}
+@media(max-width:380px){
+ body.ld510CompactPlacesHeader header{padding-left:65px!important;padding-right:65px!important}
+ body.ld510CompactPlacesHeader header #ledoviaMenuButton,
+ body.ld510CompactPlacesHeader header #ledoviaBellButton{width:44px!important;height:44px!important}
+}
