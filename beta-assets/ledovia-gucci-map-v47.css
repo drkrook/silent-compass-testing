@@ -126,3 +126,51 @@ body:has(#appMain.scMapSimple)>header #ld47CompactBrand small{font-size:clamp(7p
  min-height:58px!important;margin:0!important;padding:3px!important
 }
 @media(max-width:760px){#appMain.scMapSimple #mapwrap{--ld47-rail-right:12px;--ld47-rail-width:54px}}
+
+/* v47.5: premium, accessible Resource Layers drawer. Preserve original inputs and data. */
+#appMain.scMapSimple #mapResourceMenu.ld47PremiumResources:not([hidden]){
+ position:absolute!important;right:calc(100% + 10px)!important;top:-5px!important;
+ width:min(330px,calc(100vw - 100px))!important;max-width:calc(100vw - 100px)!important;
+ max-height:min(70dvh,650px)!important;overflow-y:auto!important;overscroll-behavior:contain!important;
+ padding:14px!important;border:1.5px solid #51e9dc!important;border-radius:17px!important;
+ background:linear-gradient(160deg,#093e47f7,#092b34fa 70%)!important;color:#f2fffc!important;
+ box-shadow:0 12px 40px #001a26bb,0 0 16px #2be4d533!important;z-index:40!important;
+}
+#appMain.scMapSimple #mapResourceMenu .ld47ResourcesHeading{
+ display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+ padding:2px 0 13px;margin-bottom:11px;border-bottom:1px solid #5bd9d555
+}
+#appMain.scMapSimple #mapResourceMenu .ld47ResourcesHeading strong{display:block;font-size:19px!important;line-height:1.25!important;color:#fff}
+#appMain.scMapSimple #mapResourceMenu .ld47ResourcesHeading small{display:block;font-size:11px!important;line-height:1.35;color:#a9dcd9;margin-top:4px}
+#appMain.scMapSimple #mapResourceMenu .ld47ResourcesClose{
+ flex:none;width:38px!important;height:38px!important;min-height:38px!important;
+ border:1px solid #63c6c1!important;border-radius:10px!important;background:#14525a!important;
+ color:#fff!important;font-size:26px!important;line-height:1!important;padding:0!important
+}
+#appMain.scMapSimple #mapResourceMenu .section{padding:0!important;margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+#appMain.scMapSimple #mapResourceMenu .section>strong:first-child{display:none!important}
+#appMain.scMapSimple #mapResourceMenu #scClearAllLayers{
+ width:100%!important;min-height:42px!important;margin:0 0 13px!important;
+ border:1px solid #60aaa9!important;border-radius:10px!important;background:#184d54!important;
+ color:#f0fffc!important;font-size:13px!important;font-weight:700!important
+}
+#appMain.scMapSimple #mapResourceMenu label.check{
+ display:flex!important;align-items:center!important;gap:12px!important;
+ min-height:56px!important;padding:10px 11px!important;margin:0 0 8px!important;
+ border:1px solid #397e80!important;border-radius:11px!important;
+ background:#164b52!important;color:#eefcf9!important;
+ font-size:13px!important;line-height:1.35!important;font-weight:650!important;
+ cursor:pointer!important;box-sizing:border-box!important
+}
+#appMain.scMapSimple #mapResourceMenu label.check.ld47SelectedResource{
+ background:#12646a!important;border-color:#52f2dc!important;box-shadow:inset 3px 0 #58fbe5!important
+}
+#appMain.scMapSimple #mapResourceMenu label.check input[type=checkbox]{
+ flex:none!important;appearance:auto!important;width:21px!important;height:21px!important;
+ margin:0!important;accent-color:#3af0d1!important
+}
+#appMain.scMapSimple #mapResourceMenu .legend{font-size:11px!important;line-height:1.5!important;color:#bddad8!important;margin:11px 0!important}
+#appMain.scMapSimple #mapResourceMenu #hospitalRefresh{width:100%!important;min-height:44px!important;background:#096d72!important;border:1px solid #47d4ca!important;border-radius:10px!important;color:#fff!important;font-weight:700!important;font-size:13px!important}
+#appMain.scMapSimple #mapResourceMenu button:focus-visible,
+#appMain.scMapSimple #mapResourceMenu input:focus-visible{outline:3px solid #a6fff1!important;outline-offset:2px!important}
+@media(max-width:400px){#appMain.scMapSimple #mapResourceMenu.ld47PremiumResources:not([hidden]){width:calc(100vw - 91px)!important;max-width:calc(100vw - 91px)!important;padding:11px!important}}
