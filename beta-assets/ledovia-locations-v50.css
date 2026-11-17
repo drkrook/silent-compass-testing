@@ -354,11 +354,11 @@ body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations .ld50To
 body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations .ld50Icon{
  flex-basis:46px!important;height:46px!important;font-size:26px!important;
 }
-body.ld510CompactPlacesHeader #appMain.scPlacesSimple .ld511PlacesNav{
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #scSimplePlacesNav{
  display:flex!important;align-items:center!important;justify-content:center!important;
  gap:7px!important;margin:9px 0 12px!important;
 }
-body.ld510CompactPlacesHeader #appMain.scPlacesSimple .ld511PlacesNav>button{
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #scSimplePlacesNav>button{
  flex:1 1 0!important;min-width:0!important;min-height:43px!important;
  margin:0!important;padding:8px 4px!important;
  border:1px solid #45d7cd!important;border-radius:10px!important;
