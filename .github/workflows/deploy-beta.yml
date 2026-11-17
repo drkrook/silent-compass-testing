@@ -519,6 +519,7 @@ jobs:
           # Beta-only password visibility and recovery completion; Stable source untouched.
           cp beta/beta-assets/ledovia-password-recovery-v41.js app/
           cp beta/beta-assets/ledovia-reset-v44.css app/
+          cp beta/beta-assets/ledovia-approved-logo-v45.jpg app/
           python3 - <<'PY'
           from pathlib import Path
           p=Path('app/index.html')
