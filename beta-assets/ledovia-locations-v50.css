@@ -366,3 +366,8 @@ body.ld510CompactPlacesHeader #appMain.scPlacesSimple #scSimplePlacesNav>button{
  box-shadow:0 0 8px #1ae0d033!important;
  font-size:clamp(12px,3.3vw,15px)!important;line-height:1.15!important;
 }
+
+/* BETA v0.8.512 — remove only the two duplicate decorative glyphs.
+   Keep the original heading pin and star; no changes to layout or handlers. */
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #privatePlacesPanel>strong::before{content:none!important;display:none!important}
+body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations>h3::before{content:none!important;display:none!important}
