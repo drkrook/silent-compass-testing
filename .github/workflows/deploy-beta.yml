@@ -625,6 +625,18 @@ jobs:
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-gucci-map-v47.css?v=475"><script src="./ledovia-gucci-map-v47.js?v=475"></script>'+marker)
           p.write_text(s)
           PY
+          # Gucci Resources v48: additive Beta-only panel; retain existing layer controls.
+          cp beta/beta-assets/ledovia-resources-v48.js app/
+          cp beta/beta-assets/ledovia-resources-v48.css app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1, 'Unexpected document ending'
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-resources-v48.css?v=480"><script src="./ledovia-resources-v48.js?v=480"></script>'+marker)
+          p.write_text(s)
+          PY
           touch app/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5

@@ -1,0 +1,67 @@
+/* LEDOVIA Gucci Resources v48 — premium visual concept adapted to real supported layers */
+#appMain.scMapSimple #mapResourceMenu.ld48Resources:not([hidden]){
+ width:min(520px,calc(100vw - 91px))!important;max-width:calc(100vw - 91px)!important;
+ max-height:min(78dvh,740px)!important;top:-60px!important;
+ padding:15px!important;border-radius:20px!important;
+ background:linear-gradient(155deg,#08414aeF 0%,#062a33fa 46%,#05252efc 100%)!important;
+ border:1.5px solid #2af5e7!important;
+ box-shadow:0 12px 45px #00141cbb,0 0 20px #00dfcf5e,inset 0 1px #b0fff94d!important;
+ backdrop-filter:blur(15px)!important;
+}
+#appMain.scMapSimple #mapResourceMenu.ld48Resources .ld47ResourcesHeading{
+ align-items:center!important;gap:9px!important;margin-bottom:13px!important;padding-bottom:13px!important;
+ background:radial-gradient(ellipse at 50% 110%,#08727c4d,transparent 65%)!important
+}
+#appMain.scMapSimple #mapResourceMenu.ld48Resources .ld47ResourcesHeading strong{font-size:clamp(20px,4.4vw,25px)!important;letter-spacing:-.025em!important}
+#appMain.scMapSimple #mapResourceMenu.ld48Resources .ld47ResourcesHeading small{font-size:11px!important;color:#d2efea!important}
+#appMain.scMapSimple #mapResourceMenu .ld48Emblem{font-size:31px;color:#5ffcf0;text-shadow:0 0 14px #33eadd;flex:none}
+#appMain.scMapSimple #mapResourceMenu .ld48Tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:16px}
+#appMain.scMapSimple #mapResourceMenu .ld48Tabs button{
+ min-width:0!important;min-height:45px!important;padding:6px 3px!important;
+ border-radius:11px!important;border:1px solid #62b8b8!important;
+ background:linear-gradient(#10535b,#063640)!important;color:#e5f7f3!important;
+ font-size:clamp(10px,2.7vw,13px)!important;font-weight:750!important;white-space:normal!important
+}
+#appMain.scMapSimple #mapResourceMenu .ld48Tabs button[aria-pressed=true]{
+ border-color:#57fff1!important;background:linear-gradient(#088f94,#06505b)!important;
+ box-shadow:0 0 11px #22efdfaa,inset 0 1px #d8fffb66!important;color:white!important
+}
+#appMain.scMapSimple #mapResourceMenu .ld48Intro{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+#appMain.scMapSimple #mapResourceMenu .ld48Intro>strong{font-size:13px;color:#fff}
+#appMain.scMapSimple #mapResourceMenu .ld48Search{
+ width:min(100%,205px)!important;min-height:38px!important;flex:1 1 170px;
+ padding:8px 11px!important;border-radius:10px!important;border:1px solid #56a6a9!important;
+ background:#06333e!important;color:white!important;font-size:13px!important
+}
+#appMain.scMapSimple #mapResourceMenu .ld48Rows{display:flex;flex-direction:column;gap:7px}
+#appMain.scMapSimple #mapResourceMenu label.check.ld48Row{
+ min-height:68px!important;margin:0!important;padding:10px!important;
+ gap:10px!important;border:1px solid #2b6870!important;border-radius:13px!important;
+ background:linear-gradient(100deg,#104b53,#073640)!important;box-shadow:inset 0 1px #ffffff10!important
+}
+#appMain.scMapSimple #mapResourceMenu label.check.ld48Row.ld47SelectedResource{
+ background:linear-gradient(95deg,#096b72,#08424a)!important;
+ border-color:#39e9dd!important;box-shadow:0 0 8px #14d8d94d,inset 2px 0 #40fff0!important
+}
+#appMain.scMapSimple #mapResourceMenu .ld48RowIcon{font-size:23px;line-height:1.1;flex:none}
+#appMain.scMapSimple #mapResourceMenu .ld48RowCopy{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}
+#appMain.scMapSimple #mapResourceMenu .ld48RowCopy strong{font-size:13px!important;line-height:1.2;color:#fff}
+#appMain.scMapSimple #mapResourceMenu .ld48RowCopy small{font-size:10px!important;line-height:1.35;color:#b6d7d5}
+#appMain.scMapSimple #mapResourceMenu .ld48Check{font-size:19px;color:#3df6dc;opacity:0}
+#appMain.scMapSimple #mapResourceMenu .ld47SelectedResource .ld48Check{opacity:1}
+#appMain.scMapSimple #mapResourceMenu .ld48Row[hidden],#appMain.scMapSimple #mapResourceMenu .ld48Rows[hidden],#appMain.scMapSimple #mapResourceMenu .ld48Intro[hidden],#appMain.scMapSimple #mapResourceMenu .ld48OfflineInfo[hidden],#appMain.scMapSimple #mapResourceMenu .ld48OfflineAction[hidden]{display:none!important}
+#appMain.scMapSimple #mapResourceMenu .ld48Footer{display:grid;grid-template-columns:1fr 1.25fr;gap:8px;margin:13px 0 9px;padding-top:12px;border-top:1px solid #4ac6bf55}
+#appMain.scMapSimple #mapResourceMenu #scClearAllLayers.ld48Clear{margin:0!important;min-height:47px!important;background:#0a3c45!important}
+#appMain.scMapSimple #mapResourceMenu .ld48Apply{
+ min-height:47px!important;margin:0!important;border-radius:11px!important;
+ background:linear-gradient(130deg,#33fff0,#04c9d4)!important;color:#042d37!important;
+ border:1px solid #9bfff7!important;box-shadow:0 0 12px #0de6d777!important;
+ font-size:13px!important;font-weight:900!important
+}
+#appMain.scMapSimple #mapResourceMenu .ld48Caution,#appMain.scMapSimple #mapResourceMenu .ld48OfflineInfo{font-size:11px!important;line-height:1.45!important;color:#b9dad7!important;margin:10px 0!important}
+#appMain.scMapSimple #mapResourceMenu .ld48OfflineAction{width:100%;min-height:45px;border:1px solid #56e6d9;border-radius:10px;background:#12676d;color:#fff;font-weight:700}
+#appMain.scMapSimple #mapResourceMenu .legend{font-size:10px!important}
+@media(max-width:400px){
+ #appMain.scMapSimple #mapResourceMenu.ld48Resources:not([hidden]){padding:10px!important}
+ #appMain.scMapSimple #mapResourceMenu .ld48RowCopy small{font-size:9px!important}
+}
