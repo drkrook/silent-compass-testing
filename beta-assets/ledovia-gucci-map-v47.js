@@ -29,6 +29,13 @@ function init(){
  const map=document.getElementById('mapwrap'),nav=document.getElementById('scSimpleMapNav');
  if(!map||!nav||!document.getElementById('mapLayersButton')||!document.getElementById('mapResourceButton'))return false;
  if(document.getElementById('ld47GpsButton'))return true;
+ const header=document.querySelector('body > header');
+ if(header&&!document.getElementById('ld47CompactBrand')){
+  const brand=document.createElement('div');brand.id='ld47CompactBrand';
+  brand.setAttribute('aria-label','LEDOVIA — Ready for the Adventure');
+  brand.innerHTML='<strong>LEDO<span>VIA</span></strong><small>READY FOR THE ADVENTURE</small>';
+  header.append(brand);
+ }
  const home=document.getElementById('scMapHome'),tools=document.getElementById('scMapTools');
  if(home){home.textContent='Locations';home.id='ld47Locations';home.onclick=()=>document.getElementById('tab-places')?.click();}
  if(tools){tools.textContent='Hazards';tools.id='ld47Hazards';tools.removeAttribute('aria-expanded');tools.onclick=()=>document.getElementById('tab-hazards')?.click();}

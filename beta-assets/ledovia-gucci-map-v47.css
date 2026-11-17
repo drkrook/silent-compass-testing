@@ -16,3 +16,18 @@
 #ld47GpsStatus{position:absolute;z-index:18;left:12px;right:68px;bottom:50px;padding:10px 12px;border:1px solid #4cd9d0;border-radius:10px;background:#04353eef;color:#f1fffc;font-size:13px;pointer-events:none}
 #ld47GpsStatus[hidden]{display:none!important}
 @media(max-width:760px){#ld47MapControls{right:9px;top:238px}#ld47MapControls .ld47MapButton{width:42px;height:42px}#appMain.scMapSimple #mapwrap{min-height:calc(100dvh - 230px)!important}}
+
+/* v47.1: compact branding on Map only; preserve menu and Home controls. */
+body:has(#appMain.scMapSimple)>header{
+ min-height:70px!important;height:70px!important;box-sizing:border-box!important;
+ padding:7px 70px!important;display:flex!important;align-items:center!important;justify-content:center!important;
+ background:#07343c!important;background-image:none!important;border-bottom:1px solid #2c8c90!important;
+}
+body:has(#appMain.scMapSimple)>header h1{display:none!important}
+body:has(#appMain.scMapSimple)>header #ld47CompactBrand{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1.1;text-align:center;pointer-events:none}
+#ld47CompactBrand{display:none}
+#ld47CompactBrand strong{font-size:clamp(20px,5.6vw,29px);font-weight:900;letter-spacing:.045em;color:#fff}
+#ld47CompactBrand strong span{color:#45e3d8}
+#ld47CompactBrand small{font-size:clamp(7px,1.7vw,10px);letter-spacing:.12em;color:#c5f5ef;font-weight:700;white-space:nowrap}
+body:has(#appMain.scMapSimple)>header #ledoviaMenuButton,body:has(#appMain.scMapSimple)>header #ledoviaBellButton{top:12px!important}
+@media(max-width:700px){body:has(#appMain.scMapSimple)>header{min-height:70px!important;height:70px!important;background:#07343c!important;background-image:none!important;padding:7px 58px!important}}
