@@ -595,6 +595,24 @@ jobs:
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
+          # Gucci Map v47: instrument the existing map render and centering, without replacing the engine.
+          cp beta/beta-assets/ledovia-gucci-map-v47.js app/
+          cp beta/beta-assets/ledovia-gucci-map-v47.css app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          render='function render(){let [w,h]=dimensions(),[cx,cy]=xy(lat,lon,z);'
+          assert s.count(render)==1, 'Map render hook changed; stop rather than deploy broken GPS overlay'
+          s=s.replace(render,render+"window.dispatchEvent(new CustomEvent('ld47-map-state',{detail:{lat,lon,zoom:z}}));",1)
+          center='function setCenter(la,lo,zoom){lat=clamp(la,-85,85);lon=clamp(lo,-180,180);z=clamp(zoom,5,16);render()}'
+          assert s.count(center)==1, 'Map centering hook changed; stop rather than deploy broken GPS overlay'
+          s=s.replace(center,center+'window.__ld47SetCenter=setCenter;',1)
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-gucci-map-v47.css?v=47"><script src="./ledovia-gucci-map-v47.js?v=47"></script>'+marker)
+          p.write_text(s)
+          PY
           touch app/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5
