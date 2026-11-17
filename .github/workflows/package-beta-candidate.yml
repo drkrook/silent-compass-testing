@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - release/independent-build-prep
+      - feature/ledovia-gucci-password-reset-v42
 permissions:
   contents: read
 jobs:
