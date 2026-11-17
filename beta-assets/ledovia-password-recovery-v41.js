@@ -16,6 +16,22 @@ style.textContent=`
 #ldAccountDialog .ldResetRules{padding:14px;border:1px solid #31c9c4;border-radius:12px;background:#003942;color:#ddf8f5;line-height:1.8}
 #ldAccountDialog .ldResetRules strong{display:block;color:#7ef0e4}
 #ldAccountDialog .ldResetPrimary{width:100%;min-height:58px;background:linear-gradient(130deg,#13b9ae,#006571)!important;border:2px solid #7cfff0!important;font-size:19px;font-weight:800}
+#ldAccountDialog:has(.ldResetForm) {width:min(94vw,520px);max-height:94dvh;overflow:auto;border:1px solid rgba(119,241,222,.5);border-radius:22px;background:linear-gradient(180deg,rgba(3,32,43,.91),rgba(3,22,32,.97)),url('./ledovia-mountains.svg') center/cover;color:#f2fffd;box-shadow:0 22px 80px #00151dcc;backdrop-filter:blur(16px)}
+#ldAccountDialog:has(.ldResetForm) .ldAccountHeading{background:transparent}
+#ldAccountDialog:has(.ldResetForm) .ldAccountHero{background:transparent}
+#ldAccountDialog:has(.ldResetForm) .ldAccountPanel{background:rgba(2,30,39,.7);border:1px solid rgba(107,225,211,.4);border-radius:18px;padding:clamp(14px,4vw,24px);box-shadow:0 12px 35px #001b2599}
+#ldAccountDialog .ldResetTitle{color:#f4fffd;letter-spacing:.01em;font-weight:800}
+#ldAccountDialog .ldResetText{color:#c5e8e4}
+#ldAccountDialog .ldResetForm label{color:#e7fffa}
+#ldAccountDialog .ldResetForm input{min-height:52px;border:1px solid #72bdb6!important;border-radius:10px!important;background:#052b37!important;color:#fff!important}
+#ldAccountDialog .ldResetRules{background:rgba(0,49,57,.85);border-color:#428f89}
+#ldAccountDialog .ldResetRule{display:flex;align-items:center;gap:9px;line-height:1.65;font-size:14px}
+#ldAccountDialog .ldResetRule::before{content:'○';color:#a2bdb9;font-weight:900}
+#ldAccountDialog .ldResetRule[data-valid="true"]{color:#b8ffe5}
+#ldAccountDialog .ldResetRule[data-valid="true"]::before{content:'✓';color:#63efb4}
+#ldAccountDialog .ldResetMatch{min-height:20px;font-size:13px;color:#b5d4d0}
+#ldAccountDialog .ldResetMatch[data-valid="true"]{color:#79f1ba}
+#ldAccountDialog .ldResetPrimary:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(.4)}
 #ldAccountDialog .ldResetStatus{white-space:pre-wrap;line-height:1.5}
 `;
 document.head.append(style);
@@ -65,9 +81,23 @@ function init(){
  }
  const first=field('New password');const second=field('Confirm new password');
  const rules=document.createElement('div');rules.className='ldResetRules';
- rules.innerHTML='<strong>Password Requirements</strong>At least 8 characters<br>Uppercase letter (A–Z)<br>Lowercase letter (a–z)<br>Number (0–9)<br>Symbol (such as ! or #)';
- form.append(rules);
- const submit=document.createElement('button');submit.type='submit';submit.className='ldResetPrimary';submit.textContent='Update Password →';form.append(submit);
+ rules.innerHTML='<strong>Password Requirements</strong>';
+ const checks=[['At least 8 characters',v=>v.length>=8],['Uppercase letter (A–Z)',v=>/[A-Z]/.test(v)],['Lowercase letter (a–z)',v=>/[a-z]/.test(v)],['Number (0–9)',v=>/[0-9]/.test(v)],['Symbol (such as ! or #)',v=>/[^a-zA-Z0-9\s]/.test(v)]];
+ const indicators=checks.map(([label])=>{const item=document.createElement('div');item.className='ldResetRule';item.textContent=label;item.dataset.valid='false';rules.append(item);return item});
+ const match=document.createElement('div');match.className='ldResetMatch';match.setAttribute('aria-live','polite');match.textContent='Confirm your new password.';
+ form.append(rules,match);
+ const submit=document.createElement('button');submit.type='submit';submit.className='ldResetPrimary';submit.textContent='Update Password →';submit.disabled=true;form.append(submit);
+ function validate(){
+  const value=first.value;
+  const valid=checks.map(([,test])=>test(value));
+  indicators.forEach((item,i)=>{item.dataset.valid=String(valid[i])});
+  const matching=second.value.length>0&&value===second.value;
+  match.dataset.valid=String(matching);
+  match.textContent=!second.value?'Confirm your new password.':matching?'✓ Passwords match':'Passwords do not match yet.';
+  submit.disabled=!(valid.every(Boolean)&&matching);
+  return valid.every(Boolean)&&matching;
+ }
+ first.addEventListener('input',validate);second.addEventListener('input',validate);validate();
  const back=document.createElement('button');back.type='button';back.textContent='← Back to Sign In';back.onclick=()=>{dlg.close();const b=document.getElementById('ldAccountOpenDesktop')||document.getElementById('ldAccountOpenMobile');b?.click()};panel.append(back);
  if(!dlg.open)dlg.showModal();
  async function request(path,method,body){
@@ -80,10 +110,11 @@ function init(){
  form.onsubmit=async e=>{
   e.preventDefault();
   const value=first.value;
+  if(!validate()){status.textContent='Complete all password requirements and confirm your password.';return}
   if(value.length<8||!/[a-z]/.test(value)||!/[A-Z]/.test(value)||!/[0-9]/.test(value)||!/[^a-zA-Z0-9\s]/.test(value)){status.textContent='Use at least 8 characters, including uppercase, lowercase, a number and a symbol.';return}
   if(value!==second.value){status.textContent='Passwords do not match.';return}
   submit.disabled=true;status.textContent='Updating password…';
-  try{await request('/user','PUT',{password:value});first.value='';second.value='';form.hidden=true;status.textContent='Password updated successfully. You can now sign in with your new password.'}
+  try{await request('/user','PUT',{password:value});first.value='';second.value='';validate();form.hidden=true;status.textContent='Password updated successfully. You can now sign in with your new password.'}
   catch(e){status.textContent=String(e.message||e)}finally{submit.disabled=false}
  };
  return true;
