@@ -660,7 +660,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-locations-v50.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=50"><script src="./ledovia-locations-v50.js?v=50"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=501"><script src="./ledovia-locations-v50.js?v=50"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
