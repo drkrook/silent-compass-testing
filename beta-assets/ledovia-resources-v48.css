@@ -82,3 +82,31 @@
 #appMain.scMapSimple #mapResourceMenu.ld48Resources .ld48Intro{margin-bottom:14px!important}
 #appMain.scMapSimple #mapResourceMenu.ld48Resources label.check.ld48Row{border-color:#3d9d9c!important;box-shadow:inset 0 1px #b4fff21a,0 2px 10px #001a2255!important}
 #appMain.scMapSimple #mapResourceMenu.ld48Resources label.check.ld48Row.ld47SelectedResource{border-color:#5bffec!important;box-shadow:0 0 12px #2be9dc77,inset 3px 0 #59fff0!important}
+
+/* v48.2: keep the entire Resources drawer inside the visible map on phones. */
+#appMain.scMapSimple #mapResourceMenu.ld48Resources:not([hidden]){
+ box-sizing:border-box!important;
+ height:min(46dvh,390px)!important;max-height:min(46dvh,390px)!important;
+ overflow-y:auto!important;overflow-x:hidden!important;
+ overscroll-behavior:contain!important;touch-action:pan-y!important;
+ scrollbar-width:thin!important;scrollbar-color:#4de9d4 #08343d!important;
+ scroll-padding-top:110px!important;scroll-padding-bottom:85px!important;
+}
+#appMain.scMapSimple #mapResourceMenu.ld48Resources .ld47ResourcesHeading{
+ position:sticky!important;top:-15px!important;z-index:4!important;
+ box-shadow:0 8px 12px #062a33cc!important;
+}
+#appMain.scMapSimple #mapResourceMenu.ld48Resources .ld48Footer{
+ position:sticky!important;bottom:-15px!important;z-index:5!important;
+ padding:10px 3px 12px!important;margin:8px -3px -15px!important;
+ background:linear-gradient(180deg,#07363ce8,#052b35 32%)!important;
+ box-shadow:0 -8px 15px #052c33cc!important;
+}
+#appMain.scMapSimple #mapResourceMenu.ld48Resources .ld48Caution{
+ padding-bottom:10px!important;
+}
+@media(max-height:680px){
+ #appMain.scMapSimple #mapResourceMenu.ld48Resources:not([hidden]){
+ height:min(42dvh,315px)!important;max-height:min(42dvh,315px)!important
+ }
+}
