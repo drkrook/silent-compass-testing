@@ -610,7 +610,7 @@ jobs:
           s=s.replace(center,center+'window.__ld47SetCenter=setCenter;',1)
           marker='</body></html>'
           assert s.count(marker)==1
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-gucci-map-v47.css?v=47"><script src="./ledovia-gucci-map-v47.js?v=47"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-gucci-map-v47.css?v=471"><script src="./ledovia-gucci-map-v47.js?v=471"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
