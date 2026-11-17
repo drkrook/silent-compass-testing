@@ -79,3 +79,31 @@ if(!enhancePhoto()){
  observer.observe(document.documentElement,{childList:true,subtree:true});
 }
 })();
+
+/* v50.4: make the existing-location Photos dialog support gallery uploads.
+   The existing photo save button and offline storage handlers are unchanged. */
+(()=>{'use strict';
+function enhanceLocationPhotoDialog(){
+ const inputs=[...document.querySelectorAll('input[type="file"]')];
+ for(const input of inputs){
+  if(input.id==='privatePhoto'||input.dataset.ldExistingPhotoUpload)return;
+  const panel=input.closest('[role="dialog"],dialog,.modal,.scPhotoModal')||input.parentElement?.parentElement;
+  if(!panel||!/Save photo offline/i.test(panel.textContent||''))continue;
+  input.dataset.ldExistingPhotoUpload='1';
+  input.removeAttribute('capture');
+  input.setAttribute('accept','image/*');
+  const label=document.createElement('label');
+  label.className='ld50ExistingPhotoLabel';
+  label.textContent='Upload Existing Photo (Gallery / Files)';
+  label.style.cssText='display:block;margin:10px 0 7px;color:#b8fff0;font-weight:700;font-size:15px';
+  input.insertAdjacentElement('beforebegin',label);
+  const note=document.createElement('small');
+  note.textContent='Choose a photo already saved on your device, then tap Save photo offline.';
+  note.style.cssText='display:block;margin:7px 0 14px;color:#bed7d5;line-height:1.4';
+  input.insertAdjacentElement('afterend',note);
+ }
+}
+enhanceLocationPhotoDialog();
+const observer=new MutationObserver(()=>enhanceLocationPhotoDialog());
+observer.observe(document.documentElement,{subtree:true,childList:true});
+})();
