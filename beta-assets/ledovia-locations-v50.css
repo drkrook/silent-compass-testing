@@ -203,3 +203,12 @@
 }
 #appMain.scPlacesSimple #privatePlacesPanel>strong::before{content:none!important}
 #appMain.scPlacesSimple .ld50PlaceMeta{overflow-wrap:anywhere}
+
+/* BETA v0.8.509: clear cancel action, visible only when the editor is expanded. */
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor .ld50CollapseEditor{
+ display:block!important;width:100%!important;margin:18px 0 0!important;
+ padding:13px!important;min-height:48px!important;border-radius:12px!important;
+ background:#123b42!important;border:1px solid #72c9c1!important;
+ color:#effffb!important;font-size:16px!important;font-weight:700!important;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor:not([open]) .ld50CollapseEditor{display:none!important}
