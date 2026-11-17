@@ -174,3 +174,6 @@ body:has(#appMain.scMapSimple)>header #ld47CompactBrand small{font-size:clamp(7p
 #appMain.scMapSimple #mapResourceMenu button:focus-visible,
 #appMain.scMapSimple #mapResourceMenu input:focus-visible{outline:3px solid #a6fff1!important;outline-offset:2px!important}
 @media(max-width:400px){#appMain.scMapSimple #mapResourceMenu.ld47PremiumResources:not([hidden]){width:calc(100vw - 91px)!important;max-width:calc(100vw - 91px)!important;padding:11px!important}}
+
+/* Empty GPS status must never render as a decorative green bar. */
+#appMain.scMapSimple #ld47GpsStatus:empty{display:none!important}
