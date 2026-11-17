@@ -56,3 +56,26 @@ function init(){
 }
 let n=0;const timer=setInterval(()=>{if(init()||++n>100)clearInterval(timer)},150);
 })();
+
+/* v50.3: explicit gallery upload for Add/Edit Location, retaining native file-save handling. */
+(()=>{'use strict';
+function enhancePhoto(){
+ const input=document.getElementById('privatePhoto');
+ if(!input||input.dataset.ldGalleryReady)return false;
+ input.dataset.ldGalleryReady='1';
+ input.removeAttribute('capture');
+ const row=document.createElement('div');row.className='ld50PhotoChoice';
+ const choose=document.createElement('button');choose.type='button';
+ choose.textContent='▧ Upload Photo from Device';
+ choose.setAttribute('aria-label','Choose an existing photo from your device');
+ const note=document.createElement('small');note.textContent='Choose a saved image from Photos or Files. Photo stays on this device.';
+ choose.addEventListener('click',()=>input.click());
+ row.append(choose,note);
+ input.insertAdjacentElement('beforebegin',row);
+ return true;
+}
+if(!enhancePhoto()){
+ const observer=new MutationObserver(()=>{if(enhancePhoto())observer.disconnect()});
+ observer.observe(document.documentElement,{childList:true,subtree:true});
+}
+})();
