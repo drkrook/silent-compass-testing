@@ -91,3 +91,38 @@ body:has(#appMain.scMapSimple)>header #ld47CompactBrand small{font-size:clamp(7p
  #ld47MapControls{top:244px!important;right:10px!important}
  #appMain.scMapSimple #mapwrap{min-height:calc(100dvh - 225px)!important}
 }
+
+/* v47.4: one aligned six-button map control rail. Existing controls stay functional. */
+#appMain.scMapSimple #mapwrap{--ld47-rail-right:12px;--ld47-rail-width:54px;--ld47-rail-gap:8px}
+#appMain.scMapSimple #zoom{
+ position:absolute!important;top:12px!important;right:var(--ld47-rail-right)!important;
+ width:var(--ld47-rail-width)!important;display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;gap:var(--ld47-rail-gap)!important;margin:0!important;z-index:16!important
+}
+#appMain.scMapSimple #zoom button{
+ box-sizing:border-box!important;width:100%!important;min-width:0!important;height:54px!important;
+ margin:0!important;padding:0!important;display:grid!important;place-items:center!important;
+ border:1.5px solid #65f7e8!important;border-radius:13px!important;
+ background:linear-gradient(145deg,#075c66,#03313c)!important;color:#fff!important;
+ box-shadow:0 0 9px #26e4d4a6,0 4px 10px #001b2388!important;font-size:28px!important
+}
+#appMain.scMapSimple #mapLayersControl,#appMain.scMapSimple #mapResourceControl{
+ position:absolute!important;right:var(--ld47-rail-right)!important;
+ width:var(--ld47-rail-width)!important;margin:0!important;z-index:16!important
+}
+#appMain.scMapSimple #mapLayersControl{top:136px!important}
+#appMain.scMapSimple #mapResourceControl{top:202px!important}
+#appMain.scMapSimple #mapLayersButton,#appMain.scMapSimple #mapResourceButton{
+ box-sizing:border-box!important;width:100%!important;min-width:0!important;
+ height:58px!important;min-height:58px!important;margin:0!important;padding:3px!important
+}
+#appMain.scMapSimple #ld47MapControls{
+ position:absolute!important;top:268px!important;right:var(--ld47-rail-right)!important;
+ width:var(--ld47-rail-width)!important;display:flex!important;flex-direction:column!important;
+ align-items:stretch!important;gap:var(--ld47-rail-gap)!important;margin:0!important;z-index:16!important
+}
+#appMain.scMapSimple #ld47MapControls .ld47MapButton{
+ box-sizing:border-box!important;width:100%!important;min-width:0!important;height:58px!important;
+ min-height:58px!important;margin:0!important;padding:3px!important
+}
+@media(max-width:760px){#appMain.scMapSimple #mapwrap{--ld47-rail-right:12px;--ld47-rail-width:54px}}
