@@ -1,0 +1,3 @@
+/* LEDOVIA approved reset panel: isolated visual stylesheet. */
+#ldAccountDialog.ldRecoveryPremium .ldResetStatus[data-verified="true"]{border-color:#70f5a2!important;background:#003d3ce8!important}
+#ldAccountDialog.ldRecoveryPremium .ldResetRules{width:100%!important;box-sizing:border-box}
