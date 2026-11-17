@@ -61,8 +61,28 @@ function init(){
  controls.append(locate,pin);map.append(controls);
  const marker=document.createElement('div');marker.id='ld47GpsMarker';marker.hidden=true;marker.setAttribute('role','img');marker.setAttribute('aria-label','Your GPS location');
  marker.innerHTML='<span id="ld47GpsAccuracy"></span><span class="ld47GpsDot"></span>';map.append(marker);
- const status=document.createElement('div');status.id='ld47GpsStatus';status.setAttribute('role','status');status.setAttribute('aria-live','polite');map.append(status);
+ const status=document.createElement('div');status.id='ld47GpsStatus';status.hidden=true;status.setAttribute('role','status');status.setAttribute('aria-live','polite');map.append(status);
  function message(s){status.textContent=s;status.hidden=false;clearTimeout(message.timeout);message.timeout=setTimeout(()=>status.hidden=true,5500);}
+
+ // Upgrade only the resource-menu presentation. Keep its existing checkboxes and listeners.
+ const resourceMenu=document.getElementById('mapResourceMenu');
+ const resourceToggle=document.getElementById('mapResourceButton');
+ if(resourceMenu&&resourceToggle){
+  resourceMenu.classList.add('ld47PremiumResources');
+  const titlebar=document.createElement('div');titlebar.className='ld47ResourcesHeading';
+  const title=document.createElement('div');title.innerHTML='<strong>Resource Layers</strong><small>Choose what appears on your map</small>';
+  const close=document.createElement('button');close.type='button';close.className='ld47ResourcesClose';
+  close.setAttribute('aria-label','Close resource layers');close.textContent='×';
+  close.addEventListener('click',()=>{resourceToggle.click();resourceToggle.focus()});
+  titlebar.append(title,close);resourceMenu.prepend(titlebar);
+  const sync=()=>{resourceMenu.querySelectorAll('label.check').forEach(label=>{
+    const input=label.querySelector('input[type="checkbox"]');
+    if(input)label.classList.toggle('ld47SelectedResource',input.checked);
+  });resourceToggle.classList.toggle('ld47ResourcesOpen',!resourceMenu.hidden)};
+  resourceMenu.addEventListener('change',sync);
+  const observer=new MutationObserver(sync);observer.observe(resourceMenu,{attributes:true,attributeFilter:['hidden']});
+  sync();
+ }
  window.addEventListener('resize',draw);document.addEventListener('fullscreenchange',draw);
  return true;
 }
