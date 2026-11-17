@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.504', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.505', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -636,6 +636,17 @@ jobs:
           assert s.count(marker)==1, 'Unexpected document ending'
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-resources-v48.css?v=482"><script src="./ledovia-resources-v48.js?v=481"></script>'+marker)
           p.write_text(s)
+          PY
+          # Beta v0.8.505: fix Android existing-location photo picker at its source.
+          # Removing capture=environment allows gallery/files instead of forcing the camera.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/circle-media.js')
+          s=p.read_text()
+          old='id="scPhotoFile" type="file" accept="image/*" capture="environment"'
+          new='id="scPhotoFile" type="file" accept="image/*"'
+          assert s.count(old)==1, 'Expected original location photo capture input exactly once'
+          p.write_text(s.replace(old,new,1))
           PY
           # Beta v49: simplify My Locations; move original backup controls under More Tools.
           cp beta/beta-assets/ledovia-locations-v49.js app/
