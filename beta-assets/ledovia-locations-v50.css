@@ -1,0 +1,26 @@
+/* LEDOVIA Beta v50: premium approved visual design, mobile first. */
+#appMain.scPlacesSimple #privatePlacesPanel{background:linear-gradient(145deg,#082c35,#071f27)!important;border:1px solid #188f8b!important;border-radius:22px!important;box-shadow:0 12px 34px #00181f90!important}
+#appMain.scPlacesSimple #privatePlacesPanel>strong{font-family:Georgia,serif;font-size:clamp(25px,6vw,36px)!important;letter-spacing:.015em;color:#fff!important;text-shadow:0 2px 12px #10ddca70}
+#appMain.scPlacesSimple .scPlacesIntro{color:#c1e2df!important}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor{background:linear-gradient(130deg,#007f78,#00b5a3 50%,#064c54)!important;border:2px solid #51f4e4!important;border-radius:16px!important;box-shadow:0 0 20px #13dfcf55,inset 0 1px 7px #a0fff955!important}
+#appMain.scPlacesSimple #ld49YourLocations.ld50Premium{padding:15px!important;border:1.5px solid #22c8c0!important;border-radius:20px!important;background:radial-gradient(ellipse at top right,#10636b,#062b34 58%,#051d25)!important;box-shadow:0 0 20px #08b9b333!important}
+#appMain.scPlacesSimple #ld49YourLocations>h3{font-family:Georgia,serif;font-size:clamp(23px,5vw,30px)!important;text-shadow:0 1px 12px #37d8cb77}
+#appMain.scPlacesSimple #ld49YourLocations #scSavedPlacesDetails{padding:0!important;background:transparent!important;border:0!important;overflow:visible!important}
+#appMain.scPlacesSimple #scSavedPlacesDetails>summary{display:none!important}
+#appMain.scPlacesSimple #privateList{display:flex;flex-direction:column;gap:10px;margin:0!important;padding:0!important}
+#appMain.scPlacesSimple #privateList>.ld50Count{align-self:flex-end;font-size:12px;color:#b9fff1;border:1px solid #29c4bc;border-radius:20px;padding:5px 12px;background:#07565a}
+#appMain.scPlacesSimple .ld50Card{display:block!important;min-width:0!important;padding:0!important;margin:0!important;overflow:hidden;border:1px solid #3be2d5;border-radius:14px;background:linear-gradient(120deg,#10444b,#062f39)!important;box-shadow:inset 0 1px 9px #27bdb53b,0 5px 14px #001a2270}
+#appMain.scPlacesSimple .ld50Toggle{display:flex!important;align-items:center;gap:10px;width:100%!important;min-height:68px;margin:0!important;padding:10px!important;border:0!important;background:transparent!important;text-align:left}
+#appMain.scPlacesSimple .ld50Icon{display:grid;place-items:center;flex:0 0 48px;height:48px;border-radius:12px;background:linear-gradient(#137c7a,#08383f);border:1px solid #52e8dd;box-shadow:0 0 10px #30e8d066;font-size:27px}
+#appMain.scPlacesSimple .ld50Name{min-width:0;flex:1;display:flex;flex-direction:column;gap:4px}
+#appMain.scPlacesSimple .ld50Name strong{font-size:16px;color:white;overflow-wrap:anywhere}
+#appMain.scPlacesSimple .ld50Name small{font-size:12px;color:#b4d7d7;overflow-wrap:anywhere}
+#appMain.scPlacesSimple .ld50Chevron{font-size:26px;color:#a7fff1;transition:transform .15s}
+#appMain.scPlacesSimple .ld50Toggle[aria-expanded=true] .ld50Chevron{transform:rotate(180deg)}
+#appMain.scPlacesSimple .ld50Card .placeName[hidden],#appMain.scPlacesSimple .ld50Details[hidden]{display:none!important}
+#appMain.scPlacesSimple .ld50Details{padding:12px;border-top:1px solid #2a9793;background:#062c35}
+#appMain.scPlacesSimple .ld50Actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#appMain.scPlacesSimple .ld50Actions button{min-height:44px;margin:0!important;padding:8px!important;border:1px solid #45bcb5;border-radius:10px;background:linear-gradient(#185c60,#0b3c45);color:#f4fffc;font-weight:700;font-size:12px;white-space:normal}
+#appMain.scPlacesSimple .ld50Actions .ld50Delete{color:#ffc1b9;border-color:#aa7774}
+#appMain.scPlacesSimple #scBookmarkDetails[hidden]{display:none!important}
+@media(min-width:700px){#appMain.scPlacesSimple .ld50Actions{grid-template-columns:repeat(5,minmax(0,1fr))}}
