@@ -650,6 +650,19 @@ jobs:
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v49.css?v=49"><script src="./ledovia-locations-v49.js?v=49"></script>'+marker)
           p.write_text(s)
           PY
+          # Beta v50: premium expandable saved-location cards, existing data handlers retained.
+          cp beta/beta-assets/ledovia-locations-v50.js app/
+          cp beta/beta-assets/ledovia-locations-v50.css app/
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          assert 'ledovia-locations-v50.js' not in s
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=50"><script src="./ledovia-locations-v50.js?v=50"></script>'+marker)
+          p.write_text(s)
+          PY
           touch app/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5
