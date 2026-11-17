@@ -595,6 +595,18 @@ jobs:
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
+          # At neighborhood/city zoom, cluster close personal pins as well as resources.
+          # The existing cluster tap zooms in; saved locations and reports remain intact.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          old="if(!gridSize||f.type==='private'){displayMarkers.push(f);continue}"
+          new="if(!gridSize){displayMarkers.push(f);continue}"
+          assert s.count(old)==1, 'Map marker clustering changed; stop instead of modifying unknown code'
+          s=s.replace(old,new,1)
+          p.write_text(s)
+          PY
           # Gucci Map v47: instrument the existing map render and centering, without replacing the engine.
           cp beta/beta-assets/ledovia-gucci-map-v47.js app/
           cp beta/beta-assets/ledovia-gucci-map-v47.css app/
@@ -610,7 +622,7 @@ jobs:
           s=s.replace(center,center+'window.__ld47SetCenter=setCenter;',1)
           marker='</body></html>'
           assert s.count(marker)==1
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-gucci-map-v47.css?v=471"><script src="./ledovia-gucci-map-v47.js?v=471"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-gucci-map-v47.css?v=472"><script src="./ledovia-gucci-map-v47.js?v=471"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
