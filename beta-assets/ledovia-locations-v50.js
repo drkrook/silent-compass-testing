@@ -86,7 +86,7 @@ if(!enhancePhoto()){
 function enhanceLocationPhotoDialog(){
  const inputs=[...document.querySelectorAll('input[type="file"]')];
  for(const input of inputs){
-  if(input.id==='privatePhoto'||input.dataset.ldExistingPhotoUpload)return;
+  if(input.id==='privatePhoto'||input.dataset.ldExistingPhotoUpload)continue;
   const panel=input.closest('[role="dialog"],dialog,.modal,.scPhotoModal')||input.parentElement?.parentElement;
   if(!panel||!/Save photo offline/i.test(panel.textContent||''))continue;
   input.dataset.ldExistingPhotoUpload='1';
