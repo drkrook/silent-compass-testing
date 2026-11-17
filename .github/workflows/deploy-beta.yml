@@ -518,6 +518,9 @@ jobs:
           PY
           # Beta-only password visibility and recovery completion; Stable source untouched.
           cp beta/beta-assets/ledovia-password-recovery-v41.js app/
+          cp beta/beta-assets/ledovia-reset-v44.css app/
+          cp beta/beta-assets/ledovia-reset-v45-state.js app/
+          cp beta/beta-assets/ledovia-approved-logo-v45.jpg app/
           python3 - <<'PY'
           from pathlib import Path
           p=Path('app/index.html')
@@ -525,7 +528,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-password-recovery-v41.js' not in s
-          s=s.replace(marker,'<script src="./ledovia-password-recovery-v41.js?v=2"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-reset-v44.css?v=44"><script src="./ledovia-password-recovery-v41.js?v=44"></script><script src="./ledovia-reset-v45-state.js?v=45"></script>'+marker)
           p.write_text(s)
           PY
           # Restore the previously selected workspace after mobile pull-to-refresh.
