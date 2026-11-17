@@ -634,7 +634,7 @@ jobs:
           s=p.read_text()
           marker='</body></html>'
           assert s.count(marker)==1, 'Unexpected document ending'
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-resources-v48.css?v=480"><script src="./ledovia-resources-v48.js?v=480"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-resources-v48.css?v=481"><script src="./ledovia-resources-v48.js?v=481"></script>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
