@@ -24,3 +24,12 @@
 #appMain.scPlacesSimple .ld50Actions .ld50Delete{color:#ffc1b9;border-color:#aa7774}
 #appMain.scPlacesSimple #scBookmarkDetails[hidden]{display:none!important}
 @media(min-width:700px){#appMain.scPlacesSimple .ld50Actions{grid-template-columns:repeat(5,minmax(0,1fr))}}
+
+/* v50.1 regression: legacy #privateList max-height:240px clipped all but first card. */
+#appMain.scPlacesSimple #ld49YourLocations #privateList{max-height:none!important;height:auto!important;overflow:visible!important;display:flex!important;flex-direction:column!important;gap:12px!important}
+#appMain.scPlacesSimple #ld49YourLocations #privateList>.ld50Card{height:auto!important;min-height:70px!important;max-height:none!important;flex:0 0 auto!important;align-self:stretch!important;overflow:visible!important}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Card>.ld50Toggle{min-height:70px!important;height:auto!important;flex:0 0 auto!important}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Card>.ld50Details:not([hidden]){display:block!important;height:auto!important}
+/* Hide only the redundant Selected Location/Resources panel on My Locations.
+   Keep its DOM and handlers available for the card action buttons. */
+#appMain.scPlacesSimple #panel-places>.section:has(> #selected){display:none!important}
