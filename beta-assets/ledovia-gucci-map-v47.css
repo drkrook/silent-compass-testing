@@ -44,3 +44,50 @@ body:has(#appMain.scMapSimple)>header #ld47CompactBrand strong{font-size:clamp(2
 body:has(#appMain.scMapSimple)>header #ld47CompactBrand small{font-size:clamp(6px,1.45vw,10px)!important;letter-spacing:.06em!important}
 body:has(#appMain.scMapSimple)>header #ledoviaMenuButton,
 body:has(#appMain.scMapSimple)>header #ledoviaBellButton{z-index:6!important}
+
+/* v47.3 approved visual reference: premium turquoise controls and tight mobile composition */
+body:has(#appMain.scMapSimple)>header{
+ background:radial-gradient(ellipse at 50% 100%,#146f75 0%,#063c44 62%,#052a32 100%)!important;
+ box-shadow:inset 0 -2px 0 #4be6d7!important;
+}
+body:has(#appMain.scMapSimple)>header #ld47CompactBrand strong{font-size:clamp(23px,5.4vw,32px)!important;letter-spacing:.06em!important}
+body:has(#appMain.scMapSimple)>header #ld47CompactBrand small{font-size:clamp(7px,1.55vw,11px)!important;letter-spacing:.17em!important}
+#appMain.scMapSimple #scSimpleMapNav{padding:7px 8px!important;background:linear-gradient(180deg,#063c44,#07343c)!important;gap:7px!important;border-bottom:2px solid #26c5bc!important}
+#appMain.scMapSimple #scSimpleMapNav>button:not([hidden]){
+ display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
+ min-height:48px!important;padding:6px 4px!important;
+ background:linear-gradient(180deg,#0c6b70,#03404a 75%)!important;
+ border:1.5px solid #4ff7e6!important;border-radius:12px!important;
+ box-shadow:inset 0 1px 0 #e0fff866,0 0 8px #23e3cf9c,0 2px 4px #001b24!important;
+ font-size:clamp(11px,3vw,15px)!important;white-space:nowrap!important
+}
+#appMain.scMapSimple #scSimpleMapNav>button svg{width:20px;height:20px;flex:none}
+#appMain.scMapSimple #mapwrap{position:relative!important}
+#appMain.scMapSimple #mapLayersButton,#appMain.scMapSimple #mapResourceButton{
+ position:relative!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+ gap:1px!important;width:50px!important;height:58px!important;min-width:50px!important;
+ background:linear-gradient(145deg,#075c66,#03313c)!important;color:#fff!important;
+ border:1.5px solid #65f7e8!important;border-radius:13px!important;
+ box-shadow:0 0 9px #26e4d4a6,0 4px 10px #001b2388!important
+}
+#appMain.scMapSimple #mapLayersButton .ld47ControlIcon,#appMain.scMapSimple #mapResourceButton .ld47ControlIcon{display:flex;align-items:center;justify-content:center}
+#appMain.scMapSimple #mapLayersButton .ld47ControlLabel,#appMain.scMapSimple #mapResourceButton .ld47ControlLabel{font-size:10px!important;line-height:1.05!important;font-weight:700!important}
+#appMain.scMapSimple #mapLayersButton svg,#appMain.scMapSimple #mapResourceButton svg{width:23px!important;height:23px!important}
+#appMain.scMapSimple .ld47ResourceActive{position:absolute;right:4px;top:4px;width:9px;height:9px;background:#30f14b;border-radius:50%;box-shadow:0 0 6px #24ff49}
+#ld47MapControls{right:10px!important;top:244px!important;gap:9px!important}
+#ld47MapControls .ld47MapButton{
+ width:50px!important;height:58px!important;display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:center!important;gap:1px!important;
+ background:linear-gradient(145deg,#075c66,#03313c)!important;border:1.5px solid #65f7e8!important;
+ box-shadow:0 0 9px #26e4d4a6,0 4px 10px #001b2388!important;border-radius:13px!important;padding:3px!important
+}
+#ld47MapControls .ld47ControlIcon{display:flex;align-items:center;justify-content:center}
+#ld47MapControls .ld47ControlIcon svg{width:25px;height:25px}
+#ld47MapControls .ld47ControlLabel{font-size:10px;line-height:1.05;font-weight:700;text-align:center;color:#fff}
+#ld47MapControls .ld47RedPin{font-size:24px;line-height:1}
+#ld47GpsMarker .ld47GpsDot{width:19px;height:19px;border:3px solid #fff;background:#1383f7;box-shadow:0 0 0 6px #168efc40,0 0 12px #167fff}
+@media(max-width:760px){
+ #appMain.scMapSimple #scSimpleMapNav{padding:7px 8px!important}
+ #ld47MapControls{top:244px!important;right:10px!important}
+ #appMain.scMapSimple #mapwrap{min-height:calc(100dvh - 225px)!important}
+}
