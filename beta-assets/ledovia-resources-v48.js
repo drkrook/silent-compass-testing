@@ -23,9 +23,6 @@ function init(){
   if(small)small.textContent='Helpful places for travel, planning and emergencies';
   const emblem=document.createElement('span');emblem.className='ld48Emblem';emblem.textContent='◈';emblem.setAttribute('aria-hidden','true');heading.prepend(emblem);
  }
- const tabs=document.createElement('div');tabs.className='ld48Tabs';tabs.setAttribute('role','group');tabs.setAttribute('aria-label','Resource filters');
- const filters=[['all','✓ All Resources'],['selected','✓ Selected'],['offline','↓ Offline Info']];
- let current='all';
  const intro=document.createElement('div');intro.className='ld48Intro';intro.innerHTML='<strong>Select Layers by Category</strong>';
  const search=document.createElement('input');search.type='search';search.placeholder='Search resources…';search.setAttribute('aria-label','Search resource categories');search.className='ld48Search';intro.append(search);
  const rows=[...section.querySelectorAll('label.check')].filter(l=>l.querySelector('input[type="checkbox"]'));
@@ -43,23 +40,19 @@ function init(){
   rowContainer.append(label);
  }
  const footer=document.createElement('div');footer.className='ld48Footer';
- const clear=section.querySelector('#scClearAllLayers');clear.classList.add('ld48Clear');clear.textContent='Clear All';
- const apply=document.createElement('button');apply.type='button';apply.className='ld48Apply';apply.textContent='✓ Apply Layers';
- apply.addEventListener('click',()=>{document.getElementById('mapResourceButton')?.click()});
- footer.append(clear,apply);
+ const clear=section.querySelector('#scClearAllLayers');clear.classList.add('ld48Clear');clear.textContent='✕ Clear All Layers';
+ footer.append(clear);
  // Preserve the original live checkbox nodes and their event listeners.
- section.prepend(tabs,intro,rowContainer);section.append(footer);
+ section.prepend(intro,rowContainer);section.append(footer);
  const note=document.createElement('p');note.className='ld48Caution';note.textContent='Map resources are not live emergency alerts. Offline access requires previously downloaded data.';section.append(note);
- const info=document.createElement('p');info.className='ld48OfflineInfo';info.hidden=true;info.textContent='Offline readiness depends on saved state resource packs. Check Offline Readiness to download or verify your data.';section.insertBefore(info,rowContainer);
- const offlineButton=document.createElement('button');offlineButton.type='button';offlineButton.className='ld48OfflineAction';offlineButton.textContent='Open Offline Readiness';offlineButton.hidden=true;
- offlineButton.addEventListener('click',()=>{document.getElementById('mapResourceButton')?.click();document.getElementById('tab-offline')?.click()});section.insertBefore(offlineButton,rowContainer);
  const render=()=>{
   const query=search.value.trim().toLocaleLowerCase();
-  for(const label of rows){const input=label.querySelector('input');label.hidden=(current==='selected'&&!input.checked)||(current==='offline')||!label.textContent.toLocaleLowerCase().includes(query);label.classList.toggle('ld47SelectedResource',input.checked)}
-  info.hidden=current!=='offline';offlineButton.hidden=current!=='offline';intro.hidden=current==='offline';rowContainer.hidden=current==='offline';
-  for(const b of tabs.querySelectorAll('button'))b.setAttribute('aria-pressed',String(b.dataset.filter===current));
+  for(const label of rows){
+   const input=label.querySelector('input[type="checkbox"]');
+   label.hidden=!label.textContent.toLocaleLowerCase().includes(query);
+   label.classList.toggle('ld47SelectedResource',!!input?.checked);
+  }
  };
- for(const [key,name] of filters){const b=document.createElement('button');b.type='button';b.textContent=name;b.dataset.filter=key;b.setAttribute('aria-pressed',String(key===current));b.addEventListener('click',()=>{current=key;render()});tabs.append(b)}
  search.addEventListener('input',render);menu.addEventListener('change',render);clear.addEventListener('click',()=>requestAnimationFrame(render));render();
  return true;
 }
