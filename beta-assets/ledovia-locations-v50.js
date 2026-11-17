@@ -1,4 +1,4 @@
-/* LEDOVIA Beta v50: approved premium My Locations cards; original data handlers retained. */
+/* LEDOVIA Beta v0.8.503 — My Locations edit + existing-photo upload fixes.\n   Release notes: Correct Edit button target and open existing editor; expose gallery/file upload in existing-location Photos dialog. Preserve local data and original save handlers. */
 (()=>{'use strict';
 const $=s=>document.querySelector(s);
 let active=null;
@@ -23,9 +23,9 @@ function upgrade(){
   toggle.append(ico,copy,chevron);
   const detail=document.createElement('div');detail.className='ld50Details';detail.hidden=true;
   const actions=document.createElement('div');actions.className='ld50Actions';
-  const nav=document.createElement('button');nav.type='button';nav.textContent='➤ Navigate';nav.onclick=()=>{go.click();const target=$('#selectedLocationPanel');const button=[...document.querySelectorAll('#selectedLocationPanel button')].find(b=>/destination/i.test(b.textContent));if(button)button.click();else document.getElementById('scPlacesMap')?.click();};
-  const edit=document.createElement('button');edit.type='button';edit.textContent='✎ Edit';edit.onclick=()=>{go.click();const button=[...document.querySelectorAll('#selectedLocationPanel button')].find(b=>/^Edit$/i.test(b.textContent.trim()));button?.click();};
-  const coords=document.createElement('button');coords.type='button';coords.textContent='▢ Copy Coords';coords.onclick=()=>{go.click();const button=[...document.querySelectorAll('#selectedLocationPanel button')].find(b=>/Copy coordinates/i.test(b.textContent));button?.click();};
+  const nav=document.createElement('button');nav.type='button';nav.textContent='➤ Navigate';nav.onclick=()=>{go.click();const target=$('#selectedLocationPanel');const button=[...document.querySelectorAll('#selected button')].find(b=>/destination/i.test(b.textContent));if(button)button.click();else document.getElementById('scPlacesMap')?.click();};
+  const edit=document.createElement('button');edit.type='button';edit.textContent='✎ Edit';edit.onclick=()=>{go.click();const button=[...document.querySelectorAll('#selected button')].find(b=>/^Edit$/i.test(b.textContent.trim()));if(button){button.click();const editor=document.getElementById('scPlaceEditor');if(editor){editor.open=true;editor.scrollIntoView({behavior:'smooth',block:'start'});}}};
+  const coords=document.createElement('button');coords.type='button';coords.textContent='▢ Copy Coords';coords.onclick=()=>{go.click();const button=[...document.querySelectorAll('#selected button')].find(b=>/Copy coordinates/i.test(b.textContent));button?.click();};
   actions.append(nav,edit,coords);
   const photo=row.querySelector('button[title="Location photos"]');if(photo){photo.textContent='▧ Photos';actions.append(photo);}
   const del=row.querySelector('button[title="Delete this location"]');if(del){del.textContent='Delete';del.classList.add('ld50Delete');actions.append(del);}
@@ -87,7 +87,10 @@ function enhanceLocationPhotoDialog(){
  const inputs=[...document.querySelectorAll('input[type="file"]')];
  for(const input of inputs){
   if(input.id==='privatePhoto'||input.dataset.ldExistingPhotoUpload)continue;
-  const panel=input.closest('[role="dialog"],dialog,.modal,.scPhotoModal')||input.parentElement?.parentElement;
+  let panel=input.parentElement;
+  for(let depth=0;panel&&depth<8;depth++,panel=panel.parentElement){
+   if(/Save photo offline/i.test(panel.textContent||''))break;
+  }
   if(!panel||!/Save photo offline/i.test(panel.textContent||''))continue;
   input.dataset.ldExistingPhotoUpload='1';
   input.removeAttribute('capture');
