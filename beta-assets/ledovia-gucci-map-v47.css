@@ -5,7 +5,7 @@
 #appMain.scMapSimple #mapwrap:before{display:none!important;content:none!important}
 #appMain.scMapSimple #mapLayersButton,#appMain.scMapSimple #mapResourceButton{display:grid!important;place-items:center!important;font-size:0!important}
 #appMain.scMapSimple #mapLayersButton svg,#appMain.scMapSimple #mapResourceButton svg{width:23px;height:23px;stroke:#ecfffc}
-#ld47MapControls{position:absolute;right:12px;top:195px;z-index:15;display:flex;flex-direction:column;gap:9px;pointer-events:auto}
+#ld47MapControls{position:absolute;right:12px;top:239px;z-index:15;display:flex;flex-direction:column;gap:9px;pointer-events:auto}
 #ld47MapControls .ld47MapButton{width:45px;height:45px;display:grid;place-items:center;border-radius:12px;border:1px solid #4bced1;background:#073b44ed;color:#f0fffc;box-shadow:0 4px 15px #001f2b77}
 #ld47MapControls .ld47MapButton:focus-visible{outline:3px solid #a5fff2;outline-offset:2px}
 #ld47MapControls .ld47MapButton:disabled{opacity:.65}
@@ -15,4 +15,4 @@
 #ld47GpsMarker .ld47GpsDot{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;box-sizing:border-box;border:3px solid #fff;border-radius:50%;background:#1478f2;box-shadow:0 0 0 5px #207bf53d,0 2px 12px #00204f99}
 #ld47GpsStatus{position:absolute;z-index:18;left:12px;right:68px;bottom:50px;padding:10px 12px;border:1px solid #4cd9d0;border-radius:10px;background:#04353eef;color:#f1fffc;font-size:13px;pointer-events:none}
 #ld47GpsStatus[hidden]{display:none!important}
-@media(max-width:760px){#ld47MapControls{right:9px;top:184px}#ld47MapControls .ld47MapButton{width:42px;height:42px}#appMain.scMapSimple #mapwrap{min-height:calc(100dvh - 230px)!important}}
+@media(max-width:760px){#ld47MapControls{right:9px;top:238px}#ld47MapControls .ld47MapButton{width:42px;height:42px}#appMain.scMapSimple #mapwrap{min-height:calc(100dvh - 230px)!important}}
