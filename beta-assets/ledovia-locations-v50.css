@@ -33,3 +33,90 @@
 /* Hide only the redundant Selected Location/Resources panel on My Locations.
    Keep its DOM and handlers available for the card action buttons. */
 #appMain.scPlacesSimple #panel-places>.section:has(> #selected){display:none!important}
+
+/* v50.2 — approved My Locations visual refinement; presentation-only.
+   Preserve original DOM, action handlers, saved records and offline storage. */
+#appMain.scPlacesSimple #privatePlacesPanel{
+  position:relative;isolation:isolate;
+  background:linear-gradient(180deg,#071e25,#04272d 46%,#041c23)!important;
+}
+#appMain.scPlacesSimple #privatePlacesPanel>strong{
+  display:block;position:relative;line-height:1.12;
+  padding:26px 15px 15px 62px!important;
+  font-family:Georgia,'Times New Roman',serif!important;
+  font-size:clamp(28px,7vw,43px)!important;
+  font-weight:700!important;text-shadow:0 3px 6px #001b22,0 0 16px #42e6db66!important;
+}
+#appMain.scPlacesSimple #privatePlacesPanel>strong::before{
+  content:'📍';position:absolute;left:12px;top:19px;
+  font:38px/1 system-ui,sans-serif;filter:drop-shadow(0 0 9px #1ef7e2);
+}
+#appMain.scPlacesSimple .scPlacesIntro{
+  font-size:clamp(14px,3.5vw,18px)!important;line-height:1.5!important;
+  margin:0 10px 20px!important;max-width:55ch;
+}
+#appMain.scPlacesSimple .scPlacesDashboard #scPlaceEditor{
+  position:relative;min-height:76px!important;display:flex!important;
+  align-items:center!important;justify-content:center!important;
+  background:radial-gradient(ellipse at 50% -45%,#11c5bd 0%,#087b79 40%,#05353e 100%)!important;
+  border:2px solid #54f7eb!important;border-radius:22px!important;
+  box-shadow:0 0 0 2px #00464b,0 0 19px #23f5e1a3,inset 0 1px 11px #b2fff455!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations.ld50Premium{
+  margin-top:22px!important;padding:14px!important;
+  background:linear-gradient(155deg,#073d43,#031c24 42%,#052b32)!important;
+  border:1.5px solid #4fe4d8!important;
+  box-shadow:0 0 24px #04a8a333,inset 0 1px 9px #38f1db1c!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations>h3{
+  padding:3px 0 10px!important;margin:0 0 8px!important;
+  font-family:Georgia,'Times New Roman',serif!important;
+  font-size:clamp(26px,6vw,37px)!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations>h3::before{
+  content:'✦';color:#f2d28c;margin-right:10px;
+  text-shadow:0 0 12px #f4d687;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Card{
+  background:linear-gradient(105deg,#0d5556,#082e38 68%,#07333a)!important;
+  border:1px solid #50ddd3!important;border-radius:17px!important;
+  box-shadow:inset 0 1px 12px #59ead82b,0 4px 16px #001b22a8!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Toggle{
+  min-height:76px!important;padding:11px 13px!important;gap:13px!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Icon{
+  flex-basis:54px;height:54px;font-size:30px;
+  border:1px solid #72f9e8;border-radius:13px;
+  box-shadow:0 0 14px #25eadb77,inset 0 0 11px #24bcb855;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Name strong{
+  font-size:clamp(16px,4vw,21px)!important;line-height:1.2!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Name small{
+  font-size:clamp(12px,3vw,14px)!important;line-height:1.35!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Chevron{
+  display:grid;place-items:center;flex:0 0 35px;height:35px;
+  border-radius:50%;background:#06424a;
+  box-shadow:inset 0 0 10px #35d5cd26;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Details{
+  background:linear-gradient(180deg,#062f36,#04252d)!important;
+  padding:13px!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Actions button{
+  min-height:48px!important;border-radius:12px!important;
+  border:1px solid #59d5ce!important;
+  background:linear-gradient(180deg,#116369,#06363e)!important;
+  box-shadow:inset 0 1px 6px #8bfff32b,0 2px 8px #001d24!important;
+  font-size:clamp(12px,3vw,14px)!important;
+}
+#appMain.scPlacesSimple #ld49YourLocations .ld50Actions .ld50Delete{
+  border-color:#b86c72!important;color:#ffb8b8!important;
+}
+@media(max-width:390px){
+ #appMain.scPlacesSimple #privatePlacesPanel>strong{padding-left:55px!important}
+ #appMain.scPlacesSimple #privatePlacesPanel>strong::before{font-size:32px}
+ #appMain.scPlacesSimple #ld49YourLocations.ld50Premium{padding:11px!important}
+}
