@@ -7,9 +7,9 @@ const rad=Math.PI/180;
 const svg=(path)=>'<svg viewBox="0 0 24 24" width="23" height="23" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+path+'</svg>';
 const icons={
  layers:svg('<path d="m12 2 9 5-9 5-9-5 9-5Zm-9 10 9 5 9-5M3 17l9 5 9-5"/>'),
- resources:svg('<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>'),
+ resources:svg('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="m8 16 2-5 2 2 3-5 2 8M7 8h.01M17 17h.01"/>'),
  locate:svg('<circle cx="12" cy="12" r="6"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/><circle cx="12" cy="12" r="1" fill="currentColor"/>'),
- pin:svg('<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>'),
+ pin:'<span class="ld47RedPin" aria-hidden="true">📍</span>',
  menu:svg('<path d="M4 6h16M4 12h16M4 18h16"/>')
 };
 function project(la,lo,z){const scale=256*2**z;return [(lo+180)/360*scale,(1-Math.log(Math.tan(la*rad)+1/Math.cos(la*rad))/Math.PI)/2*scale]}
@@ -24,7 +24,7 @@ function draw(){
  if(accuracy){const metersPerPixel=156543.03392*Math.cos(position.latitude*rad)/2**state.zoom;const diameter=Math.max(20,Math.min(1000,2*position.accuracy/metersPerPixel));accuracy.style.width=diameter+'px';accuracy.style.height=diameter+'px';accuracy.hidden=!Number.isFinite(position.accuracy)||position.accuracy<=0;}
 }
 window.addEventListener('ld47-map-state',e=>{state=e.detail;draw()});
-function button(id,label,icon,handler){const b=document.createElement('button');b.id=id;b.type='button';b.className='ld47MapButton';b.title=label;b.setAttribute('aria-label',label);b.innerHTML=icon;b.addEventListener('click',handler);return b}
+function button(id,label,icon,handler){const b=document.createElement('button');b.id=id;b.type='button';b.className='ld47MapButton';b.title=label;b.setAttribute('aria-label',label);b.innerHTML='<span class="ld47ControlIcon">'+icon+'</span><span class="ld47ControlLabel">'+(id==='ld47GpsButton'?'My Location':label)+'</span>';b.addEventListener('click',handler);return b}
 function init(){
  const map=document.getElementById('mapwrap'),nav=document.getElementById('scSimpleMapNav');
  if(!map||!nav||!document.getElementById('mapLayersButton')||!document.getElementById('mapResourceButton'))return false;
@@ -37,16 +37,16 @@ function init(){
   header.append(brand);
  }
  const home=document.getElementById('scMapHome'),tools=document.getElementById('scMapTools');
- if(home){home.textContent='Locations';home.id='ld47Locations';home.onclick=()=>document.getElementById('tab-places')?.click();}
- if(tools){tools.textContent='Hazards';tools.id='ld47Hazards';tools.removeAttribute('aria-expanded');tools.onclick=()=>document.getElementById('tab-hazards')?.click();}
- const dirs=document.getElementById('scMapDirections');if(dirs)dirs.textContent='Directions';
+ if(home){home.innerHTML=icons.pin.replace('📍',svg('<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>'))+'<span>Locations</span>';home.id='ld47Locations';home.onclick=()=>document.getElementById('tab-places')?.click();}
+ if(tools){tools.innerHTML=svg('<path d="m12 3 10 18H2L12 3Z"/><path d="M12 9v5m0 3h.01"/>')+'<span>Hazards</span>';tools.id='ld47Hazards';tools.removeAttribute('aria-expanded');tools.onclick=()=>document.getElementById('tab-hazards')?.click();}
+ const dirs=document.getElementById('scMapDirections');if(dirs)dirs.innerHTML=svg('<path d="m22 2-7 20-4-9-9-4 20-7Z"/>')+'<span>Directions</span>';
  // Existing map-workspace code expects scMapTools to exist; keep it as an invisible
  // compatibility control to avoid breaking activate('map') and legacy tools.
  const compatibility=document.createElement('button');compatibility.id='scMapTools';compatibility.type='button';compatibility.hidden=true;compatibility.setAttribute('aria-expanded','false');nav.append(compatibility);
  const controls=document.createElement('div');controls.id='ld47MapControls';controls.setAttribute('role','group');controls.setAttribute('aria-label','Map controls');
  const layers=document.getElementById('mapLayersButton'),resources=document.getElementById('mapResourceButton');
- layers.textContent='';layers.innerHTML=icons.layers;layers.title='Map layers';layers.setAttribute('aria-label','Map layers');
- resources.textContent='';resources.innerHTML=icons.resources;resources.title='Resource layers';resources.setAttribute('aria-label','Resource layers');
+ layers.textContent='';layers.innerHTML='<span class="ld47ControlIcon">'+icons.layers+'</span><span class="ld47ControlLabel">Layers</span>';layers.title='Map layers';layers.setAttribute('aria-label','Map layers');
+ resources.textContent='';resources.innerHTML='<span class="ld47ControlIcon">'+icons.resources+'</span><span class="ld47ControlLabel">Resources</span><span class="ld47ResourceActive" aria-hidden="true"></span>';resources.title='Resource layers';resources.setAttribute('aria-label','Resource layers');
  const locate=button('ld47GpsButton','Find my location',icons.locate,()=>{
   if(!navigator.geolocation){message('GPS is unavailable on this device.');return;}
   locate.disabled=true;locate.setAttribute('aria-busy','true');message('Finding your location…');
