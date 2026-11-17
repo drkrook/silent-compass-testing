@@ -38,5 +38,4 @@
 /* Approved LEDOVIA logo: exact existing cinematic artwork, not a generated substitute. */
 #ldAccountDialog.ldRecoveryPremium .ldAccountLogo{content:url('./ledovia-approved-logo-v45.jpg')!important;display:block!important;width:min(100%,430px)!important;max-height:none!important;height:auto!important;aspect-ratio:1200/640!important;object-fit:cover!important;border:1px solid #38d6d255!important;border-radius:12px!important;box-shadow:0 9px 26px #00172188!important;filter:none!important}
 #ldAccountDialog.ldRecoveryPremium .ldAccountHero{margin:12px auto 9px!important}
-#ldAccountDialog.ldRecoveryPremium .ldResetTitle::before{content:'♧'!important;font-size:.75em!important;color:#8ce6dd!important}
 @media(max-width:480px){#ldAccountDialog.ldRecoveryPremium .ldAccountLogo{width:100%!important;max-height:none!important}}
