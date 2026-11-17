@@ -39,7 +39,7 @@ function upgrade(){
     const place=places.find(p=>p.name===name&&(!address||p.address===address))||places.find(p=>p.name===name);
     if(!place)return;
     const rows=[];
-    if(Number.isFinite(Number(place.lat))&&Number.isFinite(Number(place.lon)))rows.push('⌖ Coordinates: '+Number(place.lat).toFixed(6)+', '+Number(place.lon).toFixed(6));
+    if(place.address?.trim())rows.push('⌖ Address: '+place.address.trim());else if(Number.isFinite(Number(place.lat))&&Number.isFinite(Number(place.lon)))rows.push('⌖ Coordinates: '+Number(place.lat).toFixed(6)+', '+Number(place.lon).toFixed(6));
     rows.push('▤ Notes: '+(place.notes||'No notes'));
     let photos=[];
     try{photos=await window.SilentCompassPhotos?.list?.('location',place.id)||[]}catch(e){console.warn('Location photo preview unavailable',e)}
