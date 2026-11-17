@@ -29,16 +29,37 @@ function upgrade(){
   actions.append(nav,edit,coords);
   const photo=row.querySelector('button[title="Location photos"]');if(photo){photo.textContent='▧ Photos';actions.append(photo);}
   const del=row.querySelector('button[title="Delete this location"]');if(del){del.textContent='Delete';del.classList.add('ld50Delete');actions.append(del);}
+  // Beta v0.8.507: approved expanded card — real offline photo and place metadata.
+  const info=document.createElement('div');info.className='ld50PlaceInfo';
+  const image=document.createElement('img');image.className='ld50PlacePhoto';image.alt='Saved location photo';image.hidden=true;
+  const meta=document.createElement('div');meta.className='ld50PlaceMeta';
+  info.append(image,meta);detail.append(info);
+  async function refreshCard(){
+    const places=window.ledoviaGetPrivatePlaces?.()||[];
+    const place=places.find(p=>p.name===name&&(!address||p.address===address))||places.find(p=>p.name===name);
+    if(!place)return;
+    const rows=[];
+    if(Number.isFinite(Number(place.lat))&&Number.isFinite(Number(place.lon)))rows.push('⌖ Coordinates: '+Number(place.lat).toFixed(6)+', '+Number(place.lon).toFixed(6));
+    rows.push('▤ Notes: '+(place.notes||'No notes'));
+    let photos=[];
+    try{photos=await window.SilentCompassPhotos?.list?.('location',place.id)||[]}catch(e){console.warn('Location photo preview unavailable',e)}
+    rows.push('▧ Photos: '+photos.length);
+    meta.replaceChildren(...rows.map(line=>{const p=document.createElement('p');p.textContent=line;return p}));
+    if(image.dataset.ldObjectUrl){URL.revokeObjectURL(image.dataset.ldObjectUrl);delete image.dataset.ldObjectUrl}
+    image.hidden=!photos.length;
+    if(photos.length){const url=URL.createObjectURL(photos[0].blob);image.dataset.ldObjectUrl=url;image.src=url;}
+  }
+  row.addEventListener('click',e=>{if(e.target===photo)setTimeout(refreshCard,500)});
   detail.append(actions);
   toggle.onclick=()=>{
    const wasOpen=!detail.hidden;
    list.querySelectorAll('.ld50Details').forEach(d=>d.hidden=true);
    list.querySelectorAll('.ld50Toggle').forEach(b=>b.setAttribute('aria-expanded','false'));
-   if(!wasOpen){detail.hidden=false;toggle.setAttribute('aria-expanded','true');go.click();active=name;}
+   if(!wasOpen){detail.hidden=false;toggle.setAttribute('aria-expanded','true');go.click();active=name;refreshCard();}
    else active=null;
   };
   go.hidden=true;row.prepend(toggle);row.append(detail);
-  if(active===name){detail.hidden=false;toggle.setAttribute('aria-expanded','true');}
+  if(active===name){detail.hidden=false;toggle.setAttribute('aria-expanded','true');refreshCard();}
  });
  if(marks){const list=marks.querySelector('#scBookmarkList');const count=list?.querySelectorAll('.savedItem').length||0;marks.hidden=count===0;}
 }
