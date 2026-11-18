@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.542', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.543', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80542-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80543-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -917,6 +917,16 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'''<style>.scHomeGrid>.ldSqoochEntry{grid-column:1/-1!important;min-height:170px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;padding:16px 45% 16px 16px!important;background:linear-gradient(90deg,#082e28 0%,#082e28d9 40%,#082e2820 100%),url('./sqooch-mascot.webp') right center/auto 100% no-repeat,#082e28!important;border:2px solid #68d6bb!important}.scHomeGrid>.ldSqoochEntry strong{font-size:22px!important;color:#fff!important}.scHomeGrid>.ldSqoochEntry small{color:#ffdc94!important}.scHomeGrid>.ldSqoochEntry .sqEntryCTA{display:block;background:#246b37;border:1px solid #b4e68b;border-radius:22px;padding:8px;margin-top:8px;color:#fff}</style><script>(()=>{function restore(){const grid=document.querySelector('.scHomeGrid');if(!grid)return;let card=grid.querySelector('.ldSqoochEntry');if(!card){card=document.createElement('button');card.type='button';card.className='ldSqoochEntry';card.innerHTML='<strong>Sqooch’s Adventure Club</strong><small>THE FAMILY ADVENTURE ZONE</small><span>Git Outside. Learn Stuff. Have Fun!</span><span class="sqEntryCTA">Explore with Sqooch →</span>';grid.appendChild(card)}/* Original Sqooch initializer owns the click handler and Passport rendering. */}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restore);else restore();let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;queueMicrotask(()=>{pending=false;restore()})}).observe(document.body,{childList:true,subtree:true})})();</script>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.543: independent delegated Home card activation, no timing dependency.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,'''<script>(()=>{const names=['Knot Master','Trail Finder','Pack Pro','Weather Watcher','Wildlife Explorer','Shelter Builder','Water Wise','First Aid Helper','Backtrack Explorer','Fire Safety','Outdoor Ready','Wilderness Legend'];function openClub(){let club=document.getElementById('ldSqoochClub');if(!club){club=document.createElement('section');club.id='ldSqoochClub';club.setAttribute('role','dialog');club.setAttribute('aria-modal','true');club.setAttribute('aria-label','Sqooch’s Adventure Club');document.body.appendChild(club)}club.hidden=false;club.style.setProperty('display','block','important');club.style.setProperty('position','fixed','important');club.style.setProperty('inset','0','important');club.style.setProperty('z-index','2147483646','important');club.style.setProperty('overflow-y','auto','important');club.style.setProperty('background','#082d32','important');club.innerHTML='<div class="sqHeader"><button type="button" data-sq-back aria-label="Back to LEDOVIA home">←</button><div class="sqBrand">LEDO<span>VIA</span><small>READY FOR THE ADVENTURE</small></div><button type="button" data-sq-back aria-label="LEDOVIA Home">⌂</button></div><div class="sqBody"><div class="sqHero"><div class="sqSign">Junior Adventurer Passport</div></div><div class="sqCard"><h3>My Adventure Progress</h3><p>0 of 12 badges earned</p><progress max="12" value="0" style="width:100%"></progress><small>Badge earning is not yet enabled in this Beta.</small></div><div class="sqBadges"></div><div class="sqCard sqMonthly"><small>THIS MONTH’S ADVENTURE · PREVIEW</small><h3>Git Outside. Tie Knots!</h3><p>Our first interactive lesson is in development.</p></div><div class="sqNav"><button type="button" data-sq-page="home">Club Home</button><button type="button" data-sq-page="passport">My Passport</button><button type="button" data-sq-page="library">All Lessons</button><button type="button" data-sq-page="family">Challenges</button><button type="button" data-sq-page="sheets">My Downloads</button></div></div>';const grid=club.querySelector('.sqBadges');names.forEach((name,i)=>{const b=document.createElement('button');b.type='button';b.innerHTML='<span class="sqShield"><strong>'+name+'</strong><b>'+['🪢','🧭','🎒','🌦️','🐾','⛺','💧','🩹','🥾','🔥','🏔️','🏆'][i]+'</b><span>☆ ☆ ☆</span></span><small>Not earned</small>';b.setAttribute('aria-label',name+' badge not yet earned');b.onclick=()=>{club.querySelector('.sqMonthly').innerHTML='<h3>'+name+'</h3><p>Achievement not yet available. Complete its reviewed lesson when released.</p>';club.querySelector('.sqMonthly').scrollIntoView({block:'nearest'})};grid.append(b)});club.querySelectorAll('[data-sq-back]').forEach(b=>b.onclick=()=>{club.hidden=true;club.style.removeProperty('display')});club.querySelectorAll('[data-sq-page]').forEach(b=>b.onclick=()=>{const page=b.dataset.sqPage;if(page==='passport'){openClub();return}const section=club.querySelector('.sqMonthly');section.innerHTML=page==='home'?'<h3>Sqooch’s Adventure Club</h3><p>Git Outside. Learn Stuff. Have Fun!</p>':page==='library'?'<h3>Survival Skills Library</h3><p>First lesson: Git Outside. Tie Knots! — coming soon.</p>':page==='family'?'<h3>Family Challenges</h3><p>Coming soon.</p>':'<h3>My Downloads</h3><p>Coming soon.</p>';section.scrollIntoView({block:'nearest'})});club.scrollTop=0;club.querySelector('[data-sq-back]')?.focus()}document.addEventListener('click',e=>{const target=e.target instanceof Element?e.target:null;const entry=target?.closest('.ldSqoochEntry');if(!entry)return;e.preventDefault();e.stopImmediatePropagation();openClub()},true)})();</script>'''+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
