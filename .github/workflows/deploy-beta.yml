@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.527', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.528', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80527-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80528-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -814,6 +814,21 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1 and 'ldWxCommand' in s
           s=s.replace(marker,'''<style>body:has(#appMain.scNwsSimple) header h1{font-size:0!important;width:190px!important;height:76px!important;background:url('./ledovia-approved-logo-v45.jpg') center/contain no-repeat!important}body:has(#appMain.scNwsSimple) header h1 small{display:none!important}#appMain.scNwsSimple .scNwsPanel{padding:0!important;border:0!important;background:none!important;gap:9px!important}#appMain.scNwsSimple .ldWxHero{background:linear-gradient(90deg,#061e2cbd,#061e2c22),url('./offline-guide-library-photo.webp') center/cover!important;padding:24px 14px!important}#appMain.scNwsSimple .ldWxHero h2{text-transform:uppercase;font-size:clamp(20px,5vw,30px)!important}#appMain.scNwsSimple .ldWxSummary{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid #49838b;border-radius:12px;background:#092d38;padding:10px 4px;gap:4px;text-align:center}#appMain.scNwsSimple .ldWxSummary strong{display:block;font-size:14px;color:white}#appMain.scNwsSimple .ldWxSummary small{display:block;font-size:11px;color:#b9dadd}#appMain.scNwsSimple .ldWxAlerts{padding:10px!important}#appMain.scNwsSimple .ldWxAlerts h3{margin:0!important;font-size:17px}#appMain.scNwsSimple .ldWxAlerts p{font-size:12px;line-height:1.4;margin:5px 0}#appMain.scNwsSimple .ldWxAlerts h4{font-size:13px;margin:8px 0 0}#appMain.scNwsSimple #scNwsStatus{font-size:12px}#appMain.scNwsSimple .ldWxTile{min-width:0;min-height:112px;padding:10px!important}#appMain.scNwsSimple .ldWxTile strong{font-size:clamp(14px,3.7vw,19px)}#appMain.scNwsSimple .ldWxTile small{font-size:12px}#appMain.scNwsSimple .ldWxTile em{font-size:10px}#appMain.scNwsSimple .ldWxDay{background:radial-gradient(ellipse at 80% 25%,#e4ac4d80,transparent 45%),linear-gradient(130deg,#263d45,#453b2a)!important}#appMain.scNwsSimple .ldWxPrep{grid-column:1/-1}#appMain.scNwsSimple .ldWxRadar{min-height:118px;background:linear-gradient(90deg,#092c38 42%,#092c3844),repeating-radial-gradient(circle at 82% 55%,#5db3b955 0 1px,transparent 2px 19px),linear-gradient(110deg,#102e38,#28575c)!important}</style><script>(()=>{function refine(){const p=document.querySelector('.scNwsPanel[data-ld-wx-command]');if(!p||p.dataset.ldWxRefined)return;const hero=p.querySelector('.ldWxHero'),nav=p.querySelector('.scNwsNav'),alerts=p.querySelector('.ldWxAlerts'),tiles=[...p.querySelectorAll('.ldWxTile')],grid=p.querySelector('.ldWxGrid'),archive=p.querySelector('#scNwsArchive');if(!hero||!nav||!alerts||tiles.length!==7||!grid||!archive)return;p.dataset.ldWxRefined='1';hero.after(nav);hero.querySelector('p').textContent='Know the conditions. Plan ahead. Stay prepared.';const strip=document.createElement('div');strip.className='ldWxSummary';strip.innerHTML='<div><strong>— °F</strong><small>Conditions unavailable</small></div><div><strong>My Location</strong><small>GPS not checked</small></div><div><strong>Alert status</strong><small>See latest check below</small></div>';nav.after(strip);const [radar,day,protect,route,adventure,severe,prep]=tiles;radar.classList.add('ldWxRadar');radar.querySelector('small').textContent='GPS-centered interactive radar · Not connected';const pair=document.createElement('div');pair.className='ldWxGrid';pair.append(day,protect);strip.after(radar,pair,alerts,grid);protect.style.setProperty('--art','url("./shelter.webp")');route.style.setProperty('--art','url("./navigation.webp")');adventure.style.setProperty('--art','url("./offline-guide-library.webp")');prep.style.setProperty('--art','url("./preparedness-checklists-photo.webp")');prep.classList.add('ldWxPrep');grid.append(prep);const h=alerts.querySelector('h3');h.textContent='Official Weather Alerts';const check=p.querySelector('#scNwsCheck');check.textContent='Check Official Alerts Near Me';const note=p.querySelector('.scHelpNote');if(note)archive.after(note); }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',refine);else refine();new MutationObserver(refine).observe(document.body,{childList:true,subtree:true});})();</script>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.528: reuse existing compact Map header rules for Weather only.
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          css=Path('app/ledovia-gucci-map-v47.css').read_text()
+          rules=re.findall(r'body:has\\(#appMain\\.scMapSimple\\)>header[^{}]*\\{[^{}]*\\}',css)
+          assert len(rules)>=8
+          compact=''.join(rule.replace('scMapSimple','scNwsSimple') for rule in rules)
+          s=s.replace(marker,'<style>'+compact+'</style>'+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
