@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.517', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.518', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -671,10 +671,10 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-locations-v50.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=517"><script src="./ledovia-locations-v50.js?v=517"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=518"><script src="./ledovia-locations-v50.js?v=518"></script>'+marker)
           p.write_text(s)
           PY
-          # BETA v0.8.517: scoped Emergency Help premium presentation; existing actions unchanged.
+          # BETA v0.8.518: scoped Emergency Help premium presentation; existing actions unchanged.
           python3 - <<'PY'
           from pathlib import Path
           p=Path('app/index.html')
@@ -682,6 +682,16 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'''<style>body:has(#appMain.scHelpSimple) header{min-height:0!important;height:100px!important;aspect-ratio:auto!important;background:linear-gradient(110deg,#062b35,#09636a,#062b35)!important;padding:12px 65px!important;display:flex!important;align-items:center!important;justify-content:center!important}body:has(#appMain.scHelpSimple) header h1{font:800 28px system-ui!important;color:white!important;margin:0!important;background:none!important;position:static!important;transform:none!important}body:has(#appMain.scHelpSimple) header h1::before{display:none!important}body:has(#appMain.scHelpSimple) header h1 small{display:block!important;font-size:9px!important}#appMain.scHelpSimple #scHelpNav button,#appMain.scHelpSimple .scHelpActions button,#appMain.scHelpSimple #scHelpMoreTools{background:linear-gradient(145deg,#12616a,#062830 70%)!important;border:1px solid #62d8dc!important;box-shadow:inset 0 1px 8px #44cbd333,0 2px 8px #0005;border-radius:13px;color:#fff}#appMain.scHelpSimple .scEmergencyHelp>h2{margin:0!important;padding:20px 12px 8px;text-align:center;font-size:clamp(24px,6vw,34px);background:radial-gradient(ellipse at 12% 50%,#81252f,#062c38 60%);border:1px solid #56d7df;border-bottom:0;border-radius:16px 16px 0 0}#appMain.scHelpSimple .scEmergencyHelp>h2+p{margin:0!important;padding:8px 14px 16px;background:#082e39;border:1px solid #56d7df;border-top:0;border-radius:0 0 16px 16px;color:#e3f5f6}#appMain.scHelpSimple .scCall911{background:linear-gradient(#f0323c,#a50919)!important;border:2px solid #ff6571;box-shadow:0 0 14px #ff354955;color:white!important;min-height:56px}#appMain.scHelpSimple .scHelpNote{background:#092e37;border:1px solid #407d84;border-radius:12px;padding:12px;color:#e1f3f4!important}#appMain.scHelpSimple .scHelpActions{gap:10px}#appMain.scHelpSimple .scHelpActions button{min-height:82px;font-size:16px!important;line-height:1.3}#appMain.scHelpSimple .scHelpActions button:disabled{opacity:.48;box-shadow:none}#appMain.scHelpSimple .scHelpActions button[aria-expanded=true]{border:2px solid #f1ca79!important}#appMain.scHelpSimple .ldEmergencySection{grid-column:1/-1;font-size:20px;font-weight:800;color:white;border-bottom:1px solid #43bec8;margin:8px 0 0;padding:8px 0}#appMain.scHelpSimple .scHelpDetail{background:#092e37;border-color:#47b9c1}#appMain.scHelpSimple button:focus-visible,#appMain.scHelpSimple a:focus-visible{outline:3px solid white;outline-offset:3px}</style><script>(()=>{function enhance(){const a=document.querySelector('.scHelpActions');if(!a||a.dataset.ldEmergency)return;const gps=a.querySelector('#scHelpCoords'),lost=a.querySelector('#scHelpLost');if(!gps||!lost)return;a.dataset.ldEmergency='1';for(const [el,label] of [[gps,'Location & Situation'],[lost,'Survival & Safety Assistance']]){const h=document.createElement('h3');h.className='ldEmergencySection';h.textContent=label;el.before(h);}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhance);else enhance();new MutationObserver(enhance).observe(document.body,{childList:true,subtree:true});})();</script>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.518: compact emergency layout and premium card polish.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,'''<style>#appMain.scHelpSimple #scHelpNav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;max-width:720px;gap:7px;margin:0 auto 12px!important}#appMain.scHelpSimple #scHelpNav button{width:100%;min-height:44px!important;padding:8px 4px!important;font-size:14px!important}#appMain.scHelpSimple .scEmergencyHelp>h2{padding:14px 10px 6px!important;background:radial-gradient(ellipse at 0% 0%,#a3323b88,transparent 65%),linear-gradient(135deg,#123d49,#071f2b)!important}#appMain.scHelpSimple .scEmergencyHelp>h2+p{padding:6px 12px 12px!important;font-size:15px;line-height:1.45}#appMain.scHelpSimple .scCall911{margin:12px 0 8px!important;padding:14px 8px!important}#appMain.scHelpSimple .scHelpNote{padding:9px 11px!important;font-size:13px;line-height:1.45}#appMain.scHelpSimple .scHelpActions{margin:12px 0!important;gap:9px!important}#appMain.scHelpSimple .scHelpActions button{min-height:76px!important;padding:12px!important;background:radial-gradient(ellipse at 100% 0%,#277c8244,transparent 65%),linear-gradient(145deg,#104e59,#062530 80%)!important;border:1px solid #55c5cd!important;box-shadow:inset 0 1px 8px #45cbd32b,0 3px 8px #0004!important}#appMain.scHelpSimple .scHelpActions button:disabled{opacity:.48}#appMain.scHelpSimple .ldEmergencySection{margin:4px 0 0!important;padding:7px 9px!important;border:1px solid #39858d;border-radius:9px;background:linear-gradient(90deg,#124c55,#082a34);font-size:17px!important}#appMain.scHelpSimple .ldMoreEmergency{width:100%;min-height:44px;background:linear-gradient(145deg,#12616a,#062830)!important;border:1px solid #62d8dc!important;border-radius:11px!important;color:white!important}#appMain.scHelpSimple .scHelpActions button[aria-expanded=true]{border:2px solid #f1ca79!important}</style><script>(()=>{function enhance(){const p=document.querySelector('#panel-help');if(!p)return;for(const b of p.querySelectorAll('button')){if(b.textContent.trim()==='More Emergency Tools')b.classList.add('ldMoreEmergency');}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhance);else enhance();new MutationObserver(enhance).observe(document.body,{childList:true,subtree:true});})();</script>'''+marker)
           p.write_text(s)
           PY
           # Beta v0.8.506: ensure Android receives the updated photo picker, not a cached script.
@@ -696,7 +706,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80517-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80518-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
