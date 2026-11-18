@@ -505,3 +505,24 @@ body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations .ld50Ac
 @media(min-width:700px){
  body.ld510CompactPlacesHeader #appMain.scPlacesSimple #ld49YourLocations .ld50Actions{grid-template-columns:repeat(5,minmax(0,1fr))!important}
 }
+
+/* BETA v0.8.516 — prevent Home leakage; use approved local premium Home artwork. */
+#ld49BackupTools{display:none!important}
+#appMain.scPlacesSimple.scPlacesToolsOpen:not(.scHomeActive) #ld49BackupTools{display:block!important}
+.ld50ExistingPhotoLabel,.ld50ExistingPhotoNote{display:none!important}
+dialog[open] .ld50ExistingPhotoLabel,dialog[open] .ld50ExistingPhotoNote{display:block!important}
+body:has(#appMain.scHomeActive)>header{
+ background:#041f29 url('./ledovia-approved-logo-v45.jpg') center center/contain no-repeat!important;
+ min-height:0!important;height:auto!important;aspect-ratio:16/9!important;
+ padding:0!important;position:relative!important;
+}
+body:has(#appMain.scHomeActive)>header h1{
+ position:absolute!important;width:1px!important;height:1px!important;
+ overflow:hidden!important;clip-path:inset(50%)!important;
+ padding:0!important;margin:0!important;
+}
+body:has(#appMain.scHomeActive)>header h1::before,
+body:has(#appMain.scHomeActive)>header h1::after{display:none!important}
+@media(min-width:800px){
+ body:has(#appMain.scHomeActive)>header{aspect-ratio:auto!important;height:260px!important;background-size:contain!important}
+}
