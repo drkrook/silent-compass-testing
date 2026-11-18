@@ -108,10 +108,8 @@ function enhanceLocationPhotoDialog(){
  const inputs=[...document.querySelectorAll('input[type="file"]')];
  for(const input of inputs){
   if(input.id==='privatePhoto'||input.dataset.ldExistingPhotoUpload)continue;
-  let panel=input.parentElement;
-  for(let depth=0;panel&&depth<8;depth++,panel=panel.parentElement){
-   if(/Save photo offline/i.test(panel.textContent||''))break;
-  }
+  if(input.id!=='scPhotoFile')continue;
+  const panel=input.closest('dialog');
   if(!panel||!/Save photo offline/i.test(panel.textContent||''))continue;
   input.dataset.ldExistingPhotoUpload='1';
   input.removeAttribute('capture');
@@ -123,6 +121,7 @@ function enhanceLocationPhotoDialog(){
   input.insertAdjacentElement('beforebegin',label);
   const note=document.createElement('small');
   note.textContent='Choose a photo already saved on your device, then tap Save photo offline.';
+  note.className='ld50ExistingPhotoNote';
   note.style.cssText='display:block;margin:7px 0 14px;color:#bed7d5;line-height:1.4';
   input.insertAdjacentElement('afterend',note);
  }
