@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.529', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.530', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80529-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80530-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -839,6 +839,17 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'''<script>(()=>{function ensure(){const header=document.querySelector('body > header');if(!header||document.getElementById('ld47CompactBrand'))return;const brand=document.createElement('div');brand.id='ld47CompactBrand';brand.setAttribute('aria-label','LEDOVIA — Ready for the Adventure');brand.innerHTML='<strong>LEDO<span>VIA</span></strong><small>READY FOR THE ADVENTURE</small>';header.append(brand)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensure);else ensure()})();</script>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.530: weather-specific hero and live NWS summary.
+          curl -fL --max-time 25 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&q=80' -o app/ledovia-wx-mountains.jpg || rm -f app/ledovia-wx-mountains.jpg
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1 and 'ldWxRefined' in s
+          s=s.replace(marker,'''<style>#appMain.scNwsSimple .ldWxHero{background:linear-gradient(90deg,#061e2ccc,#061e2c22),url('./ledovia-wx-mountains.jpg') center 48%/cover,url('./ledovia-mountains.svg') center/cover!important;min-height:112px}#appMain.scNwsSimple .ldWxSummary button{grid-column:1/-1;margin:2px 4px 0;min-height:42px;background:#10535c;border:1px solid #65d4d2;color:white}#appMain.scNwsSimple .ldWxSummary .ldWxStamp{grid-column:1/-1;font-size:11px;color:#c3dfe0}#appMain.scNwsSimple .ldWxTile{border-color:#61d4d8;box-shadow:inset 0 1px 5px #4ccbd122}#appMain.scNwsSimple .ldWxAlerts{border-color:#61d4d8}#appMain.scNwsSimple .ldWxGrid>.ldWxTile:only-child{grid-column:1/-1}</style><script>(()=>{function init(){const p=document.querySelector('.scNwsPanel[data-ld-wx-refined]');if(!p||p.dataset.ldWxLive)return;const strip=p.querySelector('.ldWxSummary');if(!strip)return;p.dataset.ldWxLive='1';const cells=[...strip.children],temp=cells[0].querySelector('strong'),cond=cells[0].querySelector('small'),loc=cells[1].querySelector('small'),alert=cells[2].querySelector('small');const stamp=document.createElement('small');stamp.className='ldWxStamp';stamp.setAttribute('role','status');const btn=document.createElement('button');btn.type='button';btn.textContent='Update weather near me';strip.append(stamp,btn);let seq=0;const reset=()=>{temp.textContent='— °F';cond.textContent='Unavailable';loc.textContent='GPS not checked';alert.textContent='Unknown'};const get=async u=>{const res=await fetch(u,{headers:{Accept:'application/geo+json'},cache:'no-store'});if(!res.ok)throw Error('Weather unavailable');return res.json()};async function refresh(){const id=++seq;reset();if(!navigator.onLine){stamp.textContent='Offline — current weather and alerts unknown';return}if(!navigator.geolocation){stamp.textContent='GPS unavailable';return}btn.disabled=true;stamp.textContent='Requesting GPS…';try{const pos=await new Promise((ok,no)=>navigator.geolocation.getCurrentPosition(ok,no,{timeout:12000,maximumAge:60000}));if(id!==seq)return;const point=pos.coords.latitude.toFixed(4)+','+pos.coords.longitude.toFixed(4);loc.textContent='GPS location';const [obs,a]=await Promise.allSettled([(async()=>{const pt=await get('https://api.weather.gov/points/'+point);const city=pt.properties?.relativeLocation?.properties;if(id===seq&&city?.city)loc.textContent=city.city+', '+city.state;const stations=await get(pt.properties.observationStations);const station=stations.features?.[0]?.id;if(!station)throw Error('No station');return get(station+'/observations/latest')})(),get('https://api.weather.gov/alerts/active?point='+point)]);if(id!==seq)return;const o=obs.status==='fulfilled'?obs.value.properties:null;if(o&&Number.isFinite(o.temperature?.value)){temp.textContent=Math.round(o.temperature.value*9/5+32)+'°F';cond.textContent=o.textDescription||'Station observation'}if(a.status==='fulfilled'&&Array.isArray(a.value.features)){alert.textContent=a.value.features.length?a.value.features.length+' active NWS alerts':'None reported at check'}else alert.textContent='Unknown';stamp.textContent=(o?.timestamp?'Observed '+new Date(o.timestamp).toLocaleString():'Observation unavailable')+' · Alerts '+(a.status==='fulfilled'?'checked '+new Date().toLocaleTimeString():'unavailable')+'. Conditions may change.'}catch(e){stamp.textContent='Unable to update weather. Official alert status unknown.'}finally{if(id===seq)btn.disabled=false}}btn.onclick=refresh;window.addEventListener('offline',()=>{seq++;btn.disabled=false;reset();stamp.textContent='Offline — previous readings not live'});const app=document.getElementById('appMain');let active=false;function visit(){const now=app?.classList.contains('scNwsSimple');if(now&&!active)refresh();active=now}if(app)new MutationObserver(visit).observe(app,{attributes:true,attributeFilter:['class']});visit()}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();new MutationObserver(init).observe(document.body,{childList:true,subtree:true});})();</script>'''+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
