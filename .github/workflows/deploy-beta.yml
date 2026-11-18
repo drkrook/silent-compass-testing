@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.539', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.540', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80539-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80540-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -907,6 +907,16 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'''<style>#ldSqoochClub .sqHero{min-height:0;aspect-ratio:1.45;position:relative;background-position:center top!important;background-size:100% auto!important;background-repeat:no-repeat!important;background-color:#092e24}#ldSqoochClub .sqSign{background:repeating-linear-gradient(2deg,#75451c12 0px,#75451c12 1px,transparent 2px,transparent 8px),linear-gradient(105deg,#edc78e,#ac713a);border:3px double #76502e;box-shadow:0 4px 8px #0009}#ldSqoochClub .sqShield{background:linear-gradient(145deg,#d2be8a,#716c4d 18%,#224a48 21%,#102f35 78%,#8a805e 81%,#d2be8a);min-height:112px;filter:saturate(.8)}#ldSqoochClub .sqShield b{width:42px;height:42px;line-height:0;margin:3px auto}#ldSqoochClub .sqShield svg{width:100%;height:100%;display:block}#ldSqoochClub .sqShield strong{color:#f6e7c4}#ldSqoochClub .sqBadges{row-gap:12px}</style>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.540: recover Home entry after dynamic home re-render.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,'''<style>.scHomeGrid>.ldSqoochEntry{grid-column:1/-1!important;min-height:170px!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;padding:16px 45% 16px 16px!important;background:linear-gradient(90deg,#082e28 0%,#082e28d9 40%,#082e2820 100%),url('./sqooch-mascot.webp') right center/auto 100% no-repeat,#082e28!important;border:2px solid #68d6bb!important}.scHomeGrid>.ldSqoochEntry strong{font-size:22px!important;color:#fff!important}.scHomeGrid>.ldSqoochEntry small{color:#ffdc94!important}.scHomeGrid>.ldSqoochEntry .sqEntryCTA{display:block;background:#246b37;border:1px solid #b4e68b;border-radius:22px;padding:8px;margin-top:8px;color:#fff}</style><script>(()=>{function restore(){const grid=document.querySelector('.scHomeGrid');if(!grid)return;let card=grid.querySelector('.ldSqoochEntry');if(!card){card=document.createElement('button');card.type='button';card.className='ldSqoochEntry';card.innerHTML='<strong>Sqooch’s Adventure Club</strong><small>THE FAMILY ADVENTURE ZONE</small><span>Git Outside. Learn Stuff. Have Fun!</span><span class="sqEntryCTA">Explore with Sqooch →</span>';grid.appendChild(card)}card.onclick=()=>{const club=document.getElementById('ldSqoochClub');if(club){club.hidden=false;const pass=[...club.querySelectorAll('.sqNav button')].find(b=>b.textContent.trim()==='My Passport');if(pass)pass.click()}else{const original=document.querySelector('.scHomeGrid>.ldSqoochEntry');if(original)original.click()}}}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',restore);else restore();let pending=false;new MutationObserver(()=>{if(pending)return;pending=true;queueMicrotask(()=>{pending=false;restore()})}).observe(document.body,{childList:true,subtree:true})})();</script>'''+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
