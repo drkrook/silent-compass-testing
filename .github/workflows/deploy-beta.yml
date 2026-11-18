@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.515', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.516', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -671,7 +671,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-locations-v50.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=515"><script src="./ledovia-locations-v50.js?v=515"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=516"><script src="./ledovia-locations-v50.js?v=516"></script>'+marker)
           p.write_text(s)
           PY
           # Beta v0.8.506: ensure Android receives the updated photo picker, not a cached script.
@@ -686,7 +686,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80515-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80516-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
