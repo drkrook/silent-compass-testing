@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.562', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.563', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80562-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80563-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -1063,6 +1063,16 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,r'''<style>#ldSqoochClub .sqHero:after{right:-2%!important;bottom:0%!important;width:45%!important;height:53%!important}@media(max-width:420px){#ldSqoochClub .sqHero:after{right:-2%!important;bottom:0%!important;width:44%!important;height:51%!important}}</style>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.563: premium compass and decorative adventure stamp on progress panel.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,r'''<style>#ldSqoochClub .sqHero+.sqCard{position:relative!important;min-height:142px!important;padding:17px 17px 16px!important;overflow:hidden!important;background:linear-gradient(135deg,#0a6a65,#063d42 75%)!important;border:2px solid #5bdacf!important;box-shadow:inset 0 1px 0 #b0f4de55,0 4px 12px #001d2080!important}#ldSqoochClub .sqHero+.sqCard:before{content:'';position:absolute;left:12px;top:17px;width:58px;height:58px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20stop-color%3D%22%23fff5d5%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23cfa76b%22%2F%3E%3C%2FradialGradient%3E%3C%2Fdefs%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2246%22%20fill%3D%22%23704421%22%20stroke%3D%22%23f5d49b%22%20stroke-width%3D%225%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2237%22%20fill%3D%22url(%23g)%22%20stroke%3D%22%23473b2a%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M50%2013v8M50%2079v8M13%2050h8M79%2050h8%22%20stroke%3D%22%23493e32%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22m64%2026-8%2030-30%208%2018-20Z%22%20fill%3D%22%231c7778%22%2F%3E%3Cpath%20d%3D%22m64%2026-20%2018%2012%2012Z%22%20fill%3D%22%23bb4f3b%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%224%22%20fill%3D%22%23f8dfaa%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%225%22%20r%3D%225%22%20fill%3D%22%23f5d49b%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;filter:drop-shadow(0 3px 3px #001b1e88);pointer-events:none}#ldSqoochClub .sqHero+.sqCard:after{content:'';position:absolute;right:12px;top:12px;width:63px;height:66px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20120%20120%22%3E%3Cpath%20d%3D%22M10%208%20110%208%20110%20112%2010%20112Z%22%20fill%3D%22%23dcb77b%22%20stroke%3D%22%238a592c%22%20stroke-width%3D%225%22%20stroke-dasharray%3D%226%203%22%2F%3E%3Cpath%20d%3D%22M20%2018H100V102H20Z%22%20fill%3D%22%23f4dbab%22%20stroke%3D%22%239e6a3e%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2255%22%20r%3D%2232%22%20fill%3D%22none%22%20stroke%3D%22%23426b61%22%20stroke-width%3D%223%22%2F%3E%3Cpath%20d%3D%22M33%2069%2050%2044%2059%2054%2072%2034%2088%2069Z%22%20fill%3D%22%233b786b%22%2F%3E%3Cpath%20d%3D%22m45%2051%205-7%207%2010-7-3m17-10%205-7%209%2020-9-5%22%20fill%3D%22%23fff1cb%22%2F%3E%3Ctext%20x%3D%2260%22%20y%3D%2287%22%20text-anchor%3D%22middle%22%20font-family%3D%22sans-serif%22%20font-size%3D%2210%22%20font-weight%3D%22bold%22%20fill%3D%22%23426b61%22%3EADVENTURE%3C%2Ftext%3E%3C%2Fsvg%3E") center/contain no-repeat;transform:rotate(9deg);filter:drop-shadow(0 3px 3px #001b1e88);pointer-events:none}#ldSqoochClub .sqHero+.sqCard h3{margin:1px 65px 3px 67px!important;min-height:30px!important;font-size:clamp(17px,4.3vw,25px)!important;line-height:1.13!important;color:#fff!important;text-shadow:0 2px 3px #00292b!important}#ldSqoochClub .sqHero+.sqCard p{margin:0 65px 12px 67px!important;font-size:clamp(13px,3.5vw,19px)!important;color:#f3f7ed!important}#ldSqoochClub .sqHero+.sqCard progress{display:block!important;width:100%!important;height:12px!important;margin:12px 0 7px!important;accent-color:#dcb36c!important}#ldSqoochClub .sqHero+.sqCard small{display:block!important;color:#b5cbc8!important;font-size:clamp(11px,2.8vw,14px)!important}@media(max-width:390px){#ldSqoochClub .sqHero+.sqCard:before{width:45px;height:45px;left:9px;top:16px}#ldSqoochClub .sqHero+.sqCard:after{width:48px;height:51px;right:8px;top:12px}#ldSqoochClub .sqHero+.sqCard h3,#ldSqoochClub .sqHero+.sqCard p{margin-left:53px!important;margin-right:49px!important}}</style>'''+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
