@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.559', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.560', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80559-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80560-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -1031,6 +1031,18 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,r'''<style>#ldSqoochClub .sqHero{background:linear-gradient(0deg,#052e2855,transparent 45%),url('./sqooch-mascot.webp') center top/cover no-repeat!important;background-color:#092e24!important}#ldSqoochClub .sqHero:before{content:none!important;display:none!important}#ldSqoochClub .sqHero .sqSign{z-index:2!important}</style>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.560: carved Passport sign overlay in hero, decorative only.
+          test -s beta/beta-assets/sqooch_passport_sign.png
+          cp beta/beta-assets/sqooch_passport_sign.png app/sqooch_passport_sign.png
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,r'''<style>#ldSqoochClub .sqHero{position:relative!important;overflow:hidden!important;isolation:isolate!important}#ldSqoochClub .sqHero .sqSign{display:none!important}#ldSqoochClub .sqHero:after{content:''!important;display:block!important;position:absolute!important;z-index:3!important;right:1.5%!important;bottom:5%!important;width:57%!important;height:66%!important;background:url('./sqooch_passport_sign.png') center center/contain no-repeat!important;pointer-events:none!important;filter:drop-shadow(0 5px 5px #001c1e88)!important}@media(max-width:420px){#ldSqoochClub .sqHero:after{width:55%!important;height:61%!important;right:0!important;bottom:4%!important}}</style>'''+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
