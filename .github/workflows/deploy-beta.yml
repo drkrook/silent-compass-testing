@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.554', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.555', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80554-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80555-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -997,6 +997,16 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,r'''<script>(()=>{let resume=false;try{resume=sessionStorage.getItem('ldSqoochResumeOnce')==='1'}catch(_){}if(!resume)return;let attempts=0;const restore=()=>{const club=document.getElementById('ldSqoochClub');if(club&&!club.hidden&&getComputedStyle(club).display!=='none'){try{sessionStorage.removeItem('ldSqoochResumeOnce')}catch(_){}return true}const entry=document.querySelector('.ldSqoochEntry');if(!entry)return false;entry.click();const opened=document.getElementById('ldSqoochClub');if(opened&&!opened.hidden&&getComputedStyle(opened).display!=='none'){try{sessionStorage.removeItem('ldSqoochResumeOnce')}catch(_){}opened.scrollTop=0;return true}return false};const observer=new MutationObserver(()=>{if(restore()||++attempts>1000)observer.disconnect()});const start=()=>{if(restore())return;observer.observe(document.body,{childList:true,subtree:true});setTimeout(()=>observer.disconnect(),12000)};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start()})();</script>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.555: approved foliage edging and rocky footer; decorative only.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,r'''<style>#ldSqoochClub .sqBody{position:relative!important;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20720%201550%22%20preserveAspectRatio%3D%22none%22%3E%3Cg%20opacity%3D%22.88%22%3E%3Cpath%20d%3D%22M0%200Q70%2055%204%20160M720%200Q650%2055%20716%20160%22%20fill%3D%22none%22%20stroke%3D%22%23356d37%22%20stroke-width%3D%2211%22%2F%3E%3Cg%20fill%3D%22%233e913c%22%20stroke%3D%22%231d512d%22%20stroke-width%3D%222%22%3E%3Cellipse%20cx%3D%2218%22%20cy%3D%2230%22%20rx%3D%2227%22%20ry%3D%2213%22%20transform%3D%22rotate(35%2018%2030)%22%2F%3E%3Cellipse%20cx%3D%2248%22%20cy%3D%2266%22%20rx%3D%2234%22%20ry%3D%2214%22%20transform%3D%22rotate(-30%2048%2066)%22%2F%3E%3Cellipse%20cx%3D%229%22%20cy%3D%22108%22%20rx%3D%2228%22%20ry%3D%2213%22%20transform%3D%22rotate(42%209%20108)%22%2F%3E%3Cellipse%20cx%3D%22702%22%20cy%3D%2230%22%20rx%3D%2227%22%20ry%3D%2213%22%20transform%3D%22rotate(-35%20702%2030)%22%2F%3E%3Cellipse%20cx%3D%22672%22%20cy%3D%2266%22%20rx%3D%2234%22%20ry%3D%2214%22%20transform%3D%22rotate(30%20672%2066)%22%2F%3E%3Cellipse%20cx%3D%22711%22%20cy%3D%22108%22%20rx%3D%2228%22%20ry%3D%2213%22%20transform%3D%22rotate(-42%20711%20108)%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%232f763b%22%20opacity%3D%22.72%22%3E%3Cpath%20d%3D%22M0%20390q35%2014%2058%2045L0%20421ZM0%20520q44%2012%2065%2047L0%20548ZM720%20390q-35%2014-58%2045l58-14ZM720%20520q-44%2012-65%2047l65-19ZM0%20990q42%2020%2064%2061L0%201035ZM720%20990q-42%2020-64%2061l64-16Z%22%2F%3E%3C%2Fg%3E%3Cg%20fill%3D%22%235d9e45%22%20opacity%3D%22.8%22%3E%3Cellipse%20cx%3D%2217%22%20cy%3D%22780%22%20rx%3D%2235%22%20ry%3D%2211%22%20transform%3D%22rotate(-32%2017%20780)%22%2F%3E%3Cellipse%20cx%3D%22703%22%20cy%3D%22780%22%20rx%3D%2235%22%20ry%3D%2211%22%20transform%3D%22rotate(32%20703%20780)%22%2F%3E%3Cellipse%20cx%3D%2212%22%20cy%3D%221310%22%20rx%3D%2232%22%20ry%3D%2212%22%20transform%3D%22rotate(30%2012%201310)%22%2F%3E%3Cellipse%20cx%3D%22708%22%20cy%3D%221310%22%20rx%3D%2232%22%20ry%3D%2212%22%20transform%3D%22rotate(-30%20708%201310)%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E")!important;background-repeat:no-repeat!important;background-position:center top!important;background-size:100% 100%!important;padding-bottom:12px!important}#ldSqoochClub .sqBody:after{content:'';display:block!important;grid-column:1/-1!important;height:112px!important;margin:2px -12px -12px!important;pointer-events:none!important;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20720%20150%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20d%3D%22M0%20130Q95%2090%20170%20124T355%20122T540%20119T720%20125V150H0Z%22%20fill%3D%22%23286a3c%22%2F%3E%3Cpath%20d%3D%22M0%20150V90l31-44%2048%2010%2039%2057%2043%2037ZM720%20150V77l-36-34-49%2011-45%2065-45%2031Z%22%20fill%3D%22%236c7876%22%20stroke%3D%22%23a4aca2%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22m0%2090%2031-44%2018%2021-20%2026ZM720%2077l-36-34-23%2018%2030%2017Z%22%20fill%3D%22%23b5bcb4%22%2F%3E%3Cpath%20d%3D%22M95%20150q8-50%2040-61%2045%207%2059%2061ZM526%20150q20-55%2055-61%2034%2018%2045%2061Z%22%20fill%3D%22%23596d68%22%20stroke%3D%22%23a0aca0%22%20stroke-width%3D%223%22%2F%3E%3Cg%20fill%3D%22%2346954b%22%3E%3Cpath%20d%3D%22M190%20150q-18-55-28-66%2032%2018%2044%2054-4-39%2018-61-11%2047%202%2073ZM510%20150q17-52%2028-66-33%2018-44%2054%204-39-18-61%2011%2047-2%2073Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E")!important;background-repeat:no-repeat!important;background-position:center bottom!important;background-size:100% 100%!important}#ldSqoochClub .sqBody>*{position:relative;z-index:1}#ldSqoochClub .sqBody:after{z-index:0}#ldSqoochClub .sqBadges{position:relative;z-index:1}</style>'''+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
