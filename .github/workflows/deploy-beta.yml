@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.551', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.552', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80551-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80552-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -967,6 +967,16 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,'''<style>#ldSqoochClub .sqBadgeScene svg{width:min(56px,86%);height:56px;display:block;margin:auto;filter:drop-shadow(0 2px 2px #0006)}#ldSqoochClub .sqBadgeScene b{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:100%!important}#ldSqoochClub .sqBadgeScene{background:radial-gradient(circle at 50% 25%,#367c79,#0c3a43 80%)!important}</style>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.552: independent non-blocking Passport pull-down refresh.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,r'''<style>#sqRefreshHint{position:fixed;z-index:2147483647;top:80px;left:50%;transform:translateX(-50%);background:#115a54;color:white;padding:10px 18px;border:1px solid #69e0cc;border-radius:24px;font:700 13px system-ui;box-shadow:0 3px 12px #0009;pointer-events:none}#sqRefreshHint[hidden]{display:none!important}</style><script>(()=>{let y=null,armed=false,tip=null;const active=()=>{const p=document.getElementById('ldSqoochClub');return p&&!p.hidden&&getComputedStyle(p).display!=='none'?p:null};const clear=()=>{y=null;armed=false;if(tip)tip.hidden=true};const hint=()=>{if(!tip){tip=document.createElement('div');tip.id='sqRefreshHint';tip.setAttribute('role','status');tip.textContent='Pull down to refresh';document.body.appendChild(tip)}tip.hidden=false;return tip};document.addEventListener('touchstart',e=>{const p=active();if(!p||e.touches.length!==1||p.scrollTop>1){clear();return}y=e.touches[0].clientY;armed=false},{passive:true});document.addEventListener('touchmove',e=>{const p=active();if(!p||y===null||e.touches.length!==1)return;const delta=e.touches[0].clientY-y;if(p.scrollTop>1||delta<0){clear();return}if(delta>35){const t=hint();armed=delta>105;t.textContent=armed?'Release to refresh':'Pull down to refresh'}},{passive:true});document.addEventListener('touchend',()=>{const reload=armed&&!!active();clear();if(reload)location.reload()},{passive:true});document.addEventListener('touchcancel',clear,{passive:true})})();</script>'''+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
