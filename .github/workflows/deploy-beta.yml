@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.552', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.553', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80552-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80553-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -977,6 +977,16 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           s=s.replace(marker,r'''<style>#sqRefreshHint{position:fixed;z-index:2147483647;top:80px;left:50%;transform:translateX(-50%);background:#115a54;color:white;padding:10px 18px;border:1px solid #69e0cc;border-radius:24px;font:700 13px system-ui;box-shadow:0 3px 12px #0009;pointer-events:none}#sqRefreshHint[hidden]{display:none!important}</style><script>(()=>{let y=null,armed=false,tip=null;const active=()=>{const p=document.getElementById('ldSqoochClub');return p&&!p.hidden&&getComputedStyle(p).display!=='none'?p:null};const clear=()=>{y=null;armed=false;if(tip)tip.hidden=true};const hint=()=>{if(!tip){tip=document.createElement('div');tip.id='sqRefreshHint';tip.setAttribute('role','status');tip.textContent='Pull down to refresh';document.body.appendChild(tip)}tip.hidden=false;return tip};document.addEventListener('touchstart',e=>{const p=active();if(!p||e.touches.length!==1||p.scrollTop>1){clear();return}y=e.touches[0].clientY;armed=false},{passive:true});document.addEventListener('touchmove',e=>{const p=active();if(!p||y===null||e.touches.length!==1)return;const delta=e.touches[0].clientY-y;if(p.scrollTop>1||delta<0){clear();return}if(delta>35){const t=hint();armed=delta>105;t.textContent=armed?'Release to refresh':'Pull down to refresh'}},{passive:true});document.addEventListener('touchend',()=>{const reload=armed&&!!active();clear();if(reload)location.reload()},{passive:true});document.addEventListener('touchcancel',clear,{passive:true})})();</script>'''+marker)
+          p.write_text(s)
+          PY
+          # BETA v0.8.553: Passport header and wooden navigation buttons only.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          s=s.replace(marker,r'''<style>#ldSqoochClub .sqHeader{position:relative!important;height:92px!important;min-height:92px!important;padding:0!important;overflow:hidden!important;background:linear-gradient(180deg,#00383cd9,#003a3ee9),url('./ledovia-mountains.svg') center 44%/cover no-repeat!important;border-bottom:2px solid #44c9bb!important;box-shadow:0 4px 15px #001f27a8!important}#ldSqoochClub .sqHeader:before{content:'◆';position:absolute;left:50%;top:2px;transform:translateX(-50%);color:#e5f5ee;font-size:16px;opacity:.8;pointer-events:none}#ldSqoochClub .sqHeader .sqBrand{display:block!important;top:27px!important;left:50%!important;transform:translateX(-50%)!important;max-width:calc(100% - 164px)!important;width:max-content!important;font-size:clamp(23px,6.2vw,38px)!important;letter-spacing:.025em!important;line-height:1!important;color:#fff!important;text-shadow:0 2px 3px #00262b!important}#ldSqoochClub .sqHeader .sqBrand span{display:inline!important;color:#4bdfd4!important}#ldSqoochClub .sqHeader .sqBrand small{display:block!important;margin-top:7px!important;font-size:clamp(6px,1.5vw,10px)!important;letter-spacing:.095em!important;color:#f5f7ec!important}#ldSqoochClub .sqHeader button{top:23px!important;left:9px!important;width:clamp(66px,20vw,112px)!important;height:47px!important;min-height:47px!important;padding:0 5px!important;border:3px solid #8c471d!important;border-radius:15px!important;background:linear-gradient(180deg,#f3bd70 0%,#a55b29 16%,#7b3e1c 54%,#a65e2a 82%,#663016 100%)!important;box-shadow:inset 0 2px 1px #ffdfa3,inset 0 -3px 1px #44220e,0 3px 0 #291c13,0 4px 9px #0008!important;color:transparent!important;font-size:0!important;text-shadow:none!important}#ldSqoochClub .sqHeader button:first-child:after{content:'⬅ Back';font:800 clamp(12px,3.1vw,17px) system-ui,sans-serif;color:white;text-shadow:1px 2px 2px #281307}#ldSqoochClub .sqHeader button:last-child{left:auto!important;right:9px!important}#ldSqoochClub .sqHeader button:last-child:after{content:'⌂ Home';font:800 clamp(12px,3.1vw,17px) system-ui,sans-serif;color:white;text-shadow:1px 2px 2px #281307}</style>'''+marker)
           p.write_text(s)
           PY
           touch app/.nojekyll
