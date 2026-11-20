@@ -645,8 +645,8 @@ jobs:
           s=s.replace(before,after,1)
           # The exact preceding braces vary with earlier Beta render patches.
           # Anchor on the unique route-drawing block instead.
-          route="if(currentRoute?.coordinates?.length){"
-          assert s.count(route)==1, 'Legacy route drawing block changed; stop'
+          route="if(currentRoute?.coordinates?.length){ctx.save();ctx.beginPath();"
+          assert s.count(route)==1, 'Main Canvas route drawing block changed; stop'
           s=s.replace(route,"}"+route,1)
           p.write_text(s)
           PY
