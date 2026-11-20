@@ -1220,7 +1220,7 @@ jobs:
           version='0.8.577'
           html=Path('app/index.html').read_text()
           sw=Path('app/sw.js').read_text()
-          labels=re.findall(r'BETA v0\\.8\\.\\d+',html)
+          labels=re.findall(r'BETA v0\.8\.\d+',html)
           assert labels, 'No visible Beta version label found'
           assert set(labels)=={'BETA v'+version}, f'Beta version mismatch: {set(labels)}'
           assert re.search(r'aria-label="Silent Compass beta version"[^>]*>BETA v'+re.escape(version)+r'</span>',html), 'Footer/header version badge mismatch'
