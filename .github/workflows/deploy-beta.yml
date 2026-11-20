@@ -672,6 +672,23 @@ jobs:
           assert s.count('ledovia-map2-live-bridge.js?v=2')==1
           p.write_text(s)
           PY
+          # Maps 2.0: restore resource-marker selection without intercepting map gestures.
+          # Reuse the existing marker hit-test and pick() detail-panel handler.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          anchor='function pick(f){selected=f;'
+          assert s.count(anchor)==1, 'Marker selection handler changed; stop'
+          s=s.replace(anchor,'''window.__ld2PickMarkerAt=(x,y)=>{
+            const f=(window._markers||[]).find(f=>Math.hypot(f.sx-x,f.sy-y)<(f.cluster?22:17));
+            if(!f)return false;
+            if(f.cluster){setCenter(f.members[0].lat,f.members[0].lon,Math.min(16,z+2));return true}
+            pick(f);return true;
+          };
+          '''+anchor,1)
+          p.write_text(s)
+          PY
           # Gucci Resources v48: additive Beta-only panel; retain existing layer controls.
           cp beta/beta-assets/ledovia-resources-v48.js app/
           cp beta/beta-assets/ledovia-resources-v48.css app/
