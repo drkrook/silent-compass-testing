@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.583', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.584', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -689,10 +689,10 @@ jobs:
             '<script src="https://unpkg.com/@protomaps/basemaps@5.7.2/dist/basemaps.js"></script>'
             '<script src="./ledovia-map2-engine.js?v=2"></script>'
             '<script src="./ledovia-map2-adapter.js?v=1"></script>'
-            '<script src="./ledovia-map2-live-bridge.js?v=583"></script>'
+            '<script src="./ledovia-map2-live-bridge.js?v=584"></script>'
           )
           s=s.replace(marker,scripts+marker,1)
-          assert s.count('ledovia-map2-live-bridge.js?v=583')==1
+          assert s.count('ledovia-map2-live-bridge.js?v=584')==1
           p.write_text(s)
           PY
           # Maps 2.0: restore resource-marker selection without intercepting map gestures.
@@ -845,7 +845,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80583-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80584-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -1357,7 +1357,30 @@ jobs:
           s=s.replace(marker,block+marker)
           p.write_text(s)
           PY
-          # BETA v0.8.583: mobile homepage hierarchy; reuse existing button nodes and handlers.
+          # Beta-only compact map information cards on narrow screens.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          css="""<style id="ld2-mobile-detail-cards">
+          @media(max-width:700px){
+          #scPlaceDetailPopup{left:10px!important;right:10px!important;bottom:64px!important;max-width:none!important;max-height:min(36%,310px)!important;padding:10px 12px!important;border-radius:14px!important;font-size:14px!important;line-height:1.3!important;overscroll-behavior:contain}
+          #scPlaceDetailPopup .scPlacePopupHeader{align-items:flex-start!important;gap:8px!important}
+          #scPlaceDetailPopup .scPlacePopupHeader strong{font-size:16px!important;line-height:1.25!important}
+          #scPlaceDetailPopup .scPlacePopupHeader button{min-height:40px!important;padding:7px 10px!important;font-size:13px!important}
+          #scPlaceDetailPopup p{margin:6px 0!important;line-height:1.32!important}
+          #scPlaceDetailPopup .scResourceContactRow{padding:4px 0!important;gap:8px!important}
+          #scPlaceDetailPopup .scResourceContactRow button{min-height:40px!important;padding:6px 10px!important}
+          #scPlaceDetailPopup .markerActions{gap:6px!important;margin-top:6px!important}
+          #scPlaceDetailPopup .markerActions button{min-height:40px!important;padding:7px 10px!important;font-size:13px!important}
+          }
+          </style>"""
+          s=s.replace(marker,css+marker,1)
+          p.write_text(s)
+          PY
+          # BETA v0.8.584: mobile homepage hierarchy; reuse existing button nodes and handlers.
           python3 - <<'PY'
           from pathlib import Path
           p=Path('app/index.html')
@@ -1407,7 +1430,7 @@ jobs:
           assert labels, 'No visible Beta version label found'
           assert set(labels)=={'BETA v'+version}, f'Beta version mismatch: {set(labels)}'
           assert re.search(r'aria-label="Silent Compass beta version"[^>]*>BETA v'+re.escape(version)+r'</span>',html), 'Footer/header version badge mismatch'
-          assert "const CACHE='griddown-shell-v80583-beta'" in sw, 'Service worker cache mismatch'
+          assert "const CACHE='griddown-shell-v80584-beta'" in sw, 'Service worker cache mismatch'
           print('PASS: visible Beta version and service-worker cache match v'+version)
           PY
           touch app/.nojekyll
