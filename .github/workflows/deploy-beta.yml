@@ -718,7 +718,7 @@ jobs:
           marker='</body></html>'
           assert s.count(marker)==1
           assert 'ledovia-locations-v50.js' not in s
-          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=519"><script src="./ledovia-locations-v50.js?v=519"></script>'+marker)
+          s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-locations-v50.css?v=519"><script src="./ledovia-locations-v50.js?v=580"></script>'+marker)
           p.write_text(s)
           PY
           # BETA v0.8.524: scoped Emergency Help premium presentation; existing actions unchanged.
