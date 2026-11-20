@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.586', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.587', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -677,6 +677,7 @@ jobs:
           PY
           cp beta/beta-assets/ledovia-map2-live-bridge.js app/ledovia-map2-live-bridge.js
           cp beta/beta-assets/ledovia-offline-coverage-v1.js app/ledovia-offline-coverage-v1.js
+          cp beta/beta-assets/ledovia-state-first-offline-v587.js app/ledovia-state-first-offline-v587.js
           python3 - <<'PY'
           from pathlib import Path
           p=Path('app/index.html')
@@ -692,6 +693,7 @@ jobs:
             '<script src="./ledovia-map2-adapter.js?v=1"></script>'
             '<script src="./ledovia-map2-live-bridge.js?v=584"></script>'
             '<script src="./ledovia-offline-coverage-v1.js?v=1"></script>'
+            '<script src="./ledovia-state-first-offline-v587.js?v=587"></script>'
           )
           s=s.replace(marker,scripts+marker,1)
           assert s.count('ledovia-map2-live-bridge.js?v=584')==1
@@ -847,7 +849,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80586-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80587-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -1505,14 +1507,14 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          version='0.8.586'
+          version='0.8.587'
           html=Path('app/index.html').read_text()
           sw=Path('app/sw.js').read_text()
           labels=re.findall(r'BETA v0\.8\.\d+',html)
           assert labels, 'No visible Beta version label found'
           assert set(labels)=={'BETA v'+version}, f'Beta version mismatch: {set(labels)}'
           assert re.search(r'aria-label="Silent Compass beta version"[^>]*>BETA v'+re.escape(version)+r'</span>',html), 'Footer/header version badge mismatch'
-          assert "const CACHE='griddown-shell-v80586-beta'" in sw, 'Service worker cache mismatch'
+          assert "const CACHE='griddown-shell-v80587-beta'" in sw, 'Service worker cache mismatch'
           print('PASS: visible Beta version and service-worker cache match v'+version)
           PY
           touch app/.nojekyll
