@@ -1292,7 +1292,7 @@ jobs:
               const family=select('button#scFamilyOpen');
               const gps=select('button[data-go="map"][data-map-action="gps"]');
               if(![map,compass,hazard,routes,guides,family,gps].every(Boolean))return false;
-              [map,compass,hazard,routes,guides,family].forEach(b=>grid.appendChild(b));
+              [family,guides,routes,hazard,compass,map].forEach(b=>grid.prepend(b));
               gps.hidden=true;
               gps.style.display='none';
               gps.setAttribute('aria-hidden','true');
