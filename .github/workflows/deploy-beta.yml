@@ -610,6 +610,7 @@ jobs:
           # Gucci Map v47: instrument the existing map render and centering, without replacing the engine.
           # Stage Maps 2.0 engine in Beta artifact; activation requires renderer/API migration.
           cp beta/beta-assets/ledovia-map2-engine.js app/ledovia-map2-engine.js
+          cp beta/beta-assets/ledovia-map2-adapter.js app/ledovia-map2-adapter.js
           cp beta/beta-assets/ledovia-gucci-map-v47.js app/
           cp beta/beta-assets/ledovia-gucci-map-v47.css app/
           python3 - <<'PY'
