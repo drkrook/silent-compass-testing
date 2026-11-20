@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.584', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.585', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -845,7 +845,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80584-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80585-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -1380,6 +1380,62 @@ jobs:
           s=s.replace(marker,css+marker,1)
           p.write_text(s)
           PY
+          # BETA v0.8.585: compact, expandable resource and saved-location map cards.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          block="""<style id="ld2-collapsible-map-cards">
+          @media(max-width:700px){
+          #scPlaceDetailPopup{max-height:min(32%,260px)!important}
+          #scPlaceDetailPopup.ld2-expanded{max-height:min(48%,390px)!important}
+          #scPlaceDetailPopup .ld2-more-toggle{display:block;width:100%;margin-top:8px;padding:9px 12px;min-height:42px;background:#285e58;color:#fff;border:1px solid #8abbb0;border-radius:9px;font-weight:700;text-align:center}
+          #scPlaceDetailPopup .ld2-extra[hidden]{display:none!important}
+          #scPlaceDetailPopup .ld2-extra p{margin:5px 0!important}
+          }
+          </style><script id="ld2-collapsible-map-cards-script">
+          (function(){
+            function compact(){
+              const card=document.getElementById('scPlaceDetailPopup');
+              if(!card||card.hidden||card.querySelector('.ld2-more-toggle'))return;
+              const head=card.querySelector('.scPlacePopupHeader');
+              if(!head)return;
+              const nodes=Array.from(card.children).filter(n=>n!==head);
+              if(nodes.length<2)return;
+              const firstContact=nodes.find(n=>n.classList.contains('scResourceContactRow')&&/phone/i.test(n.textContent||''));
+              const firstAddress=nodes.find(n=>n.tagName==='P'&&/address/i.test(n.textContent||''));
+              const keep=new Set([head,firstAddress,firstContact].filter(Boolean));
+              const extraNodes=nodes.filter(n=>!keep.has(n));
+              if(!extraNodes.length)return;
+              const toggle=document.createElement('button');
+              toggle.type='button';toggle.className='ld2-more-toggle';
+              toggle.setAttribute('aria-expanded','false');toggle.textContent='More Details ▾';
+              const extra=document.createElement('div');extra.className='ld2-extra';extra.hidden=true;
+              extraNodes.forEach(n=>extra.appendChild(n));
+              toggle.onclick=function(){
+                extra.hidden=!extra.hidden;
+                card.classList.toggle('ld2-expanded',!extra.hidden);
+                toggle.setAttribute('aria-expanded',String(!extra.hidden));
+                toggle.textContent=extra.hidden?'More Details ▾':'Less Details ▴';
+              };
+              card.append(toggle,extra);
+              card.classList.remove('ld2-expanded');
+            }
+            function start(){
+              const card=document.getElementById('scPlaceDetailPopup');
+              if(!card)return;
+              new MutationObserver(function(){compact()}).observe(card,{childList:true});
+              compact();
+            }
+            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);
+            else start();
+          })();
+          </script>"""
+          s=s.replace(marker,block+marker,1)
+          p.write_text(s)
+          PY
           # BETA v0.8.584: mobile homepage hierarchy; reuse existing button nodes and handlers.
           python3 - <<'PY'
           from pathlib import Path
@@ -1430,7 +1486,7 @@ jobs:
           assert labels, 'No visible Beta version label found'
           assert set(labels)=={'BETA v'+version}, f'Beta version mismatch: {set(labels)}'
           assert re.search(r'aria-label="Silent Compass beta version"[^>]*>BETA v'+re.escape(version)+r'</span>',html), 'Footer/header version badge mismatch'
-          assert "const CACHE='griddown-shell-v80584-beta'" in sw, 'Service worker cache mismatch'
+          assert "const CACHE='griddown-shell-v80585-beta'" in sw, 'Service worker cache mismatch'
           print('PASS: visible Beta version and service-worker cache match v'+version)
           PY
           touch app/.nojekyll
