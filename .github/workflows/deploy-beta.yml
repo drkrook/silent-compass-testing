@@ -1440,6 +1440,26 @@ jobs:
           s=s.replace(marker,block+marker,1)
           p.write_text(s)
           PY
+          # Beta-only refinement: keep compact map card title and Close on one row.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          css="""<style id="ld2-map-card-header-refinement">
+          @media(max-width:700px){
+          #scPlaceDetailPopup .scPlacePopupHeader{display:flex!important;flex-direction:row!important;align-items:flex-start!important;justify-content:space-between!important;gap:8px!important;margin-bottom:4px!important}
+          #scPlaceDetailPopup .scPlacePopupHeader strong{flex:1 1 auto!important;min-width:0!important;overflow-wrap:anywhere!important}
+          #scPlaceDetailPopup .scPlacePopupHeader button{flex:0 0 auto!important;align-self:flex-start!important;white-space:nowrap!important;min-height:38px!important;padding:6px 9px!important}
+          #scPlaceDetailPopup{padding:10px 12px!important}
+          #scPlaceDetailPopup .scResourceContactRow{margin:3px 0!important}
+          #scPlaceDetailPopup .ld2-more-toggle{margin-top:5px!important}
+          }
+          </style>"""
+          s=s.replace(marker,css+marker,1)
+          p.write_text(s)
+          PY
           # BETA v0.8.584: mobile homepage hierarchy; reuse existing button nodes and handlers.
           python3 - <<'PY'
           from pathlib import Path
