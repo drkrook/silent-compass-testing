@@ -643,9 +643,11 @@ jobs:
           after="let missing=0;if(!window.__ld2Active){for(let x=x0;"
           assert s.count(before)==1, 'Legacy map raster loop changed; stop'
           s=s.replace(before,after,1)
-          end="}}if(currentRoute?.coordinates?.length){"
-          assert s.count(end)==1, 'Legacy raster loop ending changed; stop'
-          s=s.replace(end,"}}}if(currentRoute?.coordinates?.length){",1)
+          # The exact preceding braces vary with earlier Beta render patches.
+          # Anchor on the unique route-drawing block instead.
+          route="if(currentRoute?.coordinates?.length){"
+          assert s.count(route)==1, 'Legacy route drawing block changed; stop'
+          s=s.replace(route,"}"+route,1)
           p.write_text(s)
           PY
           # Activate Maps 2.0 only in Beta. Keep the legacy canvas as a route/
