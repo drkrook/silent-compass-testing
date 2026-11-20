@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.577', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.578', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80577-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80578-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -1114,7 +1114,7 @@ jobs:
           s=s.replace(old,new)
           marker='</body></html>'
           assert s.count(marker)==1
-          s=s.replace(marker,r'''<style>#ldSqoochClub .sqBadges button .sqShield{display:none!important}#ldSqoochClub .sqBadges button:before{content:'';display:block;width:100%;aspect-ratio:1/1;background-position:center;background-repeat:no-repeat;background-size:contain;filter:drop-shadow(0 3px 4px #001b1d99)}#ldSqoochClub .sqBadges button:nth-child(1):before{background-image:url('./knot_master.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(2):before{background-image:url('./trail_finder.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(3):before{background-image:url('./pack_pro.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(4):before{background-image:url('./weather_watcher.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(5):before{background-image:url('./wildlife_explorer.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(6):before{background-image:url('./shelter_builder.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(7):before{background-image:url('./water_wise.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(8):before{background-image:url('./first_aid_helper.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(9):before{background-image:url('./fire_builder.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(10):before{background-image:url('./navigation_pro.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(11):before{background-image:url('./preparedness_pro.png?v=80577')}#ldSqoochClub .sqBadges button:nth-child(12):before{background-image:url('./adventure_explorer.png?v=80577')}#ldSqoochClub .sqBadges button{gap:3px!important}#ldSqoochClub .sqBadges button>small{margin-top:0!important}</style>'''+marker)
+          s=s.replace(marker,r'''<style>#ldSqoochClub .sqBadges button .sqShield{display:none!important}#ldSqoochClub .sqBadges button:before{content:'';display:block;width:100%;aspect-ratio:1/1;background-position:center;background-repeat:no-repeat;background-size:contain;filter:drop-shadow(0 3px 4px #001b1d99)}#ldSqoochClub .sqBadges button:nth-child(1):before{background-image:url('./knot_master.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(2):before{background-image:url('./trail_finder.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(3):before{background-image:url('./pack_pro.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(4):before{background-image:url('./weather_watcher.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(5):before{background-image:url('./wildlife_explorer.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(6):before{background-image:url('./shelter_builder.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(7):before{background-image:url('./water_wise.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(8):before{background-image:url('./first_aid_helper.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(9):before{background-image:url('./fire_builder.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(10):before{background-image:url('./navigation_pro.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(11):before{background-image:url('./preparedness_pro.png?v=80578')}#ldSqoochClub .sqBadges button:nth-child(12):before{background-image:url('./adventure_explorer.png?v=80578')}#ldSqoochClub .sqBadges button{gap:3px!important}#ldSqoochClub .sqBadges button>small{margin-top:0!important}</style>'''+marker)
           p.write_text(s)
           PY
           # BETA v0.8.569: normalize visible artwork, not just PNG canvas dimensions.
@@ -1213,18 +1213,75 @@ jobs:
           </style>"""
           p.write_text(s.replace(marker,css+marker))
           PY
+          # BETA v0.8.578: render real badge images, with transparent margins trimmed at build time.
+          # Original beta-assets and all existing button interactions remain unchanged.
+          python3 - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+          names=('knot_master','trail_finder','pack_pro','weather_watcher','wildlife_explorer','shelter_builder','water_wise','first_aid_helper','fire_builder','navigation_pro','preparedness_pro','adventure_explorer')
+          for name in names:
+              source=Path('app')/(name+'.png')
+              im=Image.open(source).convert('RGBA')
+              bounds=im.getchannel('A').point(lambda x:255 if x>8 else 0).getbbox()
+              assert bounds, f'Empty badge asset: {name}'
+              crop=im.crop(bounds)
+              margin=max(5,round(max(crop.size)*0.045))
+              out=Image.new('RGBA',(crop.width+2*margin,crop.height+2*margin),(0,0,0,0))
+              out.alpha_composite(crop,(margin,margin))
+              out.save(Path('app')/(name+'_display.png'),optimize=True)
+          PY
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1
+          block="""<style>
+          @media(max-width:700px){
+          #ldSqoochClub .sqBadges{grid-template-columns:repeat(4,minmax(0,1fr))!important;column-gap:6px!important;row-gap:12px!important}
+          #ldSqoochClub .sqBadges button{display:flex!important;flex-direction:column!important;align-items:center!important;gap:2px!important;overflow:visible!important}
+          #ldSqoochClub .sqBadges button::before{content:none!important;display:none!important}
+          #ldSqoochClub .sqBadges button .ldBadgeArt{display:block!important;flex:0 0 auto!important;position:static!important;width:116%!important;max-width:none!important;height:106px!important;object-fit:contain!important;object-position:center!important;margin:0!important;padding:0!important;pointer-events:none!important}
+          #ldSqoochClub .sqBadges button>small{margin:0!important;white-space:nowrap!important}
+          }
+          </style>
+          <script>
+          (function(){
+            const names=['knot_master','trail_finder','pack_pro','weather_watcher','wildlife_explorer','shelter_builder','water_wise','first_aid_helper','fire_builder','navigation_pro','preparedness_pro','adventure_explorer'];
+            function mount(){
+              const buttons=document.querySelectorAll('#ldSqoochClub .sqBadges button');
+              if(buttons.length!==12)return;
+              buttons.forEach((button,i)=>{
+                if(button.querySelector('.ldBadgeArt'))return;
+                const img=document.createElement('img');
+                img.className='ldBadgeArt';
+                img.src='./'+names[i]+'_display.png?v=80578';
+                img.alt='';
+                img.setAttribute('aria-hidden','true');
+                img.decoding='async';
+                button.insertBefore(img,button.firstChild);
+              });
+            }
+            if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);
+            else mount();
+            new MutationObserver(mount).observe(document.documentElement,{childList:true,subtree:true});
+          })();
+          </script>"""
+          s=s.replace(marker,block+marker)
+          p.write_text(s)
+          PY
           # Release gate: footer badge and service-worker cache must match this Beta release.
           python3 - <<'PY'
           from pathlib import Path
           import re
-          version='0.8.577'
+          version='0.8.578'
           html=Path('app/index.html').read_text()
           sw=Path('app/sw.js').read_text()
           labels=re.findall(r'BETA v0\.8\.\d+',html)
           assert labels, 'No visible Beta version label found'
           assert set(labels)=={'BETA v'+version}, f'Beta version mismatch: {set(labels)}'
           assert re.search(r'aria-label="Silent Compass beta version"[^>]*>BETA v'+re.escape(version)+r'</span>',html), 'Footer/header version badge mismatch'
-          assert "const CACHE='griddown-shell-v80577-beta'" in sw, 'Service worker cache mismatch'
+          assert "const CACHE='griddown-shell-v80578-beta'" in sw, 'Service worker cache mismatch'
           print('PASS: visible Beta version and service-worker cache match v'+version)
           PY
           touch app/.nojekyll
