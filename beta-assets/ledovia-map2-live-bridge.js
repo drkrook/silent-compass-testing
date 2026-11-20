@@ -9,10 +9,11 @@ if(!navigator.onLine)return; // Keep original offline renderer until real offlin
 const node=document.createElement('div');node.id='ld2LiveMap';
 node.style.cssText='position:absolute;inset:0;z-index:0;touch-action:pan-x pan-y';
 canvas.before(node);
-let instance,adapter,ready=false,updating=false,legacy=null;
+let instance,adapter,ready=false,updating=false,legacy=null,oldSet=null;
 const warn=e=>{console.warn('Ledovia Maps 2.0:',e);};
 const fallback=()=>{
  window.__ld2Active=false;ready=false;
+ if(oldSet)window.__ld47SetCenter=oldSet;
  try{adapter?.destroy();instance?.destroy()}catch(e){warn(e)}
  node.remove();canvas.style.removeProperty('pointer-events');canvas.style.removeProperty('position');
  canvas.style.removeProperty('z-index');canvas.style.removeProperty('background');
@@ -26,9 +27,10 @@ try{
    canvas.style.position='relative';canvas.style.zIndex='1';canvas.style.pointerEvents='none';
    canvas.style.background='transparent';
    if(legacy)instance.map.jumpTo({center:[legacy.lon,legacy.lat],zoom:legacy.zoom});
-   window.__ld47SetCenter?.(legacy?.lat??34.22,legacy?.lon??-79.77,legacy?.zoom??9);
+   // Preserve the last legacy center; do not reset an existing saved viewport.
+   if(legacy)window.__ld47SetCenter?.(legacy.lat,legacy.lon,legacy.zoom);
    const sel=document.getElementById('basemapStyle');
-   if(sel){const hd=document.createElement('option');hd.value='hd';hd.textContent='SC HD Aerial (online)';sel.append(hd);}
+   if(sel&&!sel.querySelector('option[value="hd"]')){const hd=document.createElement('option');hd.value='hd';hd.textContent='SC HD Aerial (online)';sel.append(hd);}
    function syncLayers(){
     const mode=sel?.value||'topo';
     instance.setMode(mode==='hd'?'hd':mode==='satellite'?'satellite':'topo');
@@ -37,7 +39,7 @@ try{
    sel?.addEventListener('change',syncLayers);
    document.getElementById('relief')?.addEventListener('change',syncLayers);
    syncLayers();
-   const oldSet=window.__ld47SetCenter;
+   oldSet=window.__ld47SetCenter;
    if(typeof oldSet==='function'){
     window.__ld47SetCenter=(lat,lon,zoom)=>{
      oldSet(lat,lon,zoom);
