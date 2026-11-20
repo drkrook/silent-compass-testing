@@ -23,10 +23,14 @@ function upgrade(){
   toggle.append(ico,copy,chevron);
   const detail=document.createElement('div');detail.className='ld50Details';detail.hidden=true;
   const actions=document.createElement('div');actions.className='ld50Actions';
+  // One-tap map viewing: reuse the original saved-place selector and map navigation.
+  const showOnMap=()=>{go.click();document.getElementById('scPlacesMap')?.click();};
+  const show=document.createElement('button');show.type='button';show.textContent='⌖ Show on Map';
+  show.onclick=showOnMap;
   const nav=document.createElement('button');nav.type='button';nav.textContent='➤ Navigate';nav.onclick=()=>{go.click();const target=$('#selectedLocationPanel');const button=[...document.querySelectorAll('#selected button')].find(b=>/destination/i.test(b.textContent));if(button)button.click();else document.getElementById('scPlacesMap')?.click();};
   const edit=document.createElement('button');edit.type='button';edit.textContent='✎ Edit';edit.onclick=()=>{go.click();const button=[...document.querySelectorAll('#selected button')].find(b=>/^Edit$/i.test(b.textContent.trim()));if(button){button.click();const editor=document.getElementById('scPlaceEditor');if(editor){editor.open=true;editor.scrollIntoView({behavior:'smooth',block:'start'});}}};
   const coords=document.createElement('button');coords.type='button';coords.textContent='▢ Copy Coords';coords.onclick=()=>{go.click();const button=[...document.querySelectorAll('#selected button')].find(b=>/Copy coordinates/i.test(b.textContent));button?.click();};
-  actions.append(nav,edit,coords);
+  actions.append(show,nav,edit,coords);
   const photo=row.querySelector('button[title="Location photos"]');if(photo){photo.textContent='▧ Photos';actions.append(photo);}
   const del=row.querySelector('button[title="Delete this location"]');if(del){del.textContent='Delete';del.classList.add('ld50Delete');actions.append(del);}
   // Beta v0.8.507: approved expanded card — real offline photo and place metadata.
@@ -55,7 +59,7 @@ function upgrade(){
    const wasOpen=!detail.hidden;
    list.querySelectorAll('.ld50Details').forEach(d=>d.hidden=true);
    list.querySelectorAll('.ld50Toggle').forEach(b=>b.setAttribute('aria-expanded','false'));
-   if(!wasOpen){detail.hidden=false;toggle.setAttribute('aria-expanded','true');go.click();active=name;refreshCard();}
+   if(!wasOpen){detail.hidden=false;toggle.setAttribute('aria-expanded','true');go.click();active=name;refreshCard();document.getElementById('scPlacesMap')?.click();}
    else active=null;
   };
   go.hidden=true;row.prepend(toggle);row.append(detail);
