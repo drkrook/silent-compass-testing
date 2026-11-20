@@ -628,6 +628,26 @@ jobs:
           s=s.replace(marker,'<link rel="stylesheet" href="./ledovia-gucci-map-v47.css?v=483"><script src="./ledovia-gucci-map-v47.js?v=475"></script>'+marker)
           p.write_text(s)
           PY
+          # Maps 2.0 overlay preparation: keep the legacy route and marker renderer,
+          # but suppress its opaque raster background while MapLibre is active.
+          # This is inert until the live bridge is explicitly activated.
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          start="ctx.fillStyle='#d7ded6';ctx.fillRect(0,0,w,h);let x0="
+          replacement="if(window.__ld2Active){ctx.clearRect(0,0,w,h)}else{ctx.fillStyle='#d7ded6';ctx.fillRect(0,0,w,h)}let x0="
+          assert s.count(start)==1, 'Legacy map background changed; stop'
+          s=s.replace(start,replacement,1)
+          before="let missing=0;for(let x=x0;"
+          after="let missing=0;if(!window.__ld2Active){for(let x=x0;"
+          assert s.count(before)==1, 'Legacy map raster loop changed; stop'
+          s=s.replace(before,after,1)
+          end="}}if(currentRoute?.coordinates?.length){"
+          assert s.count(end)==1, 'Legacy raster loop ending changed; stop'
+          s=s.replace(end,"}}}if(currentRoute?.coordinates?.length){",1)
+          p.write_text(s)
+          PY
           # Gucci Resources v48: additive Beta-only panel; retain existing layer controls.
           cp beta/beta-assets/ledovia-resources-v48.js app/
           cp beta/beta-assets/ledovia-resources-v48.css app/
