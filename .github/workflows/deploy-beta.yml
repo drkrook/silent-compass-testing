@@ -1389,8 +1389,12 @@ jobs:
           assert s.count(marker)==1
           block="""<style id="ld2-collapsible-map-cards">
           @media(max-width:700px){
-          #scPlaceDetailPopup{max-height:min(32%,260px)!important}
-          #scPlaceDetailPopup.ld2-expanded{max-height:min(48%,390px)!important}
+          #scPlaceDetailPopup{left:50%!important;right:auto!important;transform:translateX(-50%)!important;width:88vw!important;max-width:430px!important;box-sizing:border-box!important;bottom:70px!important;max-height:min(42%,320px)!important;overflow-y:auto!important}
+          #scPlaceDetailPopup.ld2-expanded{max-height:min(60%,480px)!important}
+          #scPlaceDetailPopup .scPlacePopupHeader{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+          #scPlaceDetailPopup .scPlacePopupHeader button{align-self:flex-end!important}
+          #scPlaceDetailPopup .scResourceContactRow{display:flex!important;flex-wrap:wrap!important}
+          #scPlaceDetailPopup .ld2-more-toggle{position:sticky;bottom:0;z-index:2}
           #scPlaceDetailPopup .ld2-more-toggle{display:block;width:100%;margin-top:8px;padding:9px 12px;min-height:42px;background:#285e58;color:#fff;border:1px solid #8abbb0;border-radius:9px;font-weight:700;text-align:center}
           #scPlaceDetailPopup .ld2-extra[hidden]{display:none!important}
           #scPlaceDetailPopup .ld2-extra p{margin:5px 0!important}
