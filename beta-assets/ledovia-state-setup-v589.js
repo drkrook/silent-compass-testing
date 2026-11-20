@@ -1,4 +1,4 @@
-/* Ledovia Beta v0.8.589: first-run state preparation, verified package size when available. */
+/* Ledovia Beta v0.8.590: first-run state preparation, verified package size when available. */
 (()=>{'use strict';
 const key='ledovia-state-setup-v1';
 function init(){
@@ -41,7 +41,43 @@ function init(){
  pick.addEventListener('change',()=>inspect(pick.value,size));
  inspect(pick.value,size); // both fields use independent user-facing checks
  inspect(sel.value,details);
- prepare.onclick=()=>{pick.value=sel.value;pick.dispatchEvent(new Event('change',{bubbles:true}));close();home.scrollIntoView({block:'start'});if(sel.value==='SC'){done.textContent='Review the package information, then tap Download Available South Carolina Resources.'}else done.textContent='This state is not yet available for download.'};
+ prepare.onclick=async()=>{
+  const state=sel.value;
+  if(state!=='SC'){details.textContent='This state package is not yet published. No download was started.';return}
+  if(!navigator.onLine){details.textContent='Connect to the internet to download South Carolina resources.';return}
+  prepare.disabled=true;prepare.textContent='Preparing download…';
+  pick.value=state;pick.dispatchEvent(new Event('change',{bubbles:true}));
+  const target=document.getElementById('scStatePackDownload'),source=document.getElementById('scStatePackStatus');
+  if(!target||!source){details.textContent='Download service unavailable. Nothing was changed.';prepare.disabled=false;prepare.textContent='Try Again';return}
+  const waitForReady=async()=>{
+   for(let i=0;i<60;i++){
+    if(!target.disabled&&typeof target.onclick==='function')return true;
+    if(/No published pack|Could not check state packs|Invalid pack|Manifest HTTP/.test(source.textContent||''))return false;
+    await new Promise(resolve=>setTimeout(resolve,250));
+   }
+   return false;
+  };
+  if(!await waitForReady()){details.textContent='Could not confirm a published download is ready. Please try again when connected.';prepare.disabled=false;prepare.textContent='Try Again';return}
+  details.textContent='Downloading South Carolina resources…';prepare.textContent='Downloading…';
+  target.click();
+  let outcome='';
+  for(let i=0;i<240;i++){
+   const message=source.textContent||'';
+   if(/^Saved \d+/.test(message)){outcome=message;break}
+   if(/^Download failed:/.test(message)){outcome=message;break}
+   await new Promise(resolve=>setTimeout(resolve,250));
+  }
+  if(outcome.startsWith('Saved ')){
+   details.textContent='South Carolina resources saved on this device. Complete offline maps are not included.';
+   done.textContent=outcome;
+   prepare.textContent='Continue to Ledovia';
+   prepare.disabled=false;
+   prepare.onclick=close;
+  }else{
+   details.textContent=outcome||'Download could not be verified. Check your connection and try again.';
+   prepare.textContent='Try Again';prepare.disabled=false;
+  }
+ };
  const underlying=document.getElementById('scStatePackStatus');
  if(underlying){new MutationObserver(()=>{if(!done.isConnected)return;const t=underlying.textContent||'';if(/Saved \d+|Download failed|Downloading /.test(t))done.textContent=t}).observe(underlying,{childList:true,subtree:true,characterData:true})}
  let seen=false;try{seen=localStorage.getItem(key)==='seen'}catch(e){}
