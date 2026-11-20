@@ -676,6 +676,7 @@ jobs:
           p.write_text(s)
           PY
           cp beta/beta-assets/ledovia-map2-live-bridge.js app/ledovia-map2-live-bridge.js
+          cp beta/beta-assets/ledovia-offline-coverage-v1.js app/ledovia-offline-coverage-v1.js
           python3 - <<'PY'
           from pathlib import Path
           p=Path('app/index.html')
@@ -690,6 +691,7 @@ jobs:
             '<script src="./ledovia-map2-engine.js?v=2"></script>'
             '<script src="./ledovia-map2-adapter.js?v=1"></script>'
             '<script src="./ledovia-map2-live-bridge.js?v=584"></script>'
+            '<script src="./ledovia-offline-coverage-v1.js?v=1"></script>'
           )
           s=s.replace(marker,scripts+marker,1)
           assert s.count('ledovia-map2-live-bridge.js?v=584')==1
