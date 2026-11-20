@@ -57,8 +57,24 @@ try{
     if(!ready||typeof window.__ld2PickMarkerAt!=='function')return;
     const point=instance.map.project(e.lngLat);
     // Personal hazard reports take precedence over nearby resource markers.
-    if(window.__ld2PickHazardAt?.(point.x,point.y))return;
-    window.__ld2PickMarkerAt(point.x,point.y);
+    const closePopup=id=>{
+     const popup=document.getElementById(id);
+     if(popup&&!popup.hidden){
+      const close=popup.querySelector('button');
+      if(close)close.click();else popup.hidden=true;
+     }
+    };
+    if(window.__ld2PickHazardAt?.(point.x,point.y)){
+     closePopup('scPlaceDetailPopup');
+     return;
+    }
+    if(window.__ld2PickMarkerAt(point.x,point.y)){
+     closePopup('scHazDetailPopup');
+     return;
+    }
+    // An empty-map tap dismisses open detail cards; dragging and pinch zoom do not.
+    closePopup('scHazDetailPopup');
+    closePopup('scPlaceDetailPopup');
    });
    instance.map.on('error',warn);
    window.addEventListener('offline',fallback,{once:true});
