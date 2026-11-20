@@ -49,13 +49,13 @@
    }
    function setMode(mode){
      if(!['standard','topo','satellite','hd'].includes(mode))throw Error('Unknown base map mode');
-     if(!map.isStyleLoaded())return false;
+     if(!map.getSource('ld2-topo'))return false;
      for(const key of ['topo','satellite','hd'])active[key]=key===mode;
      sync();
      return true;
    }
    function setRelief(on){
-     if(!map.isStyleLoaded())return false;
+     if(!map.getSource('ld2-relief'))return false;
      ensure('relief');active.relief=!!on;sync();return true;
    }
    map.on('load',()=>{Object.keys(MODES).forEach(ensure);if(typeof options.onReady==='function')options.onReady(map)});
