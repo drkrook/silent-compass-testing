@@ -48,14 +48,14 @@
      }
    }
    function setMode(mode){
-     if(mode!=='standard'&&!MODES[mode])throw Error('Unknown map mode');
-     if(!map.loaded())return false;
+     if(!['standard','topo','satellite','hd'].includes(mode))throw Error('Unknown base map mode');
+     if(!map.isStyleLoaded())return false;
      for(const key of ['topo','satellite','hd'])active[key]=key===mode;
-     if(mode!=='relief')sync();
+     sync();
      return true;
    }
    function setRelief(on){
-     if(!map.loaded())return false;
+     if(!map.isStyleLoaded())return false;
      ensure('relief');active.relief=!!on;sync();return true;
    }
    map.on('load',()=>{Object.keys(MODES).forEach(ensure);if(typeof options.onReady==='function')options.onReady(map)});
