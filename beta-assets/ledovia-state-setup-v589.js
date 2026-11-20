@@ -22,9 +22,9 @@ function init(){
  function close(){overlay.style.display='none';try{localStorage.setItem(key,'seen')}catch(e){}}
  skip.onclick=close;
  const fmt=n=>n>=1048576?(n/1048576).toFixed(1)+' MB':(n/1024).toFixed(1)+' KB';
- let seq=0;
+ const requests=new WeakMap();
  async function inspect(state,el){
-  const current=++seq;
+  const current=(requests.get(el)||0)+1;requests.set(el,current);
   el.textContent='Checking published download size…';
   if(state!=='SC'){el.textContent='State package not yet published. Download size unavailable.';return}
   try{
@@ -33,9 +33,9 @@ function init(){
    if(!entry?.file||typeof entry.file!=='string'||entry.file.includes('..')||!entry.file.endsWith('.json'))throw Error('No published package');
    const head=await fetch('./state-packs/'+entry.file,{method:'HEAD',cache:'no-store'});
    const n=Number(head.headers.get('content-length'));
-   if(current!==seq)return;
+   if(current!==requests.get(el))return;
    el.textContent=head.ok&&Number.isFinite(n)&&n>0?'Published resources: '+fmt(n)+' download. Storage needed may be higher after installation. Complete offline maps not included.':'Published resources: file size unavailable. Complete offline maps not included.';
-  }catch(e){if(current===seq)el.textContent='Download size unavailable. Complete offline maps not included.'}
+  }catch(e){if(current===requests.get(el))el.textContent='Download size unavailable. Complete offline maps not included.'}
  }
  sel.onchange=()=>inspect(sel.value,details);
  pick.addEventListener('change',()=>inspect(pick.value,size));
