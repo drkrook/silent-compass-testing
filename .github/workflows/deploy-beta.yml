@@ -1479,7 +1479,7 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          version='0.8.584'
+          version='0.8.585'
           html=Path('app/index.html').read_text()
           sw=Path('app/sw.js').read_text()
           labels=re.findall(r'BETA v0\.8\.\d+',html)
