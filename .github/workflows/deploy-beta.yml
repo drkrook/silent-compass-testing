@@ -648,6 +648,28 @@ jobs:
           s=s.replace(end,"}}}if(currentRoute?.coordinates?.length){",1)
           p.write_text(s)
           PY
+          # Activate Maps 2.0 only in Beta. Keep the legacy canvas as a route/
+          # marker overlay and as the fallback when offline. Stable is unchanged.
+          cp beta/beta-assets/ledovia-map2-live-bridge.js app/ledovia-map2-live-bridge.js
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/index.html')
+          s=p.read_text()
+          marker='</body></html>'
+          assert s.count(marker)==1, 'Unexpected Beta HTML ending'
+          scripts=(
+            '<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">'
+            '<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>'
+            '<script src="https://unpkg.com/pmtiles@3.2.1/dist/pmtiles.js"></script>'
+            '<script src="https://unpkg.com/@protomaps/basemaps@5.7.2/dist/basemaps.js"></script>'
+            '<script src="./ledovia-map2-engine.js?v=2"></script>'
+            '<script src="./ledovia-map2-adapter.js?v=1"></script>'
+            '<script src="./ledovia-map2-live-bridge.js?v=2"></script>'
+          )
+          s=s.replace(marker,scripts+marker,1)
+          assert s.count('ledovia-map2-live-bridge.js?v=2')==1
+          p.write_text(s)
+          PY
           # Gucci Resources v48: additive Beta-only panel; retain existing layer controls.
           cp beta/beta-assets/ledovia-resources-v48.js app/
           cp beta/beta-assets/ledovia-resources-v48.css app/
