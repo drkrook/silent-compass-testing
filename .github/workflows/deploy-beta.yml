@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.567', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.568', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -758,7 +758,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80567-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80568-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -1116,6 +1116,31 @@ jobs:
           assert s.count(marker)==1
           s=s.replace(marker,r'''<style>#ldSqoochClub .sqBadges button .sqShield{display:none!important}#ldSqoochClub .sqBadges button:before{content:'';display:block;width:100%;aspect-ratio:1/1;background-position:center;background-repeat:no-repeat;background-size:contain;filter:drop-shadow(0 3px 4px #001b1d99)}#ldSqoochClub .sqBadges button:nth-child(1):before{background-image:url('./knot_master.png')}#ldSqoochClub .sqBadges button:nth-child(2):before{background-image:url('./trail_finder.png')}#ldSqoochClub .sqBadges button:nth-child(3):before{background-image:url('./pack_pro.png')}#ldSqoochClub .sqBadges button:nth-child(4):before{background-image:url('./weather_watcher.png')}#ldSqoochClub .sqBadges button:nth-child(5):before{background-image:url('./wildlife_explorer.png')}#ldSqoochClub .sqBadges button:nth-child(6):before{background-image:url('./shelter_builder.png')}#ldSqoochClub .sqBadges button:nth-child(7):before{background-image:url('./water_wise.png')}#ldSqoochClub .sqBadges button:nth-child(8):before{background-image:url('./first_aid_helper.png')}#ldSqoochClub .sqBadges button:nth-child(9):before{background-image:url('./fire_builder.png')}#ldSqoochClub .sqBadges button:nth-child(10):before{background-image:url('./navigation_pro.png')}#ldSqoochClub .sqBadges button:nth-child(11):before{background-image:url('./preparedness_pro.png')}#ldSqoochClub .sqBadges button:nth-child(12):before{background-image:url('./adventure_explorer.png')}#ldSqoochClub .sqBadges button{gap:3px!important}#ldSqoochClub .sqBadges button>small{margin-top:0!important}</style>'''+marker)
           p.write_text(s)
+          PY
+          # BETA v0.8.568: normalize visible artwork, not just PNG canvas dimensions.
+          # Originals remain unchanged in beta-assets. All 12 outputs share one 600px canvas.
+          python3 -m pip install --quiet Pillow
+          python3 - <<'PY'
+          from PIL import Image
+          from pathlib import Path
+          names = ('knot_master trail_finder pack_pro weather_watcher wildlife_explorer '
+                   'shelter_builder water_wise first_aid_helper fire_builder '
+                   'navigation_pro preparedness_pro adventure_explorer').split()
+          size = 600
+          # Equal visible-art bounds and transparent margins for all twelve.
+          art_max = 540
+          for name in names:
+              path = Path('app') / (name + '.png')
+              image = Image.open(path).convert('RGBA')
+              alpha = image.getchannel('A')
+              bounds = alpha.point(lambda v: 255 if v > 8 else 0).getbbox()
+              assert bounds is not None, f'Empty badge: {name}'
+              image = image.crop(bounds)
+              image.thumbnail((art_max, art_max), Image.Resampling.LANCZOS)
+              canvas = Image.new('RGBA', (size, size), (0, 0, 0, 0))
+              canvas.alpha_composite(image, ((size-image.width)//2, (size-image.height)//2))
+              canvas.save(path, optimize=True)
+              print(f'Normalized {name}: {image.width}x{image.height} on {size}x{size}')
           PY
           touch app/.nojekyll
       - name: Configure Pages
