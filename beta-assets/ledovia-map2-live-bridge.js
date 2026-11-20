@@ -55,8 +55,9 @@ try{
    // MapLibre owns pointer gestures; legacy canvas owns marker selection panels.
    instance.map.on('click',e=>{
     if(!ready||typeof window.__ld2PickMarkerAt!=='function')return;
-    const r=canvas.getBoundingClientRect();
     const point=instance.map.project(e.lngLat);
+    // Personal hazard reports take precedence over nearby resource markers.
+    if(window.__ld2PickHazardAt?.(point.x,point.y))return;
     window.__ld2PickMarkerAt(point.x,point.y);
    });
    instance.map.on('error',warn);
