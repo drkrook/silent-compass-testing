@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ledovia Maps 2.0 — South Carolina Lab</title>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<style>
+:root{color-scheme:dark;font-family:system-ui,-apple-system,sans-serif;background:#061e26;color:#eaf6f5}*{box-sizing:border-box}body{margin:0}header{padding:15px 18px;background:#082b35;border-bottom:1px solid #23515a}h1{font-size:21px;margin:0}header p{margin:5px 0 0;color:#b2d2d4;font-size:13px}.bar{display:flex;flex-wrap:wrap;gap:8px;padding:10px 12px;background:#0b3540;align-items:center}button{background:#164a58;color:#fff;border:1px solid #5d8991;border-radius:9px;padding:10px 13px;font-weight:650}button:focus-visible{outline:3px solid #ffd080}#map{width:100%;height:min(72vh,760px);min-height:350px;background:#dce6dc}.note{font-size:13px;line-height:1.5;padding:10px 16px;color:#d2e5e4}#status{padding:9px 13px;background:#123b45;font-size:13px}a{color:#a8e7f5}.maplibregl-ctrl-attrib{color:#222} .maplibregl-ctrl-attrib a{color:#174d66}
+</style></head><body>
+<header><h1>LEDO<span style="color:#6bd5c6">VIA</span> · Maps 2.0 Lab</h1><p>South Carolina isolated MapLibre + PMTiles rendering test · not the production map</p></header>
+<div class="bar"><button id="florence">Florence</button><button id="greenville">Greenville</button><button id="charleston">Charleston</button><button id="locate">My GPS</button><button id="reset">Reset view</button></div>
+<div id="status" role="status" aria-live="polite">Loading MapLibre and PMTiles…</div>
+<div id="map" aria-label="Experimental South Carolina vector map"></div>
+<div class="note"><strong>Online-only proof of concept.</strong> This page uses an externally hosted Protomaps demonstration archive; it is not a South Carolina offline download. Internet is required. Offline packs, satellite imagery, terrain contours, routing and saved-location integration are <strong>not yet implemented</strong>. Existing Ledovia maps and saved data are untouched. Data attribution: © OpenStreetMap contributors (ODbL), Protomaps.</div>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/pmtiles@3.2.1/dist/pmtiles.js"></script>
+<script>
+(()=>{'use strict';
+const status=document.getElementById('status');
+function say(t){status.textContent=t}
+if(!window.maplibregl||!window.pmtiles){say('Map libraries failed to load. Check internet access.');return}
+try{
+ const protocol=new pmtiles.Protocol();maplibregl.addProtocol('pmtiles',protocol.tile);
+ const archive='https://demo-bucket.protomaps.com/v4.pmtiles';
+ const map=new maplibregl.Map({
+ container:'map',center:[-80.85,33.85],zoom:6.5,minZoom:3,maxZoom:16,
+ attributionControl:false,
+ style:{version:8,sources:{basemap:{type:'vector',url:'pmtiles://'+archive}},
+ layers:[
+ {id:'background',type:'background',paint:{'background-color':'#e6e9dc'}},
+ {id:'land',type:'fill',source:'basemap','source-layer':'earth',paint:{'fill-color':'#e7eadf'}},
+ {id:'water',type:'fill',source:'basemap','source-layer':'water',paint:{'fill-color':'#9ccdd0'}},
+ {id:'roads-minor',type:'line',source:'basemap','source-layer':'roads',filter:['in',['get','kind'],['literal',['minor_road','other','path','service']]],paint:{'line-color':'#ffffff','line-width':['interpolate',['linear'],['zoom'],6,0.2,12,1.7,16,3.5]}},
+ {id:'roads',type:'line',source:'basemap','source-layer':'roads',paint:{'line-color':'#c79b75','line-width':['interpolate',['linear'],['zoom'],5,0.35,10,1.5,15,4]}},
+ {id:'boundaries',type:'line',source:'basemap','source-layer':'boundaries',paint:{'line-color':'#a0aaa4','line-width':0.6,'line-dasharray':[3,2]}}
+ ]},
+ transformRequest:(url)=>({url})
+ });
+ map.addControl(new maplibregl.NavigationControl({showCompass:true}),'top-right');
+ map.addControl(new maplibregl.AttributionControl({compact:true,customAttribution:'© OpenStreetMap contributors · Protomaps'}),'bottom-right');
+ map.on('load',()=>say('Vector map loaded. Pan and pinch to test. Data is streamed online.'));
+ map.on('error',e=>say('Map loading error: '+(e.error?.message||'check network and archive availability')));
+ const fly=(center,zoom)=>map.flyTo({center,zoom,duration:850});
+ document.getElementById('florence').onclick=()=>fly([-79.7626,34.1954],11);
+ document.getElementById('greenville').onclick=()=>fly([-82.394,34.8526],11);
+ document.getElementById('charleston').onclick=()=>fly([-79.9311,32.7765],11);
+ document.getElementById('reset').onclick=()=>fly([-80.85,33.85],6.5);
+ document.getElementById('locate').onclick=()=>{
+ if(!navigator.geolocation){say('Geolocation unavailable.');return}
+ say('Requesting GPS position…');
+ navigator.geolocation.getCurrentPosition(p=>{fly([p.coords.longitude,p.coords.latitude],13);say('GPS centered (device accuracy '+Math.round(p.coords.accuracy)+' m).')},e=>say('GPS unavailable: '+e.message),{enableHighAccuracy:true,timeout:12000});
+ };
+}catch(e){say('Map initialization failed: '+e.message)}
+})();
+</script></body></html>
