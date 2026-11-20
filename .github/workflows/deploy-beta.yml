@@ -591,7 +591,7 @@ jobs:
           import re
           p=Path('app/index.html')
           s=p.read_text()
-          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.585', s)
+          s,n=re.subn(r'BETA v0\.8\.\d+', 'BETA v0.8.586', s)
           assert n>0, 'Expected Beta version label not found'
           p.write_text(s)
           PY
@@ -847,7 +847,7 @@ jobs:
           sw=Path('app/sw.js')
           w=sw.read_text()
           import re
-          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80585-beta'", w, count=1)
+          w,n=re.subn(r"const CACHE='griddown-shell-[^']+'", "const CACHE='griddown-shell-v80586-beta'", w, count=1)
           assert n==1, 'Expected one service-worker cache version'
           sw.write_text(w)
           photo=Path('app/circle-media.js').read_text()
@@ -1505,14 +1505,14 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           import re
-          version='0.8.585'
+          version='0.8.586'
           html=Path('app/index.html').read_text()
           sw=Path('app/sw.js').read_text()
           labels=re.findall(r'BETA v0\.8\.\d+',html)
           assert labels, 'No visible Beta version label found'
           assert set(labels)=={'BETA v'+version}, f'Beta version mismatch: {set(labels)}'
           assert re.search(r'aria-label="Silent Compass beta version"[^>]*>BETA v'+re.escape(version)+r'</span>',html), 'Footer/header version badge mismatch'
-          assert "const CACHE='griddown-shell-v80585-beta'" in sw, 'Service worker cache mismatch'
+          assert "const CACHE='griddown-shell-v80586-beta'" in sw, 'Service worker cache mismatch'
           print('PASS: visible Beta version and service-worker cache match v'+version)
           PY
           touch app/.nojekyll
